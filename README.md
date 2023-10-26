@@ -20,4 +20,5 @@ Autofficine di piccole / medie dimensioni che si occupano esclusivamente di auto
 
 ## FAQ
 Q: Perchè non è prevista una gestione più accurata del magazzino, con ad esempio l'acquisto di pezzi, la loro posizione nel magazino, valore dei pezzi eccetera?
+
 A: Questa funzione non è prevista a causa dell'elevata complessità che introdurrebbe all'interno del progetto.
