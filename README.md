@@ -1,5 +1,5 @@
 # Officina
-Gestionale per autofficine, gestione riparazioni (clone di shopmonkey)
+Gestionale per autofficine, gestione riparazioni (clone di Shopmonkey)
 
 ## Target del software
 Autofficine di piccole / medie dimensioni che si occupano esclusivamente di autoriparazioni e/o servizio gommista, con uno o più dipendenti, con o senza rifornitori ufficiali
@@ -17,3 +17,8 @@ Autofficine di piccole / medie dimensioni che si occupano esclusivamente di auto
 - Ottenere uno storico di ordini per cliente
 - Ottenere uno storico di ordini per veicolo
 - Gestire il magazzino (aggiungere / rimuovere pezzi) e cercare online il prezzo per un pezzo
+
+## FAQ
+Q: Perchè non è prevista una gestione più accurata del magazzino, con ad esempio l'acquisto di pezzi, la loro posizione nel magazino, valore dei pezzi eccetera?
+
+A: Questa funzione non è prevista a causa dell'elevata complessità che introdurrebbe all'interno del progetto.
