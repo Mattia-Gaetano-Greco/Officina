@@ -21,11 +21,13 @@ Autofficine di piccole / medie dimensioni che si occupano esclusivamente di auto
 ## Diagramma E/R
 
 ### Considerazioni aggiuntive:
-- Ogni cliente può essere associato anche a 0 ordini (ad esempio nel caso in cui è appena stato creato)
-- Un ispezione può contenere anche 0 jobs (ad esempio caso in cui è appena stata creata)
-- Un TemplateIspezione può contenere anche 0 jobs (ad esempio caso in cui è stata appena creata)
-- Un templateJob ppuò essere contenuto in 0 o più template (0 ad esempio nel caso in cui è stato appena creato, più ad esempio nel caso in cui due ispezioni hanno entrambe "ispezione freni")
-- Un servizio può usare anche 0 parti (ad esempio nel caso in cui il servizio sia una semplice calibrazione, come gonfiaggio gomme o calibrazione convergenza / campanatura ruote)
+- Ogni `Cliente` può essere associato anche a 0 `Ordine` (ad esempio nel caso in cui è appena stato creato)
+- Ogni `Ispezione` può essere associato anche 0 `Job` (ad esempio caso in cui è appena stata creata)
+- Ogni `TemplateIspezione` può essere associato anche 0 `Job` (ad esempio caso in cui è stata appena creata)
+- Ogni `TemplateJob` può essere associato a 0 o più `TemplateIspezione` (0 ad esempio nel caso in cui è stato appena creato, più ad esempio nel caso in cui due ispezioni hanno entrambe "ispezione freni")
+- Ogni `Servizio` può essere associato anche a 0 `Parte` (ad esempio nel caso in cui il servizio sia una semplice calibrazione, come gonfiaggio gomme o calibrazione convergenza / campanatura ruote)
+
+![E/R](res\Officina.drawio.png)
 
 ## FAQ
 Q: Perchè non è prevista una gestione più accurata del magazzino, con ad esempio l'acquisto di pezzi, la loro posizione nel magazino, valore dei pezzi eccetera? E la funzionalità che permette ai dipendenti di timbrare all'entrata e all'uscita della giornata lavorativa?
