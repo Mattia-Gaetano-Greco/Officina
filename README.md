@@ -17,6 +17,20 @@ Autofficine di piccole / medie dimensioni che si occupano esclusivamente di auto
 - Ottenere uno storico di ordini per cliente
 - Ottenere uno storico di ordini per veicolo
 - Gestire il magazzino (aggiungere / rimuovere pezzi) e cercare online il prezzo per un pezzo
+- Privilegi associati ai singoli utenti:
+  - Dipendente:
+    - Aggiungi / visualizza / aggiorna / rimuovi parti dal magazzino; kanban; clienti; ordini con note, servizi, ispezioni, note e task delle singole ispezioni correlate ad essi; veicoli, _Template ispezione_ e _Template task_
+  - Admin:
+    - Tutti i privilegi di Dipendente
+    - Rinomina lo shop
+    - Aggiungi / visualizza / aggiorna / rimuovi dipendenti dello shop
+  - Cliente:
+    - Visualizza lo storico degli ordini e quelli in corso con le relative informazioni (veicolo associato, commenti propri e dell'officina, appuntamenti...)
+
+### Considerazioni aggiuntive sulle funzionalità:
+- Il software offre la possibilità anche ai dipendenti, e non unicamente agli admin, di inserire numerosi dati anche sensibili e di estrema importanza (ad esempio i clienti) all'interno del database per una questione puramente produttiva, seppur vada a discapito della sicurezza: se ogni volta che il dipendente deve aggiungere al database un dato ha bisogno dell'intervento dell'admin, la produttività dell'officina scende e il software diventa d'intralcio più che di sostegno.
+- Quando vengono aggiunti i dati al database vengono effettuati numerosi controlli come ad esempio la verifica della rilevanza dei dati o che non vengano aggiunti dei duplicati, in modo da rendere la base di dati il più uniforme possibile.
+- Gli account admin vengono creati dal possessore del software tramite un processo non automatizzato, che prevede l'inserimento manuale all'interno del database dei dati dell'admin stesso: questa è una scelta di design atta a favorire la sicurezza del software (se il possessore del software avesse un account, e un malintenzionato dovesse entrare in possesso delle sue credenziali, il malintenzionato stesso avrebbe pieno controllo del software).
 
 ## Diagramma E/R
 
