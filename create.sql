@@ -1,9 +1,3 @@
--- CONSIDERAZIONI AGGIUNTIVE:
--- TemplateIspezione(id_shop) non può essere null, poichè siccome viene creato da un utente appartenente ad uno shop viene passato in automatico l'id dello shop
--- la maggior parte dei parametri all'interno delle query sono 'NOT NULL' poichè vengono inseriti in una form che richiede che tutti i parametri vengano inseriti
--- Admin(id_shop) non può essere null poiché l'admin viene creato dopo la creazione dello shop a cui fa riferimento
--- Cliente(telefono) ha 15 cifre (la lunghezza massima di un numero telefonico internazionalmente) + 2 cifre per il prefisso internazionale
-
 CREATE TABLE TemplateTask(
   nome varchar(50) NOT NULL,
   id_templ_task int NOT NULL AUTO_INCREMENT,
@@ -104,7 +98,7 @@ CREATE TABLE Ordine(
 );
 
 CREATE TABLE NotaOrdine(
-  -- creatore??? controllare lo schema ER
+                        -- creatore??? controllare lo schema ER
   testo varchar(500) NOT NULL,
   id_nota_ordine int NOT NULL AUTO_INCREMENT,
   id_ordine int NOT NULL,
@@ -131,7 +125,7 @@ CREATE TABLE Task(
 );
 
 CREATE TABLE NotaTask(
-  -- creatore??? controllare lo schema ER
+                        -- creatore??? controllare lo schema ER
   testo varchar(500) NOT NULL,
   id_nota_ordine int NOT NULL AUTO_INCREMENT,
   id_task int NOT NULL,
