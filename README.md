@@ -37,6 +37,7 @@ Autofficine di piccole / medie dimensioni che si occupano esclusivamente di auto
 ## Diagramma E/R
 
 ### Considerazioni aggiuntive:
+- `Ordine` non è direttamente collegato a `Shop` poichè lo `Shop` è ottenibile dal `Kanbak` a cui è assegnato
 - Ogni `Cliente` può essere associato anche a 0 `Ordine` (ad esempio nel caso in cui è appena stato creato)
 - Ogni `Ispezione` può essere associato anche 0 `Task` (ad esempio caso in cui è appena stata creata)
 - Ogni `TemplateIspezione` può essere associato anche 0 `Task` (ad esempio caso in cui è stata appena creata)
