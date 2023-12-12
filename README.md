@@ -44,7 +44,7 @@ Autofficine di piccole / medie dimensioni che si occupano esclusivamente di auto
 - Ogni `Admin` può essere associato anche a 0 `Shop` (ad esempio nel caso in cui l'admin è stato appena creato o un altro admin ha preso in gestione la sua officina) o a più di 1 `Shop` (nel caso in cui gestisca più officine)
 - Ogni `Dipendente` può essere associato anche a 0 `Shop` (ad esempio nel caso in cui sia stato appena creato, o appena licenziato) o a più di 1 `Shop` (nel caso in cui lavori per più officine)
 
-![E/R](res/Officina.drawio.png)
+![E/R](res/SchemaER.png)
 
 ## FAQ
 Q: Perchè non è prevista una gestione più accurata del magazzino, con ad esempio l'acquisto di pezzi, la loro posizione nel magazino, valore dei pezzi eccetera? E la funzionalità che permette ai dipendenti di timbrare all'entrata e all'uscita della giornata lavorativa?
