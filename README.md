@@ -1,15 +1,15 @@
 # Officina
-Gestionale per autofficine, gestione riparazioni (clone di Shopmonkey)
+Gestionale per autofficine, gestione ordini riparazioni (clone di Shopmonkey)
 
 ## Target del software
 Autofficine di piccole / medie dimensioni che si occupano esclusivamente di autoriparazioni e/o servizio gommista, con uno o più dipendenti, con o senza rifornitori ufficiali
 
 ## Problemi che il software si pone l'obiettivo di risolvere
 - Passare da salvare gli ordini di riparazione su carta a salvarli in digitale, in modo da archiviarli, ordinarli e modificarli digitalmente
-- Ottenere bilanci automatici sui guadagni di un dato periodo
+- Ottenere bilanci automatici sui guadagni di un dato periodo (**attenzione, non sono contenute informazioni sui soldi da nessuna parte!!!**)
 - Osservare la produttività dei singoli impiegati e dell'autofficina
-- Trovare ricambi al minor prezzo disponibile online
 - Gestire il magazzino dei ricambi
+- **aggiungere tutti gli altri problemi che il software risolve**
 
 ## Lista funzionalità
 - Creare un ordine (data, cliente, descrizione problema, stima iniziale)
@@ -19,13 +19,15 @@ Autofficine di piccole / medie dimensioni che si occupano esclusivamente di auto
 - Gestire il magazzino (aggiungere / rimuovere pezzi) e cercare online il prezzo per un pezzo
 - Privilegi associati ai singoli utenti:
   - Dipendente:
-    - Aggiungi / visualizza / aggiorna / rimuovi parti dal magazzino; kanban; clienti; ordini con note, servizi, ispezioni, note e task delle singole ispezioni correlate ad essi; veicoli, _Template ispezione_ e _Template task_
+    - Aggiungi / visualizza / aggiorna / rimuovi parti dal magazzino; kanban; clienti; ordini con note, servizi, ispezioni, note e task delle singole ispezioni correlate ad essi; veicoli; _Template ispezione_; _Template task_
+    - Visualizza lo storico delle officine in cui ha lavorato e degli ordini svolti in ciascuna officina
   - Admin:
     - Tutti i privilegi di Dipendente
     - Rinomina lo shop
     - Aggiungi / visualizza / aggiorna / rimuovi dipendenti dello shop
   - Cliente:
     - Visualizza lo storico degli ordini e quelli in corso con le relative informazioni (veicolo associato, commenti propri e dell'officina, appuntamenti...)
+- **aggiungere altre funzionalità**
 
 ### Considerazioni aggiuntive sulle funzionalità:
 - Il software offre la possibilità anche ai dipendenti, e non unicamente agli admin, di inserire numerosi dati anche sensibili e di estrema importanza (ad esempio i clienti) all'interno del database per una questione puramente produttiva, seppur vada a discapito della sicurezza: se ogni volta che il dipendente deve aggiungere al database un dato ha bisogno dell'intervento dell'admin, la produttività dell'officina scende e il software diventa d'intralcio più che di sostegno.
@@ -36,17 +38,17 @@ Autofficine di piccole / medie dimensioni che si occupano esclusivamente di auto
 
 ### Considerazioni aggiuntive:
 - Ogni `Cliente` può essere associato anche a 0 `Ordine` (ad esempio nel caso in cui è appena stato creato)
-- Ogni `Ispezione` può essere associato anche 0 `Job` (ad esempio caso in cui è appena stata creata)
-- Ogni `TemplateIspezione` può essere associato anche 0 `Job` (ad esempio caso in cui è stata appena creata)
-- Ogni `TemplateJob` può essere associato a 0 o più `TemplateIspezione` (0 ad esempio nel caso in cui è stato appena creato, più ad esempio nel caso in cui due ispezioni hanno entrambe "ispezione freni")
+- Ogni `Ispezione` può essere associato anche 0 `Task` (ad esempio caso in cui è appena stata creata)
+- Ogni `TemplateIspezione` può essere associato anche 0 `Task` (ad esempio caso in cui è stata appena creata)
+- Ogni `TemplateTask` può essere associato a 0 o più `TemplateIspezione` (0 ad esempio nel caso in cui è stato appena creato, più ad esempio nel caso in cui due ispezioni hanno entrambe "ispezione freni")
 - Ogni `Servizio` può essere associato anche a 0 `Parte` (ad esempio nel caso in cui il servizio sia una semplice calibrazione, come gonfiaggio gomme o calibrazione convergenza / campanatura ruote)
 - Ogni `Shop` può essere associato anche a 0 `Admin` (ad esempio nel caso in cui lo shop è stato appena creato, oppure si vuole cambiare admin dello shop)
-- Ogni `Admin` può essere associato anche a 0 `Shop` (ad esempio nel caso in cui l'admin è stato appena creato o un altro admin ha preso in gestione la sua officina) o a più di 1 `Shop` (nel caso in cui gestisca più officine)
-- Ogni `Dipendente` può essere associato anche a 0 `Shop` (ad esempio nel caso in cui sia stato appena creato, o appena licenziato) o a più di 1 `Shop` (nel caso in cui lavori per più officine)
+- Ogni `Admin` può essere associato anche a 0 o più `Shop` (0 ad esempio nel caso in cui l'admin è stato appena creato o un altro admin ha preso in gestione la sua officina, più nel caso in cui gestisca più officine)
+- Ogni `Dipendente` può essere associato anche a 0 o più `Shop` (ad esempio nel caso in cui sia stato appena creato, o appena licenziato, più nel caso in cui lavori per più officine)
 
 ![E/R](res/SchemaER.png)
 
 ## FAQ
 Q: Perchè non è prevista una gestione più accurata del magazzino, con ad esempio l'acquisto di pezzi, la loro posizione nel magazino, valore dei pezzi eccetera? E la funzionalità che permette ai dipendenti di timbrare all'entrata e all'uscita della giornata lavorativa?
 
-A: Questa funzione non è prevista a causa dell'elevata complessità che introdurrebbe all'interno del progetto.
+A: Queste funzioni non sono previste a causa dell'elevata complessità che introdurrebbe all'interno del progetto.
