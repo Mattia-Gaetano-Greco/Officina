@@ -40,6 +40,9 @@ Autofficine di piccole / medie dimensioni che si occupano esclusivamente di auto
 - Ogni `TemplateIspezione` può essere associato anche 0 `Job` (ad esempio caso in cui è stata appena creata)
 - Ogni `TemplateJob` può essere associato a 0 o più `TemplateIspezione` (0 ad esempio nel caso in cui è stato appena creato, più ad esempio nel caso in cui due ispezioni hanno entrambe "ispezione freni")
 - Ogni `Servizio` può essere associato anche a 0 `Parte` (ad esempio nel caso in cui il servizio sia una semplice calibrazione, come gonfiaggio gomme o calibrazione convergenza / campanatura ruote)
+- Ogni `Shop` può essere associato anche a 0 `Admin` (ad esempio nel caso in cui lo shop è stato appena creato, oppure si vuole cambiare admin dello shop)
+- Ogni `Admin` può essere associato anche a 0 `Shop` (ad esempio nel caso in cui l'admin è stato appena creato o un altro admin ha preso in gestione la sua officina) o a più di 1 `Shop` (nel caso in cui gestisca più officine)
+- Ogni `Dipendente` può essere associato anche a 0 `Shop` (ad esempio nel caso in cui sia stato appena creato, o appena licenziato) o a più di 1 `Shop` (nel caso in cui lavori per più officine)
 
 ![E/R](res/Officina.drawio.png)
 
