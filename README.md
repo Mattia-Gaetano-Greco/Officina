@@ -6,28 +6,24 @@ Autofficine di piccole / medie dimensioni che si occupano esclusivamente di auto
 
 ## Problemi che il software si pone l'obiettivo di risolvere
 - Passare da salvare gli ordini di riparazione su carta a salvarli in digitale, in modo da archiviarli, ordinarli e modificarli digitalmente
-- Ottenere bilanci automatici sui guadagni di un dato periodo (**attenzione, non sono contenute informazioni sui soldi da nessuna parte!!!**)
-- Osservare la produttività dei singoli impiegati e dell'autofficina
-- Gestire il magazzino dei ricambi
-- **aggiungere tutti gli altri problemi che il software risolve**
+- Ottenere bilanci sui guadagni di un dato periodo
+- Ottenere un elenco completo dei propri clienti, degli ordini commissionati da ciascuno e il veicolo interessato dall'ordine
+- Osservare la produttività dei singoli dipendenti e dell'autofficina
+- Suddividere gli ordini in servizi e ispezioni, con ogni ispezione divisibile in sottotask, e tenere traccia dei compiti già svolti e quelli da svolgere; tenere traccia del loro stato e del tempo impiegato per il loro completamento; 
+- Tenere traccia dei pezzi in magazzino con facilità
+- Permettere ai clienti di visualizzare lo storico dei propri ordini e gli ordini attivi in maniera facile e veloce
 
 ## Lista funzionalità
-- Creare un ordine (data, cliente, descrizione problema, stima iniziale)
-- Modifcare un ordine
-- Ottenere uno storico di ordini per cliente
-- Ottenere uno storico di ordini per veicolo
-- Gestire il magazzino (aggiungere / rimuovere pezzi) e cercare online il prezzo per un pezzo
-- Privilegi associati ai singoli utenti:
-  - Dipendente:
-    - Aggiungi / visualizza / aggiorna / rimuovi parti dal magazzino; kanban; clienti; ordini con note, servizi, ispezioni, note e task delle singole ispezioni correlate ad essi; veicoli; _Template ispezione_; _Template task_
-    - Visualizza lo storico delle officine in cui ha lavorato e degli ordini svolti in ciascuna officina
-  - Admin:
-    - Tutti i privilegi di Dipendente
-    - Rinomina lo shop
-    - Aggiungi / visualizza / aggiorna / rimuovi dipendenti dello shop
-  - Cliente:
-    - Visualizza lo storico degli ordini e quelli in corso con le relative informazioni (veicolo associato, commenti propri e dell'officina, appuntamenti...)
-- **aggiungere altre funzionalità**
+- Dipendente:
+  - Aggiungi / visualizza / aggiorna / rimuovi ordini con note, servizi, ispezioni, note e task delle singole ispezioni correlate ad essi; parti dal magazzino; kanban; clienti; veicoli; _Template ispezione_; _Template task_
+  - Visualizza lo storico delle officine in cui ha lavorato e degli ordini svolti in ciascuna officina
+  - Ottenere lo storico degli ordini di un cliente o di un veicolo
+- Admin:
+  - Tutti i privilegi di Dipendente
+  - Rinomina lo shop
+  - Aggiungi / visualizza / aggiorna / rimuovi dipendenti dello shop
+- Cliente:
+  - Visualizza lo storico degli ordini e quelli in corso con le relative informazioni (veicolo associato, commenti propri e dell'officina, appuntamenti...)
 
 ### Considerazioni aggiuntive sulle funzionalità:
 - Il software offre la possibilità anche ai dipendenti, e non unicamente agli admin, di inserire numerosi dati anche sensibili e di estrema importanza (ad esempio i clienti) all'interno del database per una questione puramente produttiva, seppur vada a discapito della sicurezza: se ogni volta che il dipendente deve aggiungere al database un dato ha bisogno dell'intervento dell'admin, la produttività dell'officina scende e il software diventa d'intralcio più che di sostegno.
