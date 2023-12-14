@@ -70,7 +70,7 @@ CREATE TABLE Dipendente(
   email varchar(100) NOT NULL,
   numero_telefono varchar(17) NOT NULL,
   password varchar(255) NOT NULL,
-  id_dipendente int NOT NULL AUTO_INCREMENT, -- modificare nell'E/R da id_utente a id_dipendente
+  id_dipendente int NOT NULL AUTO_INCREMENT,
   id_shop int,
   PRIMARY KEY(id_dipendente),
   FOREIGN KEY (id_shop) REFERENCES Shop(id_shop)
@@ -84,6 +84,8 @@ CREATE TABLE Ordine(
   titolo varchar(100) NOT NULL,
   autorizzato bool NOT NULL DEFAULT 0,
   raccomandazione varchar(500),
+  pagamento_effettuato bool NOT NULL DEFAULT 0,
+  ricavo float,
   id_ordine int NOT NULL AUTO_INCREMENT,
   id_kanban int NOT NULL,
   id_cliente int NOT NULL,
@@ -98,7 +100,6 @@ CREATE TABLE Ordine(
 );
 
 CREATE TABLE NotaOrdine(
-                        -- creatore??? controllare lo schema ER
   testo varchar(500) NOT NULL,
   id_nota_ordine int NOT NULL AUTO_INCREMENT,
   id_ordine int NOT NULL,
@@ -125,7 +126,6 @@ CREATE TABLE Task(
 );
 
 CREATE TABLE NotaTask(
-                        -- creatore??? controllare lo schema ER
   testo varchar(500) NOT NULL,
   id_nota_ordine int NOT NULL AUTO_INCREMENT,
   id_task int NOT NULL,
@@ -149,6 +149,7 @@ CREATE TABLE Parte(
   nome varchar(30) NOT NULL,
   stato enum('scarso', 'medio', 'buono') NOT NULL,
   descrizione varchar(200),
+  costo_acquisto float NOT NULL DEFAULT 0.0,
   id_parte varchar(20) NOT NULL,
   id_shop int NOT NULL,
   id_servizio int,
