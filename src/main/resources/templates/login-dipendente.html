@@ -6,7 +6,7 @@
     </head>
     <body>
 
-        <form th:action="@{/check-login-dipendente}" th:object="${dipendente}" method="post">
+        <form th:action="@{/profilo-dipendente}" th:object="${dipendente}" method="post">
 
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" th:field="*{username}" placeholder="string"><br>  <!-- th:field="*{username}"-->

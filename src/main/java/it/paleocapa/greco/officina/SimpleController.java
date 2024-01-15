@@ -10,18 +10,22 @@ public class SimpleController {
 
     @RequestMapping("/")
     public String homePage(Model model) {
-        return loginPage(model);
+        return loginDipendente(model);
     }
 
     @RequestMapping(value = "/login-dipendente", method = RequestMethod.GET)
-    public String loginPage(Model model) {
+    public String loginDipendente(Model model) {
         model.addAttribute("dipendente", new Dipendente());
         return "login-dipendente";
     }
 
-    @RequestMapping(value = "/check-login-dipendente", method = RequestMethod.POST)
-    public String loginPost(@ModelAttribute("dipendente") Dipendente dipendente) {
+    @RequestMapping(value = "/profilo-dipendente", method = RequestMethod.POST)
+    public String checkLoginDipendente(@ModelAttribute("dipendente") Dipendente dipendente) {
         return "profilo-dipendente";
+        // controlla se il dipendente è presente nel database
+        // se è presente, ritorna "profilo-dipendente"
+        // se non è presente, ritorna "login-dipendente"
+        //@Query(value = "SELECT * FROM Dipendente WHERE username = '"+ dipendente.username +"' AND password = '"+ dipendente.password +"'", nativeQuery = true);
     }
     
 }
