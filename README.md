@@ -48,7 +48,7 @@ Autofficine di piccole / medie dimensioni che si occupano esclusivamente di auto
 ## Schema relazionale
 **TemplateTask**(nome, **id_templ_task**)
 
-**Admin**(nome, cognome, password **id_admin**)
+**Admin**(nome, cognome, password, **id_admin**)
 
 **Shop**(nome, **id_shop**, **Admin_id_admin**)
 
@@ -64,7 +64,7 @@ Autofficine di piccole / medie dimensioni che si occupano esclusivamente di auto
 
 **Dipendente**(nome, cognome, email, numero_telefono, password, **id_dipendente**, **Shop_id_shop**);
 
-**Ordine**(appuntamento_fissato, commento_cliente, data_creazione, ispezione_completata, titolo, autorizzato, raccomandazione, pagamento_effettuato, ricavo,**id_ordine**, **Kanban_id_kanban**, **Cliente_id_cliente**, **Dipendente_id_dipendente**, **Veicolo_targa**, **Veicolo_num_telaio**)
+**Ordine**(appuntamento_fissato, commento_cliente, data_creazione, data_scadenza, titolo, autorizzato, raccomandazione, pagamento_effettuato, ricavo,**id_ordine**, **Kanban_id_kanban**, **Cliente_id_cliente**, **Dipendente_id_dipendente**, **Veicolo_targa**, **Veicolo_num_telaio**)
 
 **NotaOrdine**(testo, **id_nota_ordine**, **Ordine_id_ordine**)
 

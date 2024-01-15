@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-12-14T09:23:29.856Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="1rU-9qoxhgJ6x4jZdDZd" version="22.1.8" type="device">
+<mxfile host="app.diagrams.net" modified="2024-01-15T11:19:40.836Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="BnszCc7fIgwi_WpZxHD1" version="22.1.18" type="device">
   <diagram name="Page-1" id="WFpe2bnqsvH8dOUI9pfY">
-    <mxGraphModel dx="1687" dy="920" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="749" dy="863" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -208,7 +208,7 @@
         <mxCell id="5VXQHmCMqtN81jwy3sj8-92" value="È suddiviso in" style="rhombus;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#24afaf;fontFamily=Verdana;fontSize=17;fontColor=#4B4B4B;" parent="1" vertex="1">
           <mxGeometry x="546" y="295" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="5VXQHmCMqtN81jwy3sj8-93" value="appuntamento_fissato&lt;br style=&quot;font-size: 11px;&quot;&gt;commento_cliente&lt;br style=&quot;font-size: 11px;&quot;&gt;data_creazione&lt;br style=&quot;font-size: 11px;&quot;&gt;ispezione_completata&lt;br style=&quot;font-size: 11px;&quot;&gt;titolo&lt;br style=&quot;font-size: 11px;&quot;&gt;autorizzato&lt;br style=&quot;font-size: 11px;&quot;&gt;raccomandazione&lt;br&gt;ricavo&lt;br&gt;pagamento_effettuato&lt;br style=&quot;font-size: 11px;&quot;&gt;&lt;u style=&quot;font-size: 11px;&quot;&gt;id_ordine&lt;/u&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontFamily=Helvetica;fontColor=default;" parent="1" vertex="1">
+        <mxCell id="5VXQHmCMqtN81jwy3sj8-93" value="appuntamento_fissato&lt;br style=&quot;font-size: 11px;&quot;&gt;commento_cliente&lt;br style=&quot;font-size: 11px;&quot;&gt;data_creazione&lt;br style=&quot;font-size: 11px;&quot;&gt;data_scadenza&lt;br style=&quot;font-size: 11px;&quot;&gt;titolo&lt;br style=&quot;font-size: 11px;&quot;&gt;autorizzato&lt;br style=&quot;font-size: 11px;&quot;&gt;raccomandazione&lt;br&gt;ricavo&lt;br&gt;pagamento_effettuato&lt;br style=&quot;font-size: 11px;&quot;&gt;&lt;u style=&quot;font-size: 11px;&quot;&gt;id_ordine&lt;/u&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontFamily=Helvetica;fontColor=default;" parent="1" vertex="1">
           <mxGeometry x="421" y="440" width="130" height="150" as="geometry" />
         </mxCell>
         <mxCell id="5VXQHmCMqtN81jwy3sj8-94" value="modello&lt;br style=&quot;font-size: 11px;&quot;&gt;marca&lt;br style=&quot;font-size: 11px;&quot;&gt;anno_costruzione&lt;br style=&quot;font-size: 11px;&quot;&gt;&lt;u style=&quot;font-size: 11px;&quot;&gt;targa&lt;br style=&quot;font-size: 11px;&quot;&gt;num_telaio&lt;/u&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontFamily=Helvetica;fontColor=default;" parent="1" vertex="1">

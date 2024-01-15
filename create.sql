@@ -80,7 +80,7 @@ CREATE TABLE Ordine(
   appuntamento_fissato DATETIME,
   commento_cliente varchar(500),
   data_creazione DATETIME,
-  ispezione_completata bool NOT NULL DEFAULT 0,
+  data_scadenza DATETIME,
   titolo varchar(100) NOT NULL,
   autorizzato bool NOT NULL DEFAULT 0,
   raccomandazione varchar(500),
