@@ -45,6 +45,24 @@ Autofficine di piccole / medie dimensioni che si occupano esclusivamente di auto
 
 ![E/R](resources/SchemaER.png)
 
+## Schema relazionale
+**TemplateTask**(nome, <u>id_templ_task</u>)
+**Admin**(nome, cognome, password <u>id_admin</u>)
+**Shop**(nome, <u>id_shop</u>, <u>Admin_id_admin</u>)
+**TemplateIspezione**(nome, <u>Shop_id_shop</u>, <u>id_templ_ispezione</u>)
+**TemplateTask_TemplateIspezione**(<u>TemplateIspezione_id_templ_ispezione</u>, <u>TemplateTask_id_templ_task</u>)
+**Kanban**(nome, posizione, <u>id_kanban</u>, <u>Shop_id_shop</u>)
+**Cliente**(telefono, nome, cognome, email, password, <u>id_cliente</u>)
+**Veicolo**(modello, marca, anno_costruzione, <u>targa</u>, <u>num_telaio</u>)
+**Dipendente**(nome, cognome, email, numero_telefono, password, <u>id_dipendente</u>, <u>Shop_id_shop</u>);
+**Ordine**(appuntamento_fissato, commento_cliente, data_creazione, ispezione_completata, titolo, autorizzato, raccomandazione, pagamento_effettuato, ricavo,<u>id_ordine</u>, <u>Kanban_id_kanban</u>, <u>Cliente_id_cliente</u>, <u>Dipendente_id_dipendente</u>, <u>Veicolo_targa</u>, <u>Veicolo_num_telaio</u>)
+**NotaOrdine**(testo, <u>id_nota_ordine</u>, <u>Ordine_id_ordine</u>)
+**Ispezione**(nome, <u>id_ispezione</u>, <u>Ordine_id_ordine</u>)
+**Task**(nome, stato_pezzo, completato, <u>Task_id_task</u>, <u>Ispezione_id_ispezione</u>)
+**NotaTask**(testo, <u>id_nota_task</u>, <u>Task_id_task</u>)
+**Servizio**(nome, status, ore_stimate, ore_impiegate, completato, <u>id_servizio</u>, <u>Ordine_id_ordine</u>)
+**Parte**(nome, stato, descrizione, costo_acquisto, <u>id_parte</u>, <u>Shop_id_shop</u>, <u>Servizio_id_servizio</u>)
+
 ## Come eseguire il programma
 Clonare la repository sulla propria macchina, ed eseguire il comando `./mvnw spring-boot:run` (è richiesta la presenza di una JDK sulla propria macchina)
 
