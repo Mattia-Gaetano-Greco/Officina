@@ -1,0 +1,3 @@
+1. Far funzionare la registrazione (con invio dati al database, controllare se vengono salvati accedendo ad h2 console o 'SELECT * FROM DIPENDENTI')
+2. Far funzionare il login (controllo se utente esiste sul database, se esiste lo mando nella pagina del profilo dove gli faccio vedere tutti i dati,
+    altrimenti lo rimando alla pagina del login e faccio uscire l'errore "credenziali errate")
