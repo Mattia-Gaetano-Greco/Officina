@@ -8,8 +8,8 @@ import java.io.Serializable;
 public class Admin implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_cliente;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id_cliente;
 
     private String nome;
 
@@ -21,13 +21,13 @@ public class Admin implements Serializable {
 
     private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "id_shop", referencedColumnName = "id_shop", insertable = false, updatable = false)
-    private Shop shop;
+    //@ManyToOne
+    //@JoinColumn(name = "id_shop", referencedColumnName = "id_shop", insertable = false, updatable = false)
+    //private Shop shop;
 
     public Admin() {}
 
-    public Admin(String nome, String cognome, String email, String numero_telefono, String password, Shop shop) {
+    /*public Admin(String nome, String cognome, String email, String numero_telefono, String password, Shop shop) {
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
@@ -36,7 +36,7 @@ public class Admin implements Serializable {
         this.shop = shop;
     }
 
-    public Admin(Integer id, String nome, String cognome, String email, String numero_telefono, String password, Shop shop) {
+    public Admin(Long id, String nome, String cognome, String email, String numero_telefono, String password, Shop shop) {
         this.id_cliente = id;
         this.nome = nome;
         this.cognome = cognome;
@@ -44,9 +44,9 @@ public class Admin implements Serializable {
         this.numero_telefono = numero_telefono;
         this.password = password;
         this.shop = shop;
-    }
+    }*/
 
-    public Admin(Integer id, String nome, String cognome, String email, String numero_telefono, String password) {
+    public Admin(Long id, String nome, String cognome, String email, String numero_telefono, String password) {
         this.id_cliente = id;
         this.nome = nome;
         this.cognome = cognome;
@@ -63,11 +63,11 @@ public class Admin implements Serializable {
         this.password = password;
     }
 
-    public Integer getId_utente() {
+    public Long getId_utente() {
         return id_cliente;
     }
 
-    public void setId_utente(Integer id_utente) {
+    public void setId_utente(Long id_utente) {
         this.id_cliente = id_utente;
     }
 
@@ -111,12 +111,13 @@ public class Admin implements Serializable {
         this.password = password;
     }
 
+    /* 
     public Shop getShop() {
         return shop;
     }
 
     public void setShop(Shop shop) {
         this.shop = shop;
-    }
+    }*/
 
 }

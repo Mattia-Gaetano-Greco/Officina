@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import it.paleocapa.greco.officina.service.AdminUtenteDetailsService;
+import it.paleocapa.greco.officina.service.AdminDetailsService;
  
 @Configuration
 @Order(1)
@@ -16,7 +16,7 @@ public class AdminSecurityConfig {
      
     @Bean
     public UserDetailsService userDetailsService() {
-        return new AdminUtenteDetailsService();
+        return new AdminDetailsService();
     }
      
     @Bean

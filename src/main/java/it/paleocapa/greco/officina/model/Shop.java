@@ -23,7 +23,7 @@ public class Shop implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "id_admin", referencedColumnName = "id_admin", insertable = false, updatable = false)
-    private Utente admin;
+    private Admin admin;
 
     public Shop() {}
 
@@ -51,11 +51,11 @@ public class Shop implements Serializable {
         this.id_admin = id_admin;
     }
 
-    public Utente getAdmin() {
+    public Admin getAdmin() {
         return admin;
     }
 
-    public void setAdmin(Utente admin) {
+    public void setAdmin(Admin admin) {
         this.admin = admin;
     }
 

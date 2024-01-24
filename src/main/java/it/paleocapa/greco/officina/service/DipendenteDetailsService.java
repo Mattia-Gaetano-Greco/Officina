@@ -5,16 +5,16 @@ import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
 
 import it.paleocapa.greco.officina.DipendenteDetails;
-import it.paleocapa.greco.officina.model.Utente;
-import it.paleocapa.greco.officina.repository.UtenteRepository;
+import it.paleocapa.greco.officina.model.Dipendente;
+import it.paleocapa.greco.officina.repository.DipendenteRepository;
  
 @Service
-public class DipendenteUtenteDetailsService implements UserDetailsService {
-    @Autowired private UtenteRepository repo;
+public class DipendenteDetailsService implements UserDetailsService {
+    @Autowired private DipendenteRepository repo;
  
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Utente user = repo.findByEmail(email);
+        Dipendente user = repo.findByEmail(email);
         if (user == null) {
             throw new UsernameNotFoundException("No user found with the given email");
         }

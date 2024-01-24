@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import it.paleocapa.greco.officina.service.DipendenteUtenteDetailsService;
+import it.paleocapa.greco.officina.service.DipendenteDetailsService;
  
 @Configuration
 @Order(2)
@@ -16,7 +16,7 @@ public class DipendenteSecurityConfig {
      
     @Bean
     public UserDetailsService userDetailsService2() {
-        return new DipendenteUtenteDetailsService();
+        return new DipendenteDetailsService();
     }
      
     @Bean

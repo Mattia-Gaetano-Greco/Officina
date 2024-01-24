@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -52,11 +53,11 @@ public class Ordine implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente", insertable = false, updatable = false)
-    private Utente cliente;
+    private Cliente cliente;
 
     @ManyToOne
     @JoinColumn(name = "id_dipendente", referencedColumnName = "id_dipendente", insertable = false, updatable = false)
-    private Utente dipendente;
+    private Dipendente dipendente;
 
     @ManyToOne
     @JoinColumn(name = "targa, num_telaio", referencedColumnName = "targa, num_telaio", insertable = false, updatable = false) // TODO: ricontrollare che sia corretto
@@ -192,19 +193,19 @@ public class Ordine implements Serializable {
         this.kanban = kanban;
     }
 
-    public Utente getCliente() {
+    public Cliente getCliente() {
         return cliente;
     }
 
-    public void setCliente(Utente cliente) {
+    public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
 
-    public Utente getDipendente() {
+    public Dipendente getDipendente() {
         return dipendente;
     }
 
-    public void setDipendente(Utente dipendente) {
+    public void setDipendente(Dipendente dipendente) {
         this.dipendente = dipendente;
     }
 

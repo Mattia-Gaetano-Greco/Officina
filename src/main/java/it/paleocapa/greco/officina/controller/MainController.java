@@ -4,8 +4,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import it.paleocapa.greco.officina.model.Utente;
-
 @Controller
 public class MainController {
 
@@ -19,7 +17,7 @@ public class MainController {
     @RequestMapping(value = "/dipendente/login", method = RequestMethod.GET)
     public String loginDipendente(Model model) {
         
-        model.addAttribute("dipendente", new Utente());
+        //model.addAttribute("dipendente", new Utente());
         return "dipendente/login";
     }
 
