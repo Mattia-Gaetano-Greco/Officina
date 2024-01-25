@@ -44,6 +44,4 @@ public class MainController {
         return "admin/home";
     }
     
-    
-    
 }

@@ -1,9 +1,6 @@
 package it.paleocapa.greco.officina.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.Table;
+import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity

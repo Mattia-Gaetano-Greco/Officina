@@ -1,6 +1,6 @@
 package it.paleocapa.greco.officina.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -9,7 +9,7 @@ public class Admin implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id_cliente;
+    private Long id_admin;
 
     private String nome;
 
@@ -37,7 +37,7 @@ public class Admin implements Serializable {
     }
 
     public Admin(Long id, String nome, String cognome, String email, String numero_telefono, String password, Shop shop) {
-        this.id_cliente = id;
+        this.id_admin = id;
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
@@ -47,7 +47,7 @@ public class Admin implements Serializable {
     }*/
 
     public Admin(Long id, String nome, String cognome, String email, String numero_telefono, String password) {
-        this.id_cliente = id;
+        this.id_admin = id;
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
@@ -64,11 +64,11 @@ public class Admin implements Serializable {
     }
 
     public Long getId_utente() {
-        return id_cliente;
+        return id_admin;
     }
 
     public void setId_utente(Long id_utente) {
-        this.id_cliente = id_utente;
+        this.id_admin = id_utente;
     }
 
     public String getNome() {

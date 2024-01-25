@@ -1,12 +1,6 @@
 package it.paleocapa.greco.officina.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -60,7 +54,10 @@ public class Ordine implements Serializable {
     private Dipendente dipendente;
 
     @ManyToOne
-    @JoinColumn(name = "targa, num_telaio", referencedColumnName = "targa, num_telaio", insertable = false, updatable = false) // TODO: ricontrollare che sia corretto
+    @JoinColumns({
+        @JoinColumn(name = "targa", referencedColumnName = "targa", insertable = false, updatable = false),
+        @JoinColumn(name = "num_telaio", referencedColumnName = "num_telaio", insertable = false, updatable = false)
+    })
     private Veicolo veicolo;
 
     public Ordine() {}

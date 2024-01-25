@@ -35,19 +35,22 @@ public class AdminSecurityConfig {
 
     @Bean
 	public SecurityFilterChain securityFilterChainAdmin(HttpSecurity http) throws Exception {
-        http.authenticationProvider(authenticationProvider1());
+        DaoAuthenticationProvider authenticationProvider = authenticationProvider1();
+        System.out.println(authenticationProvider);
+        http.authenticationProvider(authenticationProvider);
         
-        http.authorizeHttpRequests((requests) -> requests.requestMatchers("/").permitAll());
+        //http.authorizeHttpRequests((requests) -> requests.requestMatchers("/").permitAll());
 
 		http
 			.authorizeHttpRequests((requests) -> requests
-				.requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/").permitAll()
+				.requestMatchers("/admin/**").authenticated()
 			)
 			.formLogin((form) -> form
                 .loginPage("/admin/login")
-                .usernameParameter("email")
-                .loginProcessingUrl("/admin/login")
-                .defaultSuccessUrl("/admin/home")
+                    .usernameParameter("email")
+                    .loginProcessingUrl("/admin/login")
+                    .defaultSuccessUrl("/admin/home")
                 .permitAll()
 			)
 			.logout((logout) -> logout

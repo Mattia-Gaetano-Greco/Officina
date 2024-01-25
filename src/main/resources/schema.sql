@@ -7,6 +7,8 @@ CREATE TABLE IF NOT EXISTS TemplateTask(
 CREATE TABLE IF NOT EXISTS Admin(
   nome varchar(50) NOT NULL,
   cognome varchar(50) NOT NULL,
+  email varchar(100) NOT NULL,
+  numero_telefono varchar(17) NOT NULL,
   password varchar(255) NOT NULL,
   id_admin int NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (id_admin)
@@ -46,10 +48,10 @@ CREATE TABLE IF NOT EXISTS Kanban(
 );
 
 CREATE TABLE IF NOT EXISTS Cliente(
-  telefono varchar(17) NOT NULL,
   nome varchar(50) NOT NULL,
   cognome varchar(50) NOT NULL,
   email varchar(100) NOT NULL,
+  numero_telefono varchar(17) NOT NULL,
   password varchar(255) NOT NULL,
   id_cliente int NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (id_cliente)
