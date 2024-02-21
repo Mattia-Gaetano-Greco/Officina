@@ -1,4 +1,5 @@
 package it.paleocapa.greco.officina.controller;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,7 @@ public class MainController {
     }
 
     @RequestMapping(value = "/admin/login", method = RequestMethod.GET)
-    public String loginCliente(Model model) {
+    public String loginAdmin(Model model) {
         return "admin/login";
     }
 
@@ -34,6 +35,7 @@ public class MainController {
     }*/
     @RequestMapping(value="/dipendente/home", method=RequestMethod.GET)
     public String homeDipendente(Model model) {
+        model.addAttribute("principal", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return "dipendente/home";
     }
 
@@ -41,6 +43,7 @@ public class MainController {
 
     @RequestMapping(value="/admin/home", method=RequestMethod.GET)
     public String homeAdmin(Model model) {
+        model.addAttribute("principal", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return "admin/home";
     }
     

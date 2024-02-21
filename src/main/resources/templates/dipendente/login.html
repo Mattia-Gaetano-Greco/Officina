@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>User Login - CodeJava.net</title>
+<title>Login Dipendente</title>
 </head>
 <body>
 <form th:action="@{/dipendente/login}" method="post" style="max-width: 400px; margin: 0 auto;">
-    <h2>Dipendente Login - CodeJava.net</h2>
+    <h2>Login Dipendente</h2>
      
     <div th:if="${param.error}">
         <h4 style="color: red">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</h4>

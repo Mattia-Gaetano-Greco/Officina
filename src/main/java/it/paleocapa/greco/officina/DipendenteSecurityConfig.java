@@ -35,16 +35,19 @@ public class DipendenteSecurityConfig {
  
     @Bean
 	public SecurityFilterChain securityFilterChainDipendente(HttpSecurity http) throws Exception {
+        DaoAuthenticationProvider authenticationProvider = authenticationProvider2();
+        System.out.println(authenticationProvider);
+        http.authenticationProvider(authenticationProvider);
 
 		http
 			.authorizeHttpRequests((requests) -> requests
-				.requestMatchers("/dipendente/**").hasRole("DIPENDENTE")
+				.requestMatchers("/dipendente/**").authenticated()
 			)
 			.formLogin((form) -> form
                 .loginPage("/dipendente/login")
-                .usernameParameter("email")
-                .loginProcessingUrl("/dipendente/login")
-                .defaultSuccessUrl("/dipendente/home")
+                    .usernameParameter("email")
+                    .loginProcessingUrl("/dipendente/login")
+                    .defaultSuccessUrl("/dipendente/home")
                 .permitAll()
 			)
 			.logout((logout) -> logout

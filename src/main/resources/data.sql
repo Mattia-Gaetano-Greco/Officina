@@ -16,10 +16,7 @@
 
 INSERT INTO Admin(id_admin, nome, cognome, email, numero_telefono, password) VALUES (14234, 'david', '123', 'david@gmail.com', '2131313111', '$2a$10$MYAHu0zJni9Y4SZGUN48zuI9/uiiZakDUQenpTx5AdavbDkufgKWW'); -- john2020
 INSERT INTO Admin(id_admin, nome, cognome, email, numero_telefono, password) VALUES (513251, 'john', '2020' ,'john@yahoo.com', '1234567890', '$2a$10$9pmuW3N6WzN/qApVA09c5.4ovhf0426f.TF2GJPg2Qsa0lBL67x4S'); -- david123
---            Dipendente customer1 = new Dipendente("nam", "codejava", "nam@codejava.net", "1234567654", "nam2022");
---            Dipendente customer2 = new Dipendente("ravi", "2121", "ravi@gmail.com", "1234547890", "ravi2121");
 
-/*
-$2a$10$5lGfg3fC3ZMP8uJ35/fJiOUz2aaPZ.ATmCkwYu3tu2RG.Wm2O/RUK
-$2a$10$RlQNI8Gu2f85HdAavVdFEO/C./NUDEaUPzoq40bSLC9cOUjCst9p2
-*/
+-- INSERT INTO Dipendente(id_dipendente, nome, cognome, email, numero_telefono, password, id_shop) VALUES (1243, 'nam', 'codejava', 'nam@codejava.net', '1234567654', '$2a$10$5lGfg3fC3ZMP8uJ35/fJiOUz2aaPZ.ATmCkwYu3tu2RG.Wm2O/RUK') -- nam2022
+                                                                                        -- MANCA ID SHOP!
+-- INSERT INTO Dipendente(id_dipendente, nome, cognome, email, numero_telefono, password, id_shop) VALUES (1244, 'ravi', '2121', 'ravi@gmail.com', '1234547890', '$2a$10$RlQNI8Gu2f85HdAavVdFEO/C./NUDEaUPzoq40bSLC9cOUjCst9p2') -- ravi2121
