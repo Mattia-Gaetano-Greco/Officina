@@ -35,6 +35,7 @@ Autofficine di piccole / medie dimensioni che si occupano esclusivamente di auto
 ### Considerazioni aggiuntive:
 - `Ordine` non è direttamente collegato a `Shop` poichè lo `Shop` è ottenibile dal `Kanbak` a cui è assegnato
 - Ogni `Cliente` può essere associato anche a 0 `Ordine` (ad esempio nel caso in cui è appena stato creato)
+- Ogni `Cliente` può effettuare ordini con più `Shop`, per questo motivo non c'è alcuna relazione tra le due entità
 - Ogni `Ispezione` può essere associato anche 0 `Task` (ad esempio caso in cui è appena stata creata)
 - Ogni `TemplateIspezione` può essere associato anche 0 `Task` (ad esempio caso in cui è stata appena creata)
 - Ogni `TemplateTask` può essere associato a 0 o più `TemplateIspezione` (0 ad esempio nel caso in cui è stato appena creato, più ad esempio nel caso in cui due ispezioni hanno entrambe "ispezione freni")
@@ -48,7 +49,7 @@ Autofficine di piccole / medie dimensioni che si occupano esclusivamente di auto
 ## Schema relazionale
 **TemplateTask**(nome, **id_templ_task**)
 
-**Admin**(nome, cognome, password, **id_admin**)
+**Admin**(nome, cognome, password, email, numero_telefono, **id_admin**)
 
 **Shop**(nome, **id_shop**, **Admin_id_admin**)
 

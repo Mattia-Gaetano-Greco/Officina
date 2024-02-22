@@ -21,30 +21,7 @@ public class Admin implements Serializable {
 
     private String password;
 
-    //@ManyToOne
-    //@JoinColumn(name = "id_shop", referencedColumnName = "id_shop", insertable = false, updatable = false)
-    //private Shop shop;
-
     public Admin() {}
-
-    /*public Admin(String nome, String cognome, String email, String numero_telefono, String password, Shop shop) {
-        this.nome = nome;
-        this.cognome = cognome;
-        this.email = email;
-        this.numero_telefono = numero_telefono;
-        this.password = password;
-        this.shop = shop;
-    }
-
-    public Admin(Long id, String nome, String cognome, String email, String numero_telefono, String password, Shop shop) {
-        this.id_admin = id;
-        this.nome = nome;
-        this.cognome = cognome;
-        this.email = email;
-        this.numero_telefono = numero_telefono;
-        this.password = password;
-        this.shop = shop;
-    }*/
 
     public Admin(Long id, String nome, String cognome, String email, String numero_telefono, String password) {
         this.id_admin = id;
