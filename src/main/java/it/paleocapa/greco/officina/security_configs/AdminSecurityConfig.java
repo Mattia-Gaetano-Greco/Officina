@@ -1,4 +1,4 @@
-package it.paleocapa.greco.officina;
+package it.paleocapa.greco.officina.security_configs;
  
 import org.springframework.context.annotation.*;
 import org.springframework.core.annotation.Order;
@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+//import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import it.paleocapa.greco.officina.service.AdminDetailsService;
  
@@ -33,6 +34,20 @@ public class AdminSecurityConfig {
         return authProvider;
     }
 
+    /* 
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
+                )
+                .headers(headers -> headers.frameOptions().disable())
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")));
+        return http.build();
+    }
+    */
+
     @Bean
 	public SecurityFilterChain securityFilterChainAdmin(HttpSecurity http) throws Exception {
         DaoAuthenticationProvider authenticationProvider = authenticationProvider1();
@@ -41,6 +56,8 @@ public class AdminSecurityConfig {
 		http
 			.authorizeHttpRequests((requests) -> requests
                 .requestMatchers("/").permitAll()
+                .requestMatchers("/**").permitAll()
+                .requestMatchers("/dipendente/**").permitAll()
 				.requestMatchers("/admin/**").authenticated()
 			)
 			.formLogin((form) ->
@@ -58,6 +75,5 @@ public class AdminSecurityConfig {
 
 		return http.build();
 	}
-     
      
 }

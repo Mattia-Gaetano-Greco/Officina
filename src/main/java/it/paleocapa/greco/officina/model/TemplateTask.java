@@ -4,10 +4,8 @@ import java.io.Serializable;
 import java.util.Set;
 import jakarta.persistence.*;
 
-import jakarta.persistence.ManyToMany;
-
 @Entity
-@Table(name = "TemplateTask")
+@Table(name = "Template_Task")
 public class TemplateTask implements Serializable {
 
     @Id
@@ -15,6 +13,9 @@ public class TemplateTask implements Serializable {
     private int id_templ_task;
 
     @ManyToMany
+    @JoinTable(name="Template_Task_Template_Ispezione",
+            joinColumns = @JoinColumn(name = "id_templ_task"),
+            inverseJoinColumns = @JoinColumn(name = "id_templ_ispezione"))
     Set<TemplateIspezione> templateIspezioni;
 
     private String nome;

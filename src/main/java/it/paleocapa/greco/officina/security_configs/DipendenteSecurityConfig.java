@@ -1,4 +1,4 @@
-package it.paleocapa.greco.officina;
+package it.paleocapa.greco.officina.security_configs;
 
 import org.springframework.context.annotation.*;
 import org.springframework.core.annotation.Order;
@@ -9,7 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import it.paleocapa.greco.officina.service.DipendenteDetailsService;
- 
+
 @Configuration
 @Order(2)
 public class DipendenteSecurityConfig {
@@ -36,7 +36,6 @@ public class DipendenteSecurityConfig {
     @Bean
 	public SecurityFilterChain securityFilterChainDipendente(HttpSecurity http) throws Exception {
         DaoAuthenticationProvider authenticationProvider = authenticationProvider2();
-        System.out.println(authenticationProvider);
         http.authenticationProvider(authenticationProvider);
 
 		http

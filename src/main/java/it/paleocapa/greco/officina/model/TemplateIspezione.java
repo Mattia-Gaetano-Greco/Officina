@@ -6,7 +6,7 @@ import java.util.Set;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "TemplateIspezione")
+@Table(name = "Template_Ispezione")
 public class TemplateIspezione implements Serializable {
 
     @Id
@@ -14,6 +14,9 @@ public class TemplateIspezione implements Serializable {
     private int id_templ_ispezione;
 
     @ManyToMany
+    @JoinTable(name="Template_Task_Template_Ispezione",
+            joinColumns = @JoinColumn(name = "id_templ_ispezione"),
+            inverseJoinColumns = @JoinColumn(name = "id_templ_task"))
     Set<TemplateTask> templateTasks;
 
     private String nome;

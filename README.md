@@ -82,7 +82,9 @@ Autofficine di piccole / medie dimensioni che si occupano esclusivamente di auto
 ## Come eseguire il programma
 Clonare la repository sulla propria macchina, ed eseguire il comando `./mvnw spring-boot:run` (è richiesta la presenza di una JDK sulla propria macchina)
 
-Come accedere ad H2 Console (per visualizzare / modificare il database): https://www.baeldung.com/spring-boot-h2-database (in `JDBC Url` inserire il valore dell'attributo `spring.datasource.url` contenuto in `main/resources/application.properties`)
+Come accedere ad H2 Console (per visualizzare / modificare il database): 
+1. Modificare il metodo `SecurityFilterChain securityFilterChain(HttpSecurity http)` della classe `AdminSecurityConfig` seguendo questa guida: https://stackoverflow.com/a/75406079
+2. Seguire la procedura descritta in questo articolo, inserendo nel campo `JDBC Url` il valore dell'attributo `spring.datasource.url` contenuto in `main/resources/application.properties`: https://www.baeldung.com/spring-boot-h2-database
 
 ## FAQ
 Q: Perchè non è prevista una gestione più accurata del magazzino, con ad esempio l'acquisto di pezzi, la loro posizione nel magazino, valore dei pezzi eccetera? E la funzionalità che permette ai dipendenti di timbrare all'entrata e all'uscita della giornata lavorativa?

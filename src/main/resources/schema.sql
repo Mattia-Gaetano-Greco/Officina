@@ -1,4 +1,22 @@
-CREATE TABLE IF NOT EXISTS TemplateTask(
+--/*
+DROP TABLE IF EXISTS Parte;
+DROP TABLE IF EXISTS Servizio;
+DROP TABLE IF EXISTS Nota_Task;
+DROP TABLE IF EXISTS Task;
+DROP TABLE IF EXISTS Ispezione;
+DROP TABLE IF EXISTS Nota_Ordine;
+DROP TABLE IF EXISTS Ordine;
+DROP TABLE IF EXISTS Dipendente;
+DROP TABLE IF EXISTS Veicolo;
+DROP TABLE IF EXISTS Cliente;
+DROP TABLE IF EXISTS Kanban;
+DROP TABLE IF EXISTS Template_Task_Template_Ispezione;
+DROP TABLE IF EXISTS Template_Ispezione;
+DROP TABLE IF EXISTS Shop;
+DROP TABLE IF EXISTS Admin;
+DROP TABLE IF EXISTS Template_Task; --*/
+
+CREATE TABLE IF NOT EXISTS Template_Task(
   nome varchar(50) NOT NULL,
   id_templ_task int NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (id_templ_task)
@@ -17,12 +35,12 @@ CREATE TABLE IF NOT EXISTS Admin(
 CREATE TABLE IF NOT EXISTS Shop(
   nome varchar(50) NOT NULL,
   id_shop int NOT NULL AUTO_INCREMENT,
-  id_admin int,
+  id_admin int DEFAULT NULL,
   PRIMARY KEY (id_shop),
   FOREIGN KEY (id_admin) REFERENCES Admin(id_admin)
 );
 
-CREATE TABLE IF NOT EXISTS TemplateIspezione(
+CREATE TABLE IF NOT EXISTS Template_Ispezione(
   nome varchar(50) NOT NULL,
   id_shop int NOT NULL,
   id_templ_ispezione int NOT NULL AUTO_INCREMENT,
@@ -30,11 +48,11 @@ CREATE TABLE IF NOT EXISTS TemplateIspezione(
   FOREIGN KEY (id_shop) REFERENCES Shop(id_shop)
 );
 
-CREATE TABLE IF NOT EXISTS TemplateTask_TemplateIspezione(
+CREATE TABLE IF NOT EXISTS Template_Task_Template_Ispezione(
   id_templ_ispezione int NOT NULL,
   id_templ_task int NOT NULL,
-  FOREIGN KEY (id_templ_ispezione) REFERENCES TemplateIspezione(id_templ_ispezione),
-  FOREIGN KEY (id_templ_task) REFERENCES TemplateTask(id_templ_task),
+  FOREIGN KEY (id_templ_ispezione) REFERENCES Template_Ispezione(id_templ_ispezione),
+  FOREIGN KEY (id_templ_task) REFERENCES Template_Task(id_templ_task),
   PRIMARY KEY (id_templ_ispezione, id_templ_task)
 );
 
@@ -101,7 +119,7 @@ CREATE TABLE IF NOT EXISTS Ordine(
   FOREIGN KEY (targa, num_telaio) REFERENCES Veicolo(targa, num_telaio)
 );
 
-CREATE TABLE IF NOT EXISTS NotaOrdine(
+CREATE TABLE IF NOT EXISTS Nota_Ordine(
   testo varchar(500) NOT NULL,
   id_nota_ordine int NOT NULL AUTO_INCREMENT,
   id_ordine int NOT NULL,
@@ -127,7 +145,7 @@ CREATE TABLE IF NOT EXISTS Task(
   FOREIGN KEY (id_ispezione) REFERENCES Ispezione(id_ispezione)
 );
 
-CREATE TABLE IF NOT EXISTS NotaTask(
+CREATE TABLE IF NOT EXISTS Nota_Task(
   testo varchar(500) NOT NULL,
   id_nota_ordine int NOT NULL AUTO_INCREMENT,
   id_task int NOT NULL,

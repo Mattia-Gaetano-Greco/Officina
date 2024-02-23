@@ -1,16 +1,16 @@
-package it.paleocapa.greco.officina;
+package it.paleocapa.greco.officina.user_details;
 
 import java.util.Collection;
  
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import it.paleocapa.greco.officina.model.Dipendente;
+import it.paleocapa.greco.officina.model.Admin;
  
-public class DipendenteDetails implements UserDetails {
-    private Dipendente user;
+public class AdminDetails implements UserDetails {
+    private Admin user;
      
-    public DipendenteDetails(Dipendente user) {
+    public AdminDetails(Admin user) {
         this.user = user;
     }
  

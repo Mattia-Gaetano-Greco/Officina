@@ -9,7 +9,7 @@ public class Dipendente implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id_dipendente;
+    private Long id_dipendente;
 
     private String nome;
 
@@ -36,7 +36,7 @@ public class Dipendente implements Serializable {
         this.shop = shop;
     }
 
-    public Dipendente(Integer id, String nome, String cognome, String email, String numero_telefono, String password, Shop shop) {
+    public Dipendente(Long id, String nome, String cognome, String email, String numero_telefono, String password, Shop shop) {
         this.id_dipendente = id;
         this.nome = nome;
         this.cognome = cognome;
@@ -46,7 +46,7 @@ public class Dipendente implements Serializable {
         this.shop = shop;
     }
 
-    public Dipendente(Integer id, String nome, String cognome, String email, String numero_telefono, String password) {
+    public Dipendente(Long id, String nome, String cognome, String email, String numero_telefono, String password) {
         this.id_dipendente = id;
         this.nome = nome;
         this.cognome = cognome;
@@ -63,11 +63,11 @@ public class Dipendente implements Serializable {
         this.password = password;
     }
 
-    public Integer getId_utente() {
+    public Long getId_utente() {
         return id_dipendente;
     }
 
-    public void setId_utente(Integer id_dipendente) {
+    public void setId_utente(Long id_dipendente) {
         this.id_dipendente = id_dipendente;
     }
 

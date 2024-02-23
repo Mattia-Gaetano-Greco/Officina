@@ -17,8 +17,6 @@ public class MainController {
 
     @RequestMapping(value = "/dipendente/login", method = RequestMethod.GET)
     public String loginDipendente(Model model) {
-        
-        //model.addAttribute("dipendente", new Utente());
         return "dipendente/login";
     }
 
@@ -28,11 +26,7 @@ public class MainController {
     }
 
     // dipendente pages
-
-    /*@RequestMapping(value = "/profilo-dipendente", method = RequestMethod.POST)
-    public String checkLoginDipendente(@ModelAttribute("dipendente") Utente dipendente) {
-        return "profilo-dipendente";
-    }*/
+    
     @RequestMapping(value="/dipendente/home", method=RequestMethod.GET)
     public String homeDipendente(Model model) {
         model.addAttribute("principal", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
