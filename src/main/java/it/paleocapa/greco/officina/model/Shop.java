@@ -13,7 +13,7 @@ public class Shop implements Serializable {
 
     private String nome;
 
-    private int id_admin;
+    private Integer id_admin;
 
     @ManyToOne
     @JoinColumn(name = "id_admin", referencedColumnName = "id_admin", insertable = false, updatable = false)
@@ -37,11 +37,11 @@ public class Shop implements Serializable {
         this.nome = nome;
     }
 
-    public int getId_admin() {
+    public Integer getId_admin() {
         return id_admin;
     }
 
-    public void setId_admin(int id_admin) {
+    public void setId_admin(Integer id_admin) {
         this.id_admin = id_admin;
     }
 

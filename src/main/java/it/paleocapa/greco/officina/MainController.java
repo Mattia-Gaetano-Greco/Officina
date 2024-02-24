@@ -1,4 +1,4 @@
-package it.paleocapa.greco.officina.controller;
+package it.paleocapa.greco.officina;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +23,11 @@ public class MainController {
     @RequestMapping(value = "/admin/login", method = RequestMethod.GET)
     public String loginAdmin(Model model) {
         return "admin/login";
+    }
+
+    @RequestMapping(value = "/admin/login", method = RequestMethod.POST)
+    public String loginAdminPost(Model model) {
+        return "admin/home";
     }
 
     // dipendente pages
