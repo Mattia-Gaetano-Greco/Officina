@@ -81,7 +81,7 @@ public class LoginSecurityConfig {
     }*/
 
     @Configuration
-    @Order(2)
+    @Order(1)
     public static class B_AdminSecurityConfig {
      
         @Bean
@@ -107,6 +107,7 @@ public class LoginSecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                     .requestMatchers("/").permitAll()
                     .requestMatchers("/admin/*").authenticated()
+                    .requestMatchers("/admin/officina/*").authenticated()
                 )
                 .formLogin((form) ->
                 form

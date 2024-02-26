@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import it.paleocapa.greco.officina.model.Dipendente;
  
 @Repository
-public interface DipendenteRepository extends CrudRepository<Dipendente, Integer> {
+public interface DipendenteRepository extends CrudRepository<Dipendente, Long> {
     public Dipendente findByEmail(String email);
 }

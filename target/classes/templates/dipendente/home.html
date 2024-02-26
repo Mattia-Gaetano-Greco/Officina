@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="ISO-8859-1">
+<title>Pannello di controllo</title>
+</head>
+<body>
+    <div>
+        <h2 align="center">Pannello di controllo - Dipendente</h2>
+        
+        La tua email: <p th:text=${principal.username}>EMAIL</p>
+
+        <form th:action="@{/dipendente/logout}" method="post">
+            <input type="submit" value="Logout" />
+        </form>      
+    </div>
+</body>
+</html>
