@@ -2,7 +2,6 @@ package it.paleocapa.greco.officina;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,9 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import ch.qos.logback.classic.Logger;
 import it.paleocapa.greco.officina.model.Shop;
-import it.paleocapa.greco.officina.repository.AdminRepository;
 import it.paleocapa.greco.officina.repository.ShopRepository;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
@@ -24,9 +21,6 @@ import org.springframework.web.servlet.view.RedirectView;
 public class MainController {
 
     @Autowired private ShopRepository shopRepository;
-
-    //logger
-    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(MainController.class);
 
     // public pages
 
@@ -58,13 +52,6 @@ public class MainController {
     }
 
     // admin pages
-
-    @RequestMapping(value="/admin/test", method=RequestMethod.GET)
-    public String test(@RequestParam("param") String itemid, Model model) {
-        model.addAttribute("parametro", itemid);
-        return "admin/test";
-    }
-    
 
     @RequestMapping(value="/admin/home", method=RequestMethod.GET)
     @Query("SELECT * FROM SHOP")
@@ -111,7 +98,6 @@ public class MainController {
         return new RedirectView("/admin/home");
     }
     
-    ///admin/modifica_officina?id=
     @RequestMapping(value="/admin/modifica_officina", method=RequestMethod.GET)
     public String modificaOfficina(@RequestParam("id") String itemid, Model model) {
         Optional<Shop> shops = shopRepository.findById(Integer.parseInt(itemid));
