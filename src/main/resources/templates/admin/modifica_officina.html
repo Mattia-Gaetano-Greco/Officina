@@ -8,7 +8,7 @@
     <div>
         <h2 align="center">Pannello di controllo - Admin</h2>
 
-        <form action="#" th:action="@{/admin/nuova_officina}" th:object="${shop}" method="post">
+        <form action="#" th:action="@{/admin/modifica_officina}" th:object="${shop}" method="post">
             <p>Nome shop: <input type="text" th:field="*{nome}" /></p>
             <input type="hidden" th:field="*{id_shop}" />
             <input type="hidden" th:field="*{id_admin}" />

@@ -71,48 +71,64 @@ public class MainController {
 
     @RequestMapping(value="/admin/officina", method=RequestMethod.GET)
     public String infoOfficina(@RequestParam("id") String itemid, Model model) {
-        Optional<Shop> shops = shopRepository.findById(Integer.parseInt(itemid));
-        if (shops.isPresent()) {
-            model.addAttribute("shop", shops.get());
-        } else {
-            model.addAttribute("shop", new Shop());
-        }
+        model.addAttribute("shop", getOfficina(itemid));
         return "admin/officina";
     }
 
     @RequestMapping(value="/admin/nuova_officina", method=RequestMethod.GET)
     public String nuovaOfficina(Model model) {
-        model.addAttribute("shop", new Shop());
-        return "admin/nuova_officina";
-    }
-
-    @RequestMapping(value="/admin/nuova_officina", method=RequestMethod.POST)
-    public RedirectView requestMethodName(@ModelAttribute Shop shop, Model model) {
-        shopRepository.save(shop);
-        return new RedirectView("/admin/home");
+        int id_shop = newOfficina();
+        model.addAttribute("shop", getOfficina(id_shop+""));
+        return "admin/modifica_officina";
     }
     
     @RequestMapping(value="/admin/elimina_officina", method=RequestMethod.GET)
     public RedirectView eliminaOfficina(@RequestParam("id") String itemid, Model model) {
-        shopRepository.deleteById(Integer.parseInt(itemid));
+        deleteOfficina(itemid);
         return new RedirectView("/admin/home");
     }
     
     @RequestMapping(value="/admin/modifica_officina", method=RequestMethod.GET)
     public String modificaOfficina(@RequestParam("id") String itemid, Model model) {
-        Optional<Shop> shops = shopRepository.findById(Integer.parseInt(itemid));
-        if (shops.isPresent()) {
-            model.addAttribute("shop", shops.get());
-        } else {
-            model.addAttribute("shop", new Shop());
-        }
+        model.addAttribute(getOfficina(itemid));
         return "admin/modifica_officina";
     }
 
     @RequestMapping(value="/admin/modifica_officina", method=RequestMethod.POST)
     public RedirectView modificaOfficinaPost(@ModelAttribute Shop shop, Model model) {
-        shopRepository.save(shop);
+        updateOfficina(shop);
         return new RedirectView("/admin/home");
     }
+
+    // API - officina
+
+    @RequestMapping(value="/api/officina/get_officina", method=RequestMethod.GET)
+    public Shop getOfficina(@RequestParam("id") String itemid) {
+        Optional<Shop> shops = shopRepository.findById(Integer.parseInt(itemid));
+        if (shops.isPresent())
+            return shops.get();
+        else
+            return new Shop();
+    }
+
+    @RequestMapping(value="/api/officina/new_officina", method=RequestMethod.POST)
+    public int newOfficina() {
+        Shop s = new Shop();
+        s.setNome("New shop");
+        s.setAdmin(null); // TODO: get admin from session
+        shopRepository.save(s);
+        return s.getId_shop();
+    }
+
+    @RequestMapping(value="/api/officina/update_officina", method=RequestMethod.POST)
+    public void updateOfficina(@ModelAttribute Shop shop) {
+        shopRepository.save(shop);
+    }
+
+    @RequestMapping(value="/api/officina/delete_officina", method=RequestMethod.GET)
+    public void deleteOfficina(@RequestParam("id") String itemid) {
+        shopRepository.deleteById(Integer.parseInt(itemid));
+    }
+
 
 }
