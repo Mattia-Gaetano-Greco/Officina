@@ -1,21 +1,18 @@
 package it.paleocapa.greco.officina;
-import java.util.ArrayList;
-import java.util.Optional;
 
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import it.paleocapa.greco.officina.model.Shop;
 import it.paleocapa.greco.officina.repository.ShopRepository;
+import it.paleocapa.greco.officina.user_details.AdminDetails;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
-
 
 @Controller
 public class MainController {
@@ -54,16 +51,10 @@ public class MainController {
     // admin pages
 
     @RequestMapping(value="/admin/home", method=RequestMethod.GET)
-    @Query("SELECT * FROM SHOP")
     public String homeAdmin(Model model) {
-        model.addAttribute("principal", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        Iterable<Shop> shops = shopRepository.findAll();
-        ArrayList <Shop> shopList = new ArrayList<Shop>();
-        for (Shop shop : shops) {
-            shopList.add(shop);
-        }
-        model.addAttribute("principal", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        model.addAttribute("shops", shopList);
+        AdminDetails adminDetails = (AdminDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("principal", adminDetails);
+        model.addAttribute("shops", shopRepository.findById_admin(adminDetails.getId_admin()));
         return "admin/home";
     }
 
@@ -113,9 +104,7 @@ public class MainController {
 
     @RequestMapping(value="/api/officina/new_officina", method=RequestMethod.POST)
     public int newOfficina() {
-        Shop s = new Shop();
-        s.setNome("New shop");
-        s.setAdmin(null); // TODO: get admin from session
+        Shop s = new Shop("New shop", ((AdminDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getAdmin());
         shopRepository.save(s);
         return s.getId_shop();
     }

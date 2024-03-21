@@ -40,11 +40,11 @@ public class Admin implements Serializable {
         this.password = password;
     }
 
-    public Long getId_utente() {
+    public Long getId_admin() {
         return id_admin;
     }
 
-    public void setId_utente(Long id_utente) {
+    public void setId_admin(Long id_utente) {
         this.id_admin = id_utente;
     }
 

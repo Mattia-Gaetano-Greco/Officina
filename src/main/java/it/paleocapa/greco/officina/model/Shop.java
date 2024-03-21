@@ -13,13 +13,19 @@ public class Shop implements Serializable {
 
     private String nome;
 
-    private Integer id_admin;
+    private Long id_admin;
 
     @ManyToOne
     @JoinColumn(name = "id_admin", referencedColumnName = "id_admin", insertable = false, updatable = false)
     private Admin admin;
 
     public Shop() {}
+
+    public Shop(String nome, Admin admin) {
+        this.nome = nome;
+        this.admin = admin;
+        this.id_admin = admin.getId_admin();
+    }
 
     public int getId_shop() {
         return id_shop;
@@ -37,11 +43,11 @@ public class Shop implements Serializable {
         this.nome = nome;
     }
 
-    public Integer getId_admin() {
+    public Long getId_admin() {
         return id_admin;
     }
 
-    public void setId_admin(Integer id_admin) {
+    public void setId_admin(Long id_admin) {
         this.id_admin = id_admin;
     }
 

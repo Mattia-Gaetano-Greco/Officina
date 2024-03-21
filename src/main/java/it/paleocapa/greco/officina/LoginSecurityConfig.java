@@ -1,5 +1,5 @@
 package it.paleocapa.greco.officina;
- 
+
 import org.springframework.context.annotation.*;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;

@@ -19,6 +19,14 @@ public class AdminDetails implements UserDetails {
         return null;
     }
  
+    public Admin getAdmin() {
+        return user;
+    }
+
+    public Long getId_admin() {
+        return user.getId_admin();
+    }
+
     @Override
     public String getPassword() {
         return user.getPassword();
