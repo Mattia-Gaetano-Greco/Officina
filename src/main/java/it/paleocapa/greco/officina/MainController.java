@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import it.paleocapa.greco.officina.model.Shop;
 import it.paleocapa.greco.officina.repository.ShopRepository;
 import it.paleocapa.greco.officina.user_details.AdminDetails;
+import it.paleocapa.greco.officina.user_details.DipendenteDetails;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -26,25 +28,22 @@ public class MainController {
         return "index";
     }
 
-    @RequestMapping(value = "/dipendente/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/dipendente_login", method = RequestMethod.GET)
     public String loginDipendente(Model model) {
         return "dipendente/login";
     }
 
-    @RequestMapping(value = "/admin/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin_login", method = RequestMethod.GET)
     public String loginAdmin(Model model) {
         return "admin/login";
-    }
-
-    @RequestMapping(value = "/admin/login", method = RequestMethod.POST)
-    public String loginAdminPost(Model model) {
-        return "admin/home";
     }
 
     // dipendente pages
     
     @RequestMapping(value="/dipendente/home", method=RequestMethod.GET)
     public String homeDipendente(Model model) {
+        DipendenteDetails dipendenteDetails = (DipendenteDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("principal", dipendenteDetails);
         return "dipendente/home";
     }
 
@@ -81,7 +80,7 @@ public class MainController {
     
     @RequestMapping(value="/admin/modifica_officina", method=RequestMethod.GET)
     public String modificaOfficina(@RequestParam("id") String itemid, Model model) {
-        model.addAttribute(getOfficina(itemid));
+        model.addAttribute("shop", getOfficina(itemid));
         return "admin/modifica_officina";
     }
 
@@ -109,6 +108,7 @@ public class MainController {
         return s.getId_shop();
     }
 
+    @SuppressWarnings("null")
     @RequestMapping(value="/api/officina/update_officina", method=RequestMethod.POST)
     public void updateOfficina(@ModelAttribute Shop shop) {
         shopRepository.save(shop);

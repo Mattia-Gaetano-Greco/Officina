@@ -5,38 +5,66 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 //import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import it.paleocapa.greco.officina.service.AdminDetailsService;
-//import it.paleocapa.greco.officina.service.DipendenteDetailsService;
+import it.paleocapa.greco.officina.service.DipendenteDetailsService;
 
 @Configuration
 @EnableWebSecurity
 public class LoginSecurityConfig {
-     
+    
     @Bean
     public static BCryptPasswordEncoder bCryptPasswordEncoder() {
-      return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder();
     }
 
-    /* @Configuration
+    @Configuration
     @Order(1)
-    public static class A_DipendenteSecurityConfig {
+    public static class App1ConfigurationAdapter {
+
+
         @Bean
-        public UserDetailsService userDetailsService2() {
-            return new DipendenteDetailsService();
+        public UserDetailsService userDetailsService() {
+            return new AdminDetailsService();
         }
-        
+
         @Bean
-        public DaoAuthenticationProvider authenticationProvider2() {
+        public DaoAuthenticationProvider authenticationProvider1() {
             DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-            authProvider.setUserDetailsService(userDetailsService2());
+            authProvider.setUserDetailsService(userDetailsService());
             authProvider.setPasswordEncoder(bCryptPasswordEncoder());
-     
+    
             return authProvider;
+        }
+
+        @Bean
+        public SecurityFilterChain filterChainApp1(HttpSecurity http) throws Exception {
+            http.authenticationProvider(authenticationProvider1());
+            http.securityMatcher("/admin/*")
+                .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry.
+                    requestMatchers("/admin/*").authenticated())
+                // log in
+                .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
+                        .loginPage("/admin_login")
+                            .usernameParameter("email")
+                        .loginProcessingUrl("/admin/login_processing")
+                        .failureUrl("/admin_login?error=loginError")
+                        .defaultSuccessUrl("/admin/home"))
+                // logout
+                .logout(httpSecurityLogoutConfigurer ->
+                        httpSecurityLogoutConfigurer.logoutUrl("/admin/logout")
+                                .logoutSuccessUrl("/")
+                                .deleteCookies("JSESSIONID"))
+                .exceptionHandling(httpSecurityExceptionHandlingConfigurer ->
+                        httpSecurityExceptionHandlingConfigurer.accessDeniedPage("/403"))
+                .csrf(AbstractHttpConfigurer::disable);
+
+            return http.build();
         }
 
         /* 
@@ -51,77 +79,49 @@ public class LoginSecurityConfig {
                             .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")));
             return http.build();
         }
-        * /
-    
-        @Bean
-        public SecurityFilterChain securityFilterChainDipendente(HttpSecurity http) throws Exception {
-            DaoAuthenticationProvider authenticationProvider = authenticationProvider2();
-            http.authenticationProvider(authenticationProvider);
-    
-            http
-                .authorizeHttpRequests((requests) -> requests
-                    .requestMatchers("/").permitAll()
-                    .requestMatchers("/admin/*").permitAll()
-                    .requestMatchers("/dipendente/*").authenticated()
-                )
-                .formLogin((form) -> form
-                    .loginPage("/dipendente/login")
-                        .usernameParameter("email")
-                        .loginProcessingUrl("/dipendente/login")
-                        .defaultSuccessUrl("/dipendente/home")
-                    .permitAll()
-                )
-                .logout((logout) -> logout
-                    .logoutUrl("/dipendente/logout")
-                    .logoutSuccessUrl("/")
-                );
-    
-            return http.build();
-        }
-    }*/
+        */
+
+    }
 
     @Configuration
-    @Order(1)
-    public static class B_AdminSecurityConfig {
-     
+    @Order(2)
+    public static class App2ConfigurationAdapter {
+
         @Bean
-        public UserDetailsService userDetailsService() {
-            return new AdminDetailsService();
+        public UserDetailsService userDetailsService2() {
+            return new DipendenteDetailsService();
         }
 
         @Bean
-        public DaoAuthenticationProvider authenticationProvider1() {
+        public DaoAuthenticationProvider authenticationProvider2() {
             DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-            authProvider.setUserDetailsService(userDetailsService());
+            authProvider.setUserDetailsService(userDetailsService2());
             authProvider.setPasswordEncoder(bCryptPasswordEncoder());
     
             return authProvider;
         }
-    
+
         @Bean
-        public SecurityFilterChain securityFilterChainAdmin(HttpSecurity http) throws Exception {
-            DaoAuthenticationProvider authenticationProvider = authenticationProvider1();
-            http.authenticationProvider(authenticationProvider);
-    
-            http
-                .authorizeHttpRequests((requests) -> requests
-                    .requestMatchers("/").permitAll()
-                    .requestMatchers("/admin/*").authenticated()
-                    .requestMatchers("/admin/officina/*").authenticated()
-                )
-                .formLogin((form) ->
-                form
-                    .loginPage("/admin/login")
-                        .usernameParameter("email")
-                        .loginProcessingUrl("/admin/login")
-                        .defaultSuccessUrl("/admin/home")
-                    .permitAll()
-                )
-                .logout((logout) -> logout
-                    .logoutUrl("/admin/logout")
-                    .logoutSuccessUrl("/")
-                );
-    
+        public SecurityFilterChain filterChainApp2(HttpSecurity http) throws Exception {
+            http.authenticationProvider(authenticationProvider2());
+            http.securityMatcher("/dipendente/*")
+                .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
+                    .requestMatchers("/dipendente/*").authenticated())
+                // log in
+                .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
+                        .loginPage("/dipendente_login")                   
+                            .usernameParameter("email")
+                        .loginProcessingUrl("/dipendente/login_processing")
+                        .failureUrl("/dipendente_login?error=loginError")
+                        .defaultSuccessUrl("/dipendente/home"))
+                // logout
+                .logout(httpSecurityLogoutConfigurer ->
+                        httpSecurityLogoutConfigurer.logoutUrl("/dipendente/logout")
+                                .logoutSuccessUrl("/")
+                                .deleteCookies("JSESSIONID"))
+                .exceptionHandling(httpSecurityExceptionHandlingConfigurer ->
+                        httpSecurityExceptionHandlingConfigurer.accessDeniedPage("/403"))
+                .csrf(AbstractHttpConfigurer::disable);
             return http.build();
         }
     }
