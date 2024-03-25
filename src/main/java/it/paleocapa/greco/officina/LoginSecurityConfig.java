@@ -1,24 +1,18 @@
 package it.paleocapa.greco.officina;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-
 import org.springframework.context.annotation.*;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 //import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.stereotype.Component;
 
 import it.paleocapa.greco.officina.service.AdminDetailsService;
 import it.paleocapa.greco.officina.service.DipendenteDetailsService;
@@ -26,7 +20,21 @@ import it.paleocapa.greco.officina.service.DipendenteDetailsService;
 @Configuration
 @EnableWebSecurity
 public class LoginSecurityConfig {
-    
+
+    private static GrantedAuthoritiesMapper customAuthorityMapper(String role) {
+        return (authorities) -> {
+            HashSet<GrantedAuthority> mappedAuthorities = new HashSet<>();
+            mappedAuthorities.add(new GrantedAuthority() {
+                @Override
+                public String getAuthority() {
+                    return role;
+                }
+            });
+
+            return mappedAuthorities;
+        };
+    }
+
     @Bean
     public static BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -35,20 +43,6 @@ public class LoginSecurityConfig {
     @Configuration
     @Order(1)
     public static class App1ConfigurationAdapter {
-
-        private GrantedAuthoritiesMapper adminAuthorityMapper() {
-            return (authorities) -> {
-                HashSet<GrantedAuthority> mappedAuthorities = new HashSet<>();
-                mappedAuthorities.add(new GrantedAuthority() {
-                    @Override
-                    public String getAuthority() {
-                        return "ADMIN";
-                    }
-                });
-
-                return mappedAuthorities;
-            };
-        }
 
         @Bean
         public UserDetailsService userDetailsService() {
@@ -60,9 +54,8 @@ public class LoginSecurityConfig {
             DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
             authProvider.setUserDetailsService(userDetailsService());
             authProvider.setPasswordEncoder(bCryptPasswordEncoder());
-            authProvider.setAuthoritiesMapper(adminAuthorityMapper());
+            authProvider.setAuthoritiesMapper(customAuthorityMapper("ADMIN"));
 
-    
             return authProvider;
         }
 
@@ -111,21 +104,6 @@ public class LoginSecurityConfig {
     @Order(2)
     public static class App2ConfigurationAdapter {
 
-        private GrantedAuthoritiesMapper dipendenteAuthorityMapper() {
-            return (authorities) -> {
-                HashSet<GrantedAuthority> mappedAuthorities = new HashSet<>();
-                mappedAuthorities.add(new GrantedAuthority() {
-                    @Override
-                    public String getAuthority() {
-                        return "DIPENDENTE";
-                    }
-                });
-
-                return mappedAuthorities;
-            };
-        }
-
-
         @Bean
         public UserDetailsService userDetailsService2() {
             return new DipendenteDetailsService();
@@ -136,7 +114,7 @@ public class LoginSecurityConfig {
             DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
             authProvider.setUserDetailsService(userDetailsService2());
             authProvider.setPasswordEncoder(bCryptPasswordEncoder());
-            authProvider.setAuthoritiesMapper(dipendenteAuthorityMapper());
+            authProvider.setAuthoritiesMapper(customAuthorityMapper("DIPENDENTE"));
     
             return authProvider;
         }
