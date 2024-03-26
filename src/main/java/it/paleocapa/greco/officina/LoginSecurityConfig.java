@@ -35,6 +35,38 @@ public class LoginSecurityConfig {
         };
     }
 
+    private static SecurityFilterChain customHttpSecurity(HttpSecurity http, String filter_prefix, DaoAuthenticationProvider authenticationProvider) throws Exception {
+        http.authenticationProvider(authenticationProvider);
+        http.securityMatcher("/"+filter_prefix+"/*")
+            .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
+                .requestMatchers("/"+filter_prefix+"/*").hasAuthority(filter_prefix.toUpperCase()))
+            // log in
+            .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
+                    .loginPage("/"+filter_prefix+"_login")                   
+                        .usernameParameter("email")
+                    .loginProcessingUrl("/"+filter_prefix+"/login_processing")
+                    .failureUrl("/"+filter_prefix+"_login?error=loginError")
+                    .defaultSuccessUrl("/"+filter_prefix+"/home"))
+            // logout
+            .logout(httpSecurityLogoutConfigurer ->
+                    httpSecurityLogoutConfigurer.logoutUrl("/"+filter_prefix+"/logout")
+                            .logoutSuccessUrl("/")
+                            .deleteCookies("JSESSIONID"))
+            .exceptionHandling(httpSecurityExceptionHandlingConfigurer ->
+                    httpSecurityExceptionHandlingConfigurer.accessDeniedPage("/403"))
+            .csrf(AbstractHttpConfigurer::disable);
+        return http.build();
+    }
+
+    private static DaoAuthenticationProvider customAuthenticationProvider(UserDetailsService userDetailsService, String role) {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(bCryptPasswordEncoder());
+        authProvider.setAuthoritiesMapper(customAuthorityMapper(role.toUpperCase()));
+
+        return authProvider;
+    }
+
     @Bean
     public static BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -42,50 +74,20 @@ public class LoginSecurityConfig {
 
     @Configuration
     @Order(1)
-    public static class App1ConfigurationAdapter {
+    public static class AdminConfigurationAdapter {
 
         @Bean
-        public UserDetailsService userDetailsService() {
+        public UserDetailsService adminUserDetailsService() {
             return new AdminDetailsService();
         }
 
         @Bean
-        public DaoAuthenticationProvider authenticationProvider1() {
-            DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-            authProvider.setUserDetailsService(userDetailsService());
-            authProvider.setPasswordEncoder(bCryptPasswordEncoder());
-            authProvider.setAuthoritiesMapper(customAuthorityMapper("ADMIN"));
-
-            return authProvider;
+        public SecurityFilterChain adminFilterChain(HttpSecurity http) throws Exception {
+            DaoAuthenticationProvider clienteAuthenticationProvider = customAuthenticationProvider(adminUserDetailsService(), "ADMIN");
+            return customHttpSecurity(http, "admin", clienteAuthenticationProvider);
         }
 
-        @Bean
-        public SecurityFilterChain filterChainApp1(HttpSecurity http) throws Exception {
-            http.authenticationProvider(authenticationProvider1());
-            http.securityMatcher("/admin/*")
-                .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry.
-                    requestMatchers("/admin/*").hasAuthority("ADMIN"))
-                // log in
-                .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
-                        .loginPage("/admin_login")
-                            .usernameParameter("email")
-                        .loginProcessingUrl("/admin/login_processing")
-                        .failureUrl("/admin_login?error=loginError")
-                        .defaultSuccessUrl("/admin/home"))
-                // logout
-                .logout(httpSecurityLogoutConfigurer ->
-                        httpSecurityLogoutConfigurer.logoutUrl("/admin/logout")
-                                .logoutSuccessUrl("/")
-                                .deleteCookies("JSESSIONID"))
-                .exceptionHandling(httpSecurityExceptionHandlingConfigurer ->
-                        httpSecurityExceptionHandlingConfigurer.accessDeniedPage("/403"))
-                .csrf(AbstractHttpConfigurer::disable);
-
-            return http.build();
-        }
-
-        /* 
-        @Bean
+        /* @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
             http
                     .authorizeHttpRequests(auth -> auth
@@ -95,52 +97,23 @@ public class LoginSecurityConfig {
                     .csrf(csrf -> csrf
                             .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")));
             return http.build();
-        }
-        */
+        } */
 
     }
 
     @Configuration
     @Order(2)
-    public static class App2ConfigurationAdapter {
+    public static class DipendenteConfigurationAdapter {
 
         @Bean
-        public UserDetailsService userDetailsService2() {
+        public UserDetailsService dipendenteUserDetailsService() {
             return new DipendenteDetailsService();
         }
 
         @Bean
-        public DaoAuthenticationProvider authenticationProvider2() {
-            DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-            authProvider.setUserDetailsService(userDetailsService2());
-            authProvider.setPasswordEncoder(bCryptPasswordEncoder());
-            authProvider.setAuthoritiesMapper(customAuthorityMapper("DIPENDENTE"));
-    
-            return authProvider;
-        }
-
-        @Bean
-        public SecurityFilterChain filterChainApp2(HttpSecurity http) throws Exception {
-            http.authenticationProvider(authenticationProvider2());
-            http.securityMatcher("/dipendente/*")
-                .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
-                    .requestMatchers("/dipendente/*").hasAuthority("DIPENDENTE"))
-                // log in
-                .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
-                        .loginPage("/dipendente_login")                   
-                            .usernameParameter("email")
-                        .loginProcessingUrl("/dipendente/login_processing")
-                        .failureUrl("/dipendente_login?error=loginError")
-                        .defaultSuccessUrl("/dipendente/home"))
-                // logout
-                .logout(httpSecurityLogoutConfigurer ->
-                        httpSecurityLogoutConfigurer.logoutUrl("/dipendente/logout")
-                                .logoutSuccessUrl("/")
-                                .deleteCookies("JSESSIONID"))
-                .exceptionHandling(httpSecurityExceptionHandlingConfigurer ->
-                        httpSecurityExceptionHandlingConfigurer.accessDeniedPage("/403"))
-                .csrf(AbstractHttpConfigurer::disable);
-            return http.build();
+        public SecurityFilterChain dipendenteFilterChain(HttpSecurity http) throws Exception {
+            DaoAuthenticationProvider dipendenteAuthenticationProvider = customAuthenticationProvider(dipendenteUserDetailsService(), "DIPENDENTE");
+            return customHttpSecurity(http, "dipendente", dipendenteAuthenticationProvider);
         }
     }
 

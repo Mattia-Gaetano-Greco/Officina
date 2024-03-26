@@ -108,7 +108,6 @@ public class MainController {
         return s.getId_shop();
     }
 
-    @SuppressWarnings("null")
     @RequestMapping(value="/api/officina/update_officina", method=RequestMethod.POST)
     public void updateOfficina(@ModelAttribute Shop shop) {
         shopRepository.save(shop);
