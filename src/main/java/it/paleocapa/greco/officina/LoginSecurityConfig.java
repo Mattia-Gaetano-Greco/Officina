@@ -12,6 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 //import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import it.paleocapa.greco.officina.service.AdminDetailsService;
+import it.paleocapa.greco.officina.service.ClienteDetailsService;
 import it.paleocapa.greco.officina.service.DipendenteDetailsService;
 
 @Configuration
@@ -25,7 +26,7 @@ public class LoginSecurityConfig {
 
     @Configuration
     @Order(1)
-    public static class App1ConfigurationAdapter {
+    public static class AdminConfigurationAdapter {
 
 
         @Bean
@@ -85,7 +86,7 @@ public class LoginSecurityConfig {
 
     @Configuration
     @Order(2)
-    public static class App2ConfigurationAdapter {
+    public static class DipendenteConfigurationAdapter {
 
         @Bean
         public UserDetailsService userDetailsService2() {
@@ -117,6 +118,49 @@ public class LoginSecurityConfig {
                 // logout
                 .logout(httpSecurityLogoutConfigurer ->
                         httpSecurityLogoutConfigurer.logoutUrl("/dipendente/logout")
+                                .logoutSuccessUrl("/")
+                                .deleteCookies("JSESSIONID"))
+                .exceptionHandling(httpSecurityExceptionHandlingConfigurer ->
+                        httpSecurityExceptionHandlingConfigurer.accessDeniedPage("/403"))
+                .csrf(AbstractHttpConfigurer::disable);
+            return http.build();
+        }
+    }
+
+    @Configuration
+    @Order(2)
+    public static class ClienteConfigurationAdapter {
+
+        @Bean
+        public UserDetailsService userDetailsService3() {
+            return new ClienteDetailsService();
+        }
+
+        @Bean
+        public DaoAuthenticationProvider authenticationProvider3() {
+            DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+            authProvider.setUserDetailsService(userDetailsService3());
+            authProvider.setPasswordEncoder(bCryptPasswordEncoder());
+    
+            return authProvider;
+        }
+
+        @Bean
+        public SecurityFilterChain filterChainApp3(HttpSecurity http) throws Exception {
+            http.authenticationProvider(authenticationProvider3());
+            http.securityMatcher("/cliente/*")
+                .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
+                    .requestMatchers("/cliente/*").authenticated())
+                // log in
+                .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
+                        .loginPage("/cliente_login")                   
+                            .usernameParameter("email")
+                        .loginProcessingUrl("/cliente/login_processing")
+                        .failureUrl("/cliente_login?error=loginError")
+                        .defaultSuccessUrl("/cliente/home"))
+                // logout
+                .logout(httpSecurityLogoutConfigurer ->
+                        httpSecurityLogoutConfigurer.logoutUrl("/cliente/logout")
                                 .logoutSuccessUrl("/")
                                 .deleteCookies("JSESSIONID"))
                 .exceptionHandling(httpSecurityExceptionHandlingConfigurer ->

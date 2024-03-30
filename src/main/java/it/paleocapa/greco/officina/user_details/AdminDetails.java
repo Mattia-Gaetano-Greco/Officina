@@ -23,8 +23,8 @@ public class AdminDetails implements UserDetails {
         return user;
     }
 
-    public Long getId_admin() {
-        return user.getId_admin();
+    public void setAdmin(Admin user) {
+        this.user = user;
     }
 
     @Override

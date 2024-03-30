@@ -21,29 +21,14 @@ public class Cliente implements Serializable {
 
     private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "id_shop", referencedColumnName = "id_shop", insertable = false, updatable = false)
-    private Shop shop;
-
     public Cliente() {}
 
-    public Cliente(String nome, String cognome, String email, String numero_telefono, String password, Shop shop) {
+    public Cliente(String nome, String cognome, String email, String numero_telefono, String password) {
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
         this.numero_telefono = numero_telefono;
         this.password = password;
-        this.shop = shop;
-    }
-
-    public Cliente(Integer id, String nome, String cognome, String email, String numero_telefono, String password, Shop shop) {
-        this.id_cliente = id;
-        this.nome = nome;
-        this.cognome = cognome;
-        this.email = email;
-        this.numero_telefono = numero_telefono;
-        this.password = password;
-        this.shop = shop;
     }
 
     public Cliente(Integer id, String nome, String cognome, String email, String numero_telefono, String password) {
@@ -55,19 +40,11 @@ public class Cliente implements Serializable {
         this.password = password;
     }
 
-    public Cliente(String nome, String cognome, String email, String numero_telefono, String password) {
-        this.nome = nome;
-        this.cognome = cognome;
-        this.email = email;
-        this.numero_telefono = numero_telefono;
-        this.password = password;
-    }
-
-    public Integer getId_utente() {
+    public Integer getId_cliente() {
         return id_cliente;
     }
 
-    public void setId_utente(Integer id_cliente) {
+    public void setId_cliente(Integer id_cliente) {
         this.id_cliente = id_cliente;
     }
 
@@ -109,14 +86,6 @@ public class Cliente implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Shop getShop() {
-        return shop;
-    }
-
-    public void setShop(Shop shop) {
-        this.shop = shop;
     }
 
 }

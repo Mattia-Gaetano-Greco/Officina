@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="ISO-8859-1">
+<title>Pannello di controllo</title>
+</head>
+<body>
+    <div>
+        <h1 style="text-align:left"> Gestionale Officina </h1>
+        <div>
+            <div style="width:33%; float:left; text-align:center">
+                <h2> Le tue informazioni </h2>
+                <form th:action="@{/cliente/update}" method="post">
+                    <label for="nome">Nome</label><br>
+                    <input type="text" id="nome" name="nome" th:value=${principal.getUser().getNome()} />
+                    <br><br>
+                    <label for="cognome">Cognome</label><br>
+                    <input type="text" id="cognome" name="cognome" th:value=${principal.getUser().getCognome()} />
+                    <br><br>
+                    <label for="telefono">Telefono</label><br>
+                    <input type="text" id="telefono" name="telefono" th:value=${principal.getUser().getNumero_telefono()} />
+                    <br><br>
+                    <label for="email">Email</label><br>
+                    <input type="text" id="email" name="email" th:value=${principal.getUser().getEmail()} />
+                    <br><br>
+                    <button th:href="@{/cliente/updatePassword}"> Cambia password </button>
+                    <br><br><br>
+                    <input type="submit" value="Salva dati" />
+                </form>
+                <br>
+                <form th:action="@{/cliente/logout}" method="post">
+                    <input type="submit" value="Logout" />
+                </form>
+
+                <h2> I tuoi veicoli </h2>
+                <!-- per ciascuno dei veicoli posseduti dal cliente crea un bottone con il nome del veicolo ; bottone aggiungi veicolo -->
+            </div>
+
+            <div style="width:33%; float:left; text-align:center">
+                <h2> Ordini in corso </h2>
+                <!-- per ciascuno degli ordini crea una card dove ci aggiungi le informazioni -->
+            </div>
+
+            <div style="width:33%; float:left; text-align:center">
+                <h2> Ordini consegnati </h2> 
+            </div>
+
+        </div>
+   
+    </div>
+</body>
+</html>

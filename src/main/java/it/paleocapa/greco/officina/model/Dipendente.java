@@ -63,11 +63,11 @@ public class Dipendente implements Serializable {
         this.password = password;
     }
 
-    public Long getId_utente() {
+    public Long getId_dipendente() {
         return id_dipendente;
     }
 
-    public void setId_utente(Long id_dipendente) {
+    public void setId_dipendente(Long id_dipendente) {
         this.id_dipendente = id_dipendente;
     }
 
@@ -117,6 +117,19 @@ public class Dipendente implements Serializable {
 
     public void setShop(Shop shop) {
         this.shop = shop;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+            " id_dipendente='" + getId_dipendente() + "'" +
+            ", nome='" + getNome() + "'" +
+            ", cognome='" + getCognome() + "'" +
+            ", email='" + getEmail() + "'" +
+            ", numero_telefono='" + getNumero_telefono() + "'" +
+            ", password='" + getPassword() + "'" +
+            ", shop='" + getShop() + "'" +
+            "}";
     }
 
 }

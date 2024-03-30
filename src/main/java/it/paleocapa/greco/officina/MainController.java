@@ -1,6 +1,7 @@
 package it.paleocapa.greco.officina;
 
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import it.paleocapa.greco.officina.model.Shop;
 import it.paleocapa.greco.officina.repository.ShopRepository;
 import it.paleocapa.greco.officina.user_details.AdminDetails;
+import it.paleocapa.greco.officina.user_details.ClienteDetails;
 import it.paleocapa.greco.officina.user_details.DipendenteDetails;
 
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +22,7 @@ import org.springframework.web.servlet.view.RedirectView;
 public class MainController {
 
     @Autowired private ShopRepository shopRepository;
+    org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(MainController.class);
 
     // public pages
 
@@ -38,6 +41,11 @@ public class MainController {
         return "admin/login";
     }
 
+    @RequestMapping(value = "/cliente_login", method = RequestMethod.GET)
+    public String loginCliente(Model model) {
+        return "cliente/login";
+    }
+
     // dipendente pages
     
     @RequestMapping(value="/dipendente/home", method=RequestMethod.GET)
@@ -53,8 +61,17 @@ public class MainController {
     public String homeAdmin(Model model) {
         AdminDetails adminDetails = (AdminDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("principal", adminDetails);
-        model.addAttribute("shops", shopRepository.findById_admin(adminDetails.getId_admin()));
+        model.addAttribute("shops", shopRepository.findById_admin(adminDetails.getAdmin().getId_admin()));
         return "admin/home";
+    }
+
+    // cliente pages
+
+    @RequestMapping(value="/cliente/home", method=RequestMethod.GET)
+    public String homeCliente(Model model) {
+        ClienteDetails clienteDetails = (ClienteDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("principal", clienteDetails);
+        return "cliente/home";
     }
 
     // pagine officina

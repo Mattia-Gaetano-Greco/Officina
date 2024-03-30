@@ -5,12 +5,12 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import it.paleocapa.greco.officina.model.Dipendente;
+import it.paleocapa.greco.officina.model.Cliente;
  
-public class DipendenteDetails implements UserDetails {
-    private Dipendente user;
+public class ClienteDetails implements UserDetails {
+    private Cliente user;
      
-    public DipendenteDetails(Dipendente user) {
+    public ClienteDetails(Cliente user) {
         this.user = user;
     }
  
@@ -19,11 +19,11 @@ public class DipendenteDetails implements UserDetails {
         return null;
     }
 
-    public Dipendente getUser() {
+    public Cliente getUser() {
         return user;
     }
 
-    public void setUser(Dipendente user) {
+    public void setUser(Cliente user) {
         this.user = user;
     }
     
