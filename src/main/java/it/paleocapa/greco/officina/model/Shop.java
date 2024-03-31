@@ -9,7 +9,7 @@ public class Shop implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_shop;
+    private Long id_shop;
 
     private String nome;
 
@@ -27,11 +27,11 @@ public class Shop implements Serializable {
         this.id_admin = admin.getId_admin();
     }
 
-    public int getId_shop() {
+    public Long getId_shop() {
         return id_shop;
     }
 
-    public void setId_shop(int id_shop) {
+    public void setId_shop(Long id_shop) {
         this.id_shop = id_shop;
     }
 

@@ -1,6 +1,7 @@
 package it.paleocapa.greco.officina.user_details;
 
 import java.util.Collection;
+import java.io.Serializable;
  
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

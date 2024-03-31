@@ -9,7 +9,7 @@ public class Kanban implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_kanban;
+    private Long id_kanban;
 
     private String nome;
 
@@ -23,11 +23,11 @@ public class Kanban implements Serializable {
 
     public Kanban() {}
 
-    public int getId_kanban() {
+    public Long getId_kanban() {
         return id_kanban;
     }
 
-    public void setId_kanban(int id_kanban) {
+    public void setId_kanban(Long id_kanban) {
         this.id_kanban = id_kanban;
     }
 
@@ -37,6 +37,10 @@ public class Kanban implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getNomeNoSpaces() {
+        return nome.replace(" ", "_").toLowerCase();
     }
 
     public int getPosizione() {

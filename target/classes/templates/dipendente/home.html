@@ -26,6 +26,10 @@
             <h2 style="text-align: center;">Menu</h2>
             <ul>
                 <a href="#popup-box">Le tue informazioni</a>
+                <br><br>
+                <form th:action="@{/dipendente/logout}" method="post">
+                    <input type="submit" value="Logout" />
+                </form>
             </ul>
         </div>
         <div style="width: 89%; height: 100%; float: right; border:1px solid black;">
@@ -33,27 +37,37 @@
                 <h1 style="margin-left: 50px; display:inline-block"> Ordini </h1>
                 <button style="margin-left: 50px; display:inline-block">Aggiungi ordine</button>
             </div>
-            <table style="width: 100%;">
-                <!-- make it wide 100% -->
-                <tr style="width: 100%;">
-                    <th>Titolo</th>
-                    <th>Informazioni veicolo</th>
-                    <th>Costo totale</th>
-                    <th>Data di scadenza</th>
-                    <th>Stato pagamento</th>
-                    <th>Commento cliente</th>
-                    <th>Data creazione</th>
-                    <th>Autorizzato</th>
-                    <th>Raccomandazione</th>
+            <table style="width:50%">
+                <tr style="display: inline-block; margin:5px" th:each="kanban : ${kanbans}">
+                    <td> <a th:text="${kanban.getNome()}" th:href="@{kanban?pos_kanban={pos_kanban}(pos_kanban=${kanban.getPosizione()})}"></a> </td>
                 </tr>
-                <!-- Add table rows and data here -->
             </table>
-
-
+            <table style="width: 100%;">
+                <tr style="width: 100%;">
+                    <th style="width: 11%">Titolo</th>
+                    <th style="width: 11%">Informazioni veicolo</th>
+                    <th style="width: 11%">Costo totale</th>
+                    <th style="width: 11%">Data di scadenza</th>
+                    <th style="width: 11%">Stato pagamento</th>
+                    <th style="width: 11%">Commento cliente</th>
+                    <th style="width: 11%">Data creazione</th>
+                    <th style="width: 11%">Autorizzato</th>
+                    <th style="width: 11%">Raccomandazione</th>
+                </tr>
+                <tr style="width: 100%;" th:each="ordine : ${ordini}">
+                    <td style="width: 11%; text-align: center;" th:text="'(#' + ${ordine.getId_ordine()} + ') ' + ${ordine.getTitolo()}"></td>
+                    <td style="width: 11%; text-align: center;" th:text="${ordine.getVeicolo().getMarca()} + ' - ' + ${ordine.getVeicolo().getModello()} 
+                        + ' - ' + ${ordine.getVeicolo().getAnno_costruzione()}"></td>
+                    <td style="width: 11%; text-align: center;" th:text="${ordine.getRicavo()}"></td>
+                    <td style="width: 11%; text-align: center;" th:text="${ordine.getData_scadenza()}"></td>
+                    <td style="width: 11%; text-align: center;" th:text="${ordine.isPagamento_effettuato()} ? 'Si' : 'No'"></td>
+                    <td style="width: 11%; text-align: center;" th:text="${ordine.getCommento_cliente()}"></td>
+                    <td style="width: 11%; text-align: center;" th:text="${ordine.getData_creazione()}"></td>
+                    <td style="width: 11%; text-align: center;" th:text="${ordine.isAutorizzato()} ? 'Si' : 'No'"></td>
+                    <td style="width: 11%; text-align: center;" th:text="${ordine.getRaccomandazione()}"></td>
+                <tr style="width: 100%;" ></tr>
+            </table>
         </div>
-        <!--<form th:action="@{/dipendente/logout}" method="post">
-            <input type="submit" value="Logout" />
-        </form>-->
     </div>
     <div id="popup-box" class="modal">
         <div>
