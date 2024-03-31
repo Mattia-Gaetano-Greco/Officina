@@ -1,18 +1,83 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-<meta charset="ISO-8859-1">
-<title>Pannello di controllo</title>
-</head>
-<body>
-    <div>
-        <h2 align="center">Pannello di controllo - Dipendente</h2>
-        
-        La tua email: <p th:text=${principal.username}>EMAIL</p>
+    <meta charset="ISO-8859-1">
+    <title>Pannello di controllo</title>
+    <style>
 
-        <form th:action="@{/dipendente/logout}" method="post">
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(75, 75, 75, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal:target {
+            display: flex;
+        }
+        
+    </style>
+</head>
+<body style="min-height: 97vh;">
+    <div style="height:97vh">
+        <div style="width: 10%; height: 100%; float: left; border:1px solid black;">
+            <h2 style="text-align: center;">Menu</h2>
+            <ul>
+                <a href="#popup-box">Le tue informazioni</a>
+            </ul>
+        </div>
+        <div style="width: 89%; height: 100%; float: right; border:1px solid black;">
+            <div>
+                <h1 style="margin-left: 50px; display:inline-block"> Ordini </h1>
+                <button style="margin-left: 50px; display:inline-block">Aggiungi ordine</button>
+            </div>
+            <table style="width: 100%;">
+                <!-- make it wide 100% -->
+                <tr style="width: 100%;">
+                    <th>Titolo</th>
+                    <th>Informazioni veicolo</th>
+                    <th>Costo totale</th>
+                    <th>Data di scadenza</th>
+                    <th>Stato pagamento</th>
+                    <th>Commento cliente</th>
+                    <th>Data creazione</th>
+                    <th>Autorizzato</th>
+                    <th>Raccomandazione</th>
+                </tr>
+                <!-- Add table rows and data here -->
+            </table>
+
+
+        </div>
+        <!--<form th:action="@{/dipendente/logout}" method="post">
             <input type="submit" value="Logout" />
-        </form>      
+        </form>-->
+    </div>
+    <div id="popup-box" class="modal">
+        <div>
+            <h1> Le tue informazioni: </h1>
+            <form th:action="@{/cliente/update}" method="post">
+                <label for="nome">Nome</label><br>
+                <input type="text" id="nome" name="nome" th:value=${principal.getUser().getNome()} />
+                <br><br>
+                <label for="cognome">Cognome</label><br>
+                <input type="text" id="cognome" name="cognome" th:value=${principal.getUser().getCognome()} />
+                <br><br>
+                <label for="telefono">Telefono</label><br>
+                <input type="text" id="telefono" name="telefono" th:value=${principal.getUser().getNumero_telefono()} />
+                <br><br>
+                <label for="email">Email</label><br>
+                <input type="text" id="email" name="email" th:value=${principal.getUser().getEmail()} />
+                <br><br>
+                <button th:href="@{/dipendente/update_password}"> Cambia password </button>
+                <br><br>
+                <input type="submit" value="Salva dati" />
+            </form>
+            <br>
+            <button onclick="window.location.href='#'" style="background-color: #fe0606; color: white"> Chiudi </button>
+        </div>
     </div>
 </body>
 </html>

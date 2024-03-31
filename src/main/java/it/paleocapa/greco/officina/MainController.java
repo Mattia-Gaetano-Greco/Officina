@@ -65,17 +65,6 @@ public class MainController {
         return "admin/home";
     }
 
-    // cliente pages
-
-    @RequestMapping(value="/cliente/home", method=RequestMethod.GET)
-    public String homeCliente(Model model) {
-        ClienteDetails clienteDetails = (ClienteDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("principal", clienteDetails);
-        return "cliente/home";
-    }
-
-    // pagine officina
-
     @RequestMapping(value="/admin/officina", method=RequestMethod.GET)
     public String infoOfficina(@RequestParam("id") String itemid, Model model) {
         model.addAttribute("shop", getOfficina(itemid));
@@ -105,6 +94,15 @@ public class MainController {
     public RedirectView modificaOfficinaPost(@ModelAttribute Shop shop, Model model) {
         updateOfficina(shop);
         return new RedirectView("/admin/home");
+    }
+
+    // cliente pages
+
+    @RequestMapping(value="/cliente/home", method=RequestMethod.GET)
+    public String homeCliente(Model model) {
+        ClienteDetails clienteDetails = (ClienteDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("principal", clienteDetails);
+        return "cliente/home";
     }
 
     // API - officina
