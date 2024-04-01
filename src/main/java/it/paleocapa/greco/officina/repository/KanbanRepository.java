@@ -14,4 +14,7 @@ public interface KanbanRepository extends CrudRepository<Kanban, Integer> {
 
     @Query("SELECT s FROM Kanban s WHERE s.id_shop = :id_shop AND s.posizione = :posizione")
     Optional<Kanban> findById_shopAndPosizione(Long id_shop, int posizione);
+
+    @Query("SELECT nome from Kanban")
+    List<String> findAll_Nome();
 }

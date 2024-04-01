@@ -17,9 +17,11 @@ import it.paleocapa.greco.officina.model.Shop;
 import it.paleocapa.greco.officina.repository.KanbanRepository;
 import it.paleocapa.greco.officina.repository.OrdineRepository;
 import it.paleocapa.greco.officina.repository.ShopRepository;
+import it.paleocapa.greco.officina.repository.VeicoloRepository;
 import it.paleocapa.greco.officina.user_details.AdminDetails;
 import it.paleocapa.greco.officina.user_details.ClienteDetails;
 import it.paleocapa.greco.officina.user_details.DipendenteDetails;
+import it.paleocapa.greco.officina.utilities.OrdineInputFields;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -31,6 +33,7 @@ public class MainController {
     @Autowired private ShopRepository shopRepository;
     @Autowired private OrdineRepository ordineRepository;
     @Autowired private KanbanRepository kanbanRepository;
+    @Autowired private VeicoloRepository veicoloRepository;
     org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(MainController.class);
 
     // public pages
@@ -123,6 +126,20 @@ public class MainController {
         return "dipendente/home";
     }
 
+    @RequestMapping(value="/dipendente/aggiungi_ordine", method=RequestMethod.GET)
+    public String aggiungiOrdineGet(Model model) {
+        DipendenteDetails dipendenteDetails = (DipendenteDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model = putPrincipalIfNull(model);
+        model.addAttribute("kanbans", getKanbans(dipendenteDetails.getUser().getShop().getId_shop()+""));
+        model = putOrdineInputFields(model);
+        return "dipendente/aggiungi_ordine";
+    }
+
+    @RequestMapping(value="/dipendente/aggiungi_ordine", method=RequestMethod.POST)
+    public RedirectView aggiungiOrdinePost(Model model) {
+        return new RedirectView("/dipendente/home");
+    }
+
     private Model putPrincipalIfNull(Model model) {
         if (model.getAttribute("principal") == null) {
             DipendenteDetails dipendenteDetails = (DipendenteDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -131,7 +148,26 @@ public class MainController {
         return model;
     }
 
+    private Model putOrdineInputFields(Model model) {
+        HashMap<String, String[]> dropdowns = new HashMap<String, String[]>();
+        List<String> targhe = veicoloRepository.findAll_Targa();
+        List<String> kanbans = kanbanRepository.findAll_Nome();
+        dropdowns.put("autorizzato", new String[]{"Si", "No"});        
+        dropdowns.put("targa", targhe.toArray(new String[targhe.size()]));
+        dropdowns.put("kanban", kanbans.toArray(new String[kanbans.size()]));
+        model.addAttribute("dropdowns", dropdowns);
+        model.addAttribute("fields", OrdineInputFields.input_fields);
+        return model;
+    }
+
     // API - officina
+
+    @RequestMapping(value="/api/officina/aggiungi_ordine", method=RequestMethod.GET)
+    public Ordine aggiungiOrdine(Ordine ordine) {
+        if (ordine == null)
+            return null;
+        return ordineRepository.save(ordine);
+    }
 
     @RequestMapping(value="/api/officina/get_officina", method=RequestMethod.GET)
     public Shop getOfficina(@RequestParam("id") String itemid) {
@@ -151,6 +187,8 @@ public class MainController {
 
     @RequestMapping(value="/api/officina/update_officina", method=RequestMethod.POST)
     public void updateOfficina(@ModelAttribute Shop shop) {
+        if (shop == null)
+            return;
         shopRepository.save(shop);
     }
 

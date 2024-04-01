@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="ISO-8859-1">
+        <title>Login Cliente</title>
+    </head>
+    <body>
+        <h2>Crea nuovo ordine</h2>
+
+        <div>
+        </div>
+
+        <form th:action="@{/dipendente/aggiungi_ordine}" th:object="${ordine}" method="post" style="max-width: 400px; margin: 0 auto;">
+            <div th:each="ordine_input_field : ${fields}">
+                <label for="${ordine_input_field.getNome()}" th:text="${ordine_input_field.getDescrizione()}"></label><br>
+                <div th:switch="${ordine_input_field.getTipo()}"> 
+                    <select th:case="dropdown" id="${ordine_input_field.getNome()}" name="${ordine_input_field.getNome()}">
+                        <option value="0">Seleziona</option>
+                        <option th:each="value : ${ dropdowns.get( ordine_input_field.getNome() ) }" th:value="${value}" th:text="${value}"></option>
+                    </select>
+                    <input th:case="*" type="${ordine_input_field.getTipo()}" id="${ordine_input_field.getNome()}" name="${ordine_input_field.getNome()}"/>
+                </div>
+                <br><br>
+            </div>
+            <input type="submit" value="Salva dati" />
+        </form>
+        <a th:href="@{/dipendente/home}">Annulla</a>
+    </body>
+</html>
