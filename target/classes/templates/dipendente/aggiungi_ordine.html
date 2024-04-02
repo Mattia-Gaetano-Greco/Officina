@@ -7,9 +7,6 @@
     <body>
         <h2>Crea nuovo ordine</h2>
 
-        <div>
-        </div>
-
         <form th:action="@{/dipendente/aggiungi_ordine}" th:object="${ordine}" method="post" style="max-width: 400px; margin: 0 auto;">
             <div th:each="ordine_input_field, index : ${fields}">
                 <label th:for="${ordine_input_field.getNome()}" th:text="${ordine_input_field.getDescrizione()}"></label><br>

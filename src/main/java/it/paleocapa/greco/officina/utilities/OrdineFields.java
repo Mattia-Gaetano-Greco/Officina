@@ -1,6 +1,6 @@
 package it.paleocapa.greco.officina.utilities;
 
-public class OrdineInputFields {
+public class OrdineFields {
     public static OrderInputField[] input_fields = new OrderInputField[]{
         new OrderInputField("titolo", "Titolo ordine", Tipo.text),
         new OrderInputField("targa", "Targa veicolo", Tipo.dropdown, true),
@@ -10,6 +10,18 @@ public class OrdineInputFields {
         new OrderInputField("autorizzato", "Ordine autorizzato", Tipo.dropdown, true),
         new OrderInputField("raccomandazione", "Raccomandazione dell'autofficina", Tipo.text),
         new OrderInputField("kanban", "Kanban in cui inserire l'ordine", Tipo.dropdown, true)
+    };
+
+    public static OrderShowFields[] show_fields = new OrderShowFields[]{
+        new OrderShowFields("Titolo", "'(#' + ${ordine.getId_ordine()} + ') ' + ${ordine.getTitolo()}"),
+        new OrderShowFields("Informazioni veicolo", "${ordine.getVeicolo().getMarca()} + ' - ' + ${ordine.getVeicolo().getModello()} + ' - ' + ${ordine.getVeicolo().getAnno_costruzione()}"),
+        new OrderShowFields("Costo totale", "${ordine.getRicavo()}"),
+        new OrderShowFields("Data di scadenza", "${ordine.getData_scadenza()}"),
+        new OrderShowFields("Stato pagamento", "${ordine.isPagamento_effettuato()} ? 'Si' : 'No'"),
+        new OrderShowFields("Commento cliente", "${ordine.getCommento_cliente()}"),
+        new OrderShowFields("Data creazione", "${ordine.getData_creazione()}"),
+        new OrderShowFields("Autrizzato", "${ordine.isAutorizzato()} ? 'Si' : 'No'"),
+        new OrderShowFields("Raccomandazione", "${ordine.getRaccomandazione()}")
     };
 }
 
@@ -68,6 +80,33 @@ class OrderInputField {
         this.required = required ? "true" : "false";
     }
 
+}
+
+class OrderShowFields {
+    String nome;
+    String valore_to_parse;
+
+    public OrderShowFields(String nome, String valore_to_parse) {
+        this.nome = nome;
+        this.valore_to_parse = valore_to_parse;
+    }
+
+    public String getNome() {
+        return this.nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getValore_to_parse() {
+        return this.valore_to_parse;
+    }
+
+    public void setValore_to_parse(String valore_to_parse) {
+        this.valore_to_parse = valore_to_parse;
+    }
+    
 }
 
 enum Tipo {

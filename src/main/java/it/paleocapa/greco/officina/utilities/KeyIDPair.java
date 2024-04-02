@@ -4,6 +4,8 @@ public class KeyIDPair {
     String key;
     String id;
 
+    public KeyIDPair() {}
+
     public KeyIDPair(String key, String id) {
         this.key = key;
         this.id = id;

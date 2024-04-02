@@ -4,7 +4,6 @@
     <meta charset="ISO-8859-1">
     <title>Pannello di controllo</title>
     <style>
-
         .modal {
             position: fixed;
             inset: 0;
@@ -46,28 +45,13 @@
             </table>
             <table style="width: 100%;">
                 <tr style="width: 100%;">
-                    <th style="width: 11%">Titolo</th>
-                    <th style="width: 11%">Informazioni veicolo</th>
-                    <th style="width: 11%">Costo totale</th>
-                    <th style="width: 11%">Data di scadenza</th>
-                    <th style="width: 11%">Stato pagamento</th>
-                    <th style="width: 11%">Commento cliente</th>
-                    <th style="width: 11%">Data creazione</th>
-                    <th style="width: 11%">Autorizzato</th>
-                    <th style="width: 11%">Raccomandazione</th>
+                    <th th:each="field : ${show_fields}" style="width: 11%; text-align: center" th:text="${field.getNome()}"></th>
                 </tr>
                 <tr style="width: 100%;" th:each="ordine : ${ordini}">
-                    <td style="width: 11%; text-align: center;" th:text="'(#' + ${ordine.getId_ordine()} + ') ' + ${ordine.getTitolo()}"></td>
-                    <td style="width: 11%; text-align: center;" th:text="${ordine.getVeicolo().getMarca()} + ' - ' + ${ordine.getVeicolo().getModello()} 
-                        + ' - ' + ${ordine.getVeicolo().getAnno_costruzione()}"></td>
-                    <td style="width: 11%; text-align: center;" th:text="${ordine.getRicavo()}"></td>
-                    <td style="width: 11%; text-align: center;" th:text="${ordine.getData_scadenza()}"></td>
-                    <td style="width: 11%; text-align: center;" th:text="${ordine.isPagamento_effettuato()} ? 'Si' : 'No'"></td>
-                    <td style="width: 11%; text-align: center;" th:text="${ordine.getCommento_cliente()}"></td>
-                    <td style="width: 11%; text-align: center;" th:text="${ordine.getData_creazione()}"></td>
-                    <td style="width: 11%; text-align: center;" th:text="${ordine.isAutorizzato()} ? 'Si' : 'No'"></td>
-                    <td style="width: 11%; text-align: center;" th:text="${ordine.getRaccomandazione()}"></td>
-                <tr style="width: 100%;" ></tr>
+                    <div th:each="field : ${show_fields}">
+                        <td style="width: 11%; text-align: center;" th:text="__${field.getValore_to_parse()}__"></td>
+                    </div>
+                </tr>
             </table>
         </div>
     </div>
