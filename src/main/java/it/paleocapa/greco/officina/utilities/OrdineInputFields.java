@@ -2,14 +2,14 @@ package it.paleocapa.greco.officina.utilities;
 
 public class OrdineInputFields {
     public static OrderInputField[] input_fields = new OrderInputField[]{
-        new OrderInputField("titolo", "Titolo ordine", Tipo.text, true),
+        new OrderInputField("titolo", "Titolo ordine", Tipo.text),
         new OrderInputField("targa", "Targa veicolo", Tipo.dropdown, true),
-        new OrderInputField("costo", "Costo ordine", Tipo.number),
+        new OrderInputField("ricavo", "Costo ordine", Tipo.number),
         new OrderInputField("data_scadenza", "Data di scadenza dell'ordine", Tipo.datetime),
         new OrderInputField("commento_cliente", "Commento del cliente", Tipo.text),
-        new OrderInputField("autorizzato", "Ordine autorizzato", Tipo.dropdown),
+        new OrderInputField("autorizzato", "Ordine autorizzato", Tipo.dropdown, true),
         new OrderInputField("raccomandazione", "Raccomandazione dell'autofficina", Tipo.text),
-        new OrderInputField("kanban", "Kanban in cui inserire l'ordine", Tipo.dropdown)
+        new OrderInputField("kanban", "Kanban in cui inserire l'ordine", Tipo.dropdown, true)
     };
 }
 
@@ -17,7 +17,7 @@ class OrderInputField {
     String nome;
     String descrizione;
     String tipo;
-    boolean required = false;
+    String required = "false";
 
     public OrderInputField(String nome, String descrizione, Enum<Tipo> tipo) {
         this.nome = nome;
@@ -29,7 +29,7 @@ class OrderInputField {
         this.nome = nome;
         this.descrizione = descrizione;
         this.tipo = tipo.toString();
-        this.required = required;
+        this.required = required ? "true" : "false";
     }
 
     public String getNome() {
@@ -56,16 +56,16 @@ class OrderInputField {
         this.tipo = tipo.toString();
     }
 
-    public boolean isRequired() {
+    public String isRequired() {
         return this.required;
     }
 
-    public boolean getRequired() {
+    public String getRequired() {
         return this.required;
     }
 
     public void setRequired(boolean required) {
-        this.required = required;
+        this.required = required ? "true" : "false";
     }
 
 }

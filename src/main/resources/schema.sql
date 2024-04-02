@@ -81,7 +81,9 @@ CREATE TABLE IF NOT EXISTS Veicolo(
   anno_costruzione int NOT NULL,
   targa varchar(7) NOT NULL, -- funziona per unione europea e alcuni stati US
   num_telaio varchar(17) NOT NULL, -- convenzione internazionale
-  PRIMARY KEY (targa, num_telaio)
+  id_cliente int NOT NULL,
+  PRIMARY KEY (targa, num_telaio),
+  FOREIGN KEY (id_cliente) REFERENCES Cliente(id_cliente)
 );
 
 CREATE TABLE IF NOT EXISTS Dipendente(

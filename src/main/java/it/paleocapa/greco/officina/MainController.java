@@ -14,6 +14,7 @@ import it.paleocapa.greco.officina.model.Admin;
 import it.paleocapa.greco.officina.model.Kanban;
 import it.paleocapa.greco.officina.model.Ordine;
 import it.paleocapa.greco.officina.model.Shop;
+import it.paleocapa.greco.officina.model.Veicolo;
 import it.paleocapa.greco.officina.repository.KanbanRepository;
 import it.paleocapa.greco.officina.repository.OrdineRepository;
 import it.paleocapa.greco.officina.repository.ShopRepository;
@@ -21,6 +22,7 @@ import it.paleocapa.greco.officina.repository.VeicoloRepository;
 import it.paleocapa.greco.officina.user_details.AdminDetails;
 import it.paleocapa.greco.officina.user_details.ClienteDetails;
 import it.paleocapa.greco.officina.user_details.DipendenteDetails;
+import it.paleocapa.greco.officina.utilities.KeyIDPair;
 import it.paleocapa.greco.officina.utilities.OrdineInputFields;
 
 import org.springframework.web.bind.annotation.RequestParam;
@@ -109,8 +111,6 @@ public class MainController {
     }
 
     // dipendente pages
-    
-    // ...
 
     @RequestMapping(value="/dipendente/home", method=RequestMethod.GET)
     public RedirectView homeDipendente(Model model, RedirectAttributes attributes) {
@@ -120,7 +120,7 @@ public class MainController {
     @RequestMapping(value="/dipendente/kanban", method=RequestMethod.GET)
     public String vistaKanban(@RequestParam("pos_kanban") String pos_kanban, Model model) {
         DipendenteDetails dipendenteDetails = (DipendenteDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model = putPrincipalIfNull(model);
+        model = putPrincipal(model);
         model.addAttribute("kanbans", getKanbans(dipendenteDetails.getUser().getShop().getId_shop()+""));
         model.addAttribute("ordini", getOrdini(dipendenteDetails.getUser().getShop().getId_shop()+"", pos_kanban));
         return "dipendente/home";
@@ -129,18 +129,31 @@ public class MainController {
     @RequestMapping(value="/dipendente/aggiungi_ordine", method=RequestMethod.GET)
     public String aggiungiOrdineGet(Model model) {
         DipendenteDetails dipendenteDetails = (DipendenteDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model = putPrincipalIfNull(model);
-        model.addAttribute("kanbans", getKanbans(dipendenteDetails.getUser().getShop().getId_shop()+""));
+        model = putPrincipal(model);
         model = putOrdineInputFields(model);
+        model.addAttribute("kanbans", getKanbans(dipendenteDetails.getUser().getShop().getId_shop()+""));
+        model.addAttribute("ordine", new Ordine());
         return "dipendente/aggiungi_ordine";
     }
 
     @RequestMapping(value="/dipendente/aggiungi_ordine", method=RequestMethod.POST)
-    public RedirectView aggiungiOrdinePost(Model model) {
-        return new RedirectView("/dipendente/home");
+    public RedirectView aggiungiOrdinePost(Model model, @ModelAttribute("ordine") Ordine ordine) {
+        logger.info("Model: "+model);
+        logger.info("Aggiunto ordine: " + ordine);
+        DipendenteDetails dipendenteDetails = (DipendenteDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (ordine.getTitolo() == null)
+            ordine.setTitolo("Ordine");
+        ordine.setPagamento_effettuato(false);
+        ordine.setVeicolo(veicoloRepository.findByTarga(ordine.getTarga()).get());
+        ordine.setNum_telaio(ordine.getVeicolo().getNum_telaio());
+        ordine.setId_cliente(ordine.getVeicolo().getCliente().getId_cliente());
+        ordine.setId_dipendente(dipendenteDetails.getUser().getId_dipendente());
+        ordine.setId_kanban(ordine.getKanban().getId_kanban());
+        aggiungiOrdine(ordine);
+        return new RedirectView("/dipendente/kanban?pos_kanban="+ordine.getKanban().getPosizione());
     }
 
-    private Model putPrincipalIfNull(Model model) {
+    private Model putPrincipal(Model model) {
         if (model.getAttribute("principal") == null) {
             DipendenteDetails dipendenteDetails = (DipendenteDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             model.addAttribute("principal", dipendenteDetails);
@@ -149,12 +162,26 @@ public class MainController {
     }
 
     private Model putOrdineInputFields(Model model) {
-        HashMap<String, String[]> dropdowns = new HashMap<String, String[]>();
-        List<String> targhe = veicoloRepository.findAll_Targa();
-        List<String> kanbans = kanbanRepository.findAll_Nome();
-        dropdowns.put("autorizzato", new String[]{"Si", "No"});        
-        dropdowns.put("targa", targhe.toArray(new String[targhe.size()]));
-        dropdowns.put("kanban", kanbans.toArray(new String[kanbans.size()]));
+        HashMap<String, KeyIDPair[]> dropdowns = new HashMap<String, KeyIDPair[]>();
+        Iterator<Veicolo> veicoli = veicoloRepository.findAll().iterator();
+        Iterator<Kanban> kanban = kanbanRepository.findAll().iterator();
+        List<KeyIDPair> targhe = new ArrayList<KeyIDPair>();
+        List<String> targhe2 = new ArrayList<String>();
+        List<KeyIDPair> kanbans = new ArrayList<KeyIDPair>();
+        List<String> kanbans2 = new ArrayList<String>();
+        while (veicoli.hasNext()) {
+            Veicolo v = veicoli.next();
+            targhe.add(new KeyIDPair(v.getTarga(), v.getTarga()));
+            targhe2.add(v.getTarga());
+        }
+        while (kanban.hasNext()) {
+            Kanban k = kanban.next();
+            kanbans.add(new KeyIDPair(k.getNome(), k.getId_kanban().intValue()));
+            kanbans2.add(k.getNome());
+        }
+        dropdowns.put("autorizzato", new KeyIDPair[]{new KeyIDPair("No", 0), new KeyIDPair("Si", 1)});
+        dropdowns.put("targa", targhe.toArray(new KeyIDPair[targhe.size()]));
+        dropdowns.put("kanban", kanbans.toArray(new KeyIDPair[kanbans.size()]));
         model.addAttribute("dropdowns", dropdowns);
         model.addAttribute("fields", OrdineInputFields.input_fields);
         return model;

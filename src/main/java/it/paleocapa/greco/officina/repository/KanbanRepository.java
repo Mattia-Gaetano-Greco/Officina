@@ -9,6 +9,8 @@ import java.util.*;
  
 @Repository
 public interface KanbanRepository extends CrudRepository<Kanban, Integer> {
+    Optional<Kanban> findByNome(String nome);
+
     @Query("SELECT s FROM Kanban s WHERE s.id_shop = :id_shop")
     List<Kanban> findById_shop(Long id_shop);
 

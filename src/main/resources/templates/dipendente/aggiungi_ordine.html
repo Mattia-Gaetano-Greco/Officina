@@ -11,14 +11,18 @@
         </div>
 
         <form th:action="@{/dipendente/aggiungi_ordine}" th:object="${ordine}" method="post" style="max-width: 400px; margin: 0 auto;">
-            <div th:each="ordine_input_field : ${fields}">
-                <label for="${ordine_input_field.getNome()}" th:text="${ordine_input_field.getDescrizione()}"></label><br>
-                <div th:switch="${ordine_input_field.getTipo()}"> 
-                    <select th:case="dropdown" id="${ordine_input_field.getNome()}" name="${ordine_input_field.getNome()}">
-                        <option value="0">Seleziona</option>
-                        <option th:each="value : ${ dropdowns.get( ordine_input_field.getNome() ) }" th:value="${value}" th:text="${value}"></option>
+            <div th:each="ordine_input_field, index : ${fields}">
+                <label th:for="${ordine_input_field.getNome()}" th:text="${ordine_input_field.getDescrizione()}"></label><br>
+                <div th:if="${ordine_input_field.getTipo()} == 'dropdown'"> 
+                    <select th:field="*{__${ordine_input_field.getNome()}__}" required>
+                        <option th:each="keyidpair : ${dropdowns.get(ordine_input_field.getNome())}" th:value="${keyidpair.getId()}" th:text="${keyidpair.getKey()}"></option>                        
                     </select>
-                    <input th:case="*" type="${ordine_input_field.getTipo()}" id="${ordine_input_field.getNome()}" name="${ordine_input_field.getNome()}"/>
+                </div>
+                <div th:if="${ordine_input_field.getTipo()} != 'dropdown' and ${ordine_input_field.getRequired()} == 'false'">
+                    <input th:type="${ordine_input_field.getTipo()}" th:value="*{__${ordine_input_field.getNome()}__}" th:field="*{__${ordine_input_field.getNome()}__}"/>
+                </div>
+                <div th:if="${ordine_input_field.getTipo()} != 'dropdown' and ${ordine_input_field.getRequired()} == 'true'">
+                    <input th:type="${ordine_input_field.getTipo()}" th:value="*{__${ordine_input_field.getNome()}__}" th:field="*{__${ordine_input_field.getNome()}__}"required/>
                 </div>
                 <br><br>
             </div>

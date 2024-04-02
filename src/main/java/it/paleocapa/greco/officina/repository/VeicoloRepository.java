@@ -13,4 +13,6 @@ import it.paleocapa.greco.officina.model.VeicoloId;
 public interface VeicoloRepository extends CrudRepository<Veicolo, VeicoloId> {
     @Query("SELECT targa FROM Veicolo")
     public List<String> findAll_Targa();
+
+    public Optional<Veicolo> findByTarga(String targa);
 }

@@ -31,11 +31,11 @@ public class Ordine implements Serializable {
 
     private float ricavo;
 
-    private int id_kanban;
+    private Long id_kanban;
 
     private int id_cliente;
 
-    private int id_dipendente;
+    private Long id_dipendente;
 
     private String targa;
 
@@ -142,11 +142,11 @@ public class Ordine implements Serializable {
         this.ricavo = ricavo;
     }
 
-    public int getId_kanban() {
+    public Long getId_kanban() {
         return id_kanban;
     }
 
-    public void setId_kanban(int id_kanban) {
+    public void setId_kanban(Long id_kanban) {
         this.id_kanban = id_kanban;
     }
 
@@ -158,11 +158,11 @@ public class Ordine implements Serializable {
         this.id_cliente = id_cliente;
     }
 
-    public int getId_dipendente() {
+    public Long getId_dipendente() {
         return id_dipendente;
     }
 
-    public void setId_dipendente(int id_dipendente) {
+    public void setId_dipendente(Long id_dipendente) {
         this.id_dipendente = id_dipendente;
     }
 
@@ -213,6 +213,33 @@ public class Ordine implements Serializable {
     public void setVeicolo(Veicolo veicolo) {
         this.veicolo = veicolo;
     }
+
+
+    @Override
+    public String toString() {
+        return "{" +
+            " id_ordine='" + getId_ordine() + "'" +
+            ", appuntamento_fissato='" + getAppuntamento_fissato() + "'" +
+            ", commento_cliente='" + getCommento_cliente() + "'" +
+            ", data_creazione='" + getData_creazione() + "'" +
+            ", data_scadenza='" + getData_scadenza() + "'" +
+            ", titolo='" + getTitolo() + "'" +
+            ", autorizzato='" + isAutorizzato() + "'" +
+            ", raccomandazione='" + getRaccomandazione() + "'" +
+            ", pagamento_effettuato='" + isPagamento_effettuato() + "'" +
+            ", ricavo='" + getRicavo() + "'" +
+            ", id_kanban='" + getId_kanban() + "'" +
+            ", id_cliente='" + getId_cliente() + "'" +
+            ", id_dipendente='" + getId_dipendente() + "'" +
+            ", targa='" + getTarga() + "'" +
+            ", num_telaio='" + getNum_telaio() + "'" +
+            ", kanban='" + getKanban() + "'" +
+            ", cliente='" + getCliente() + "'" +
+            ", dipendente='" + getDipendente() + "'" +
+            ", veicolo='" + getVeicolo() + "'" +
+            "}";
+    }
+
 
 }
 
