@@ -1,16 +1,19 @@
 package it.paleocapa.greco.officina.utilities;
 
+import java.util.HashMap;
+
 public class OrdineFields {
-    public static OrderInputField[] input_fields = new OrderInputField[]{
-        new OrderInputField("titolo", "Titolo ordine", Tipo.text),
-        new OrderInputField("targa", "Targa veicolo", Tipo.dropdown, true),
-        new OrderInputField("ricavo", "Costo ordine", Tipo.number),
-        new OrderInputField("data_scadenza", "Data di scadenza dell'ordine", Tipo.datetime),
-        new OrderInputField("commento_cliente", "Commento del cliente", Tipo.text),
-        new OrderInputField("autorizzato", "Ordine autorizzato", Tipo.dropdown, true),
-        new OrderInputField("raccomandazione", "Raccomandazione dell'autofficina", Tipo.text),
-        new OrderInputField("kanban", "Kanban in cui inserire l'ordine", Tipo.dropdown, true)
-    };
+    
+    public static HashMap<String, OrderInputField> input_fields = new HashMap<String, OrderInputField>(){{
+        put("titolo", new OrderInputField("Titolo ordine", Tipo.text));
+        put("targa", new OrderInputField("Targa veicolo", Tipo.dropdown, true));
+        put("ricavo", new OrderInputField("Costo ordine", Tipo.number));
+        put("data_scadenza", new OrderInputField("Data di scadenza dell'ordine", Tipo.datetime));
+        put("commento_cliente", new OrderInputField("Commento del cliente", Tipo.text));
+        put("autorizzato", new OrderInputField("Ordine autorizzato", Tipo.dropdown, true));
+        put("raccomandazione", new OrderInputField("Raccomandazione dell'autofficina", Tipo.text));
+        put("kanban", new OrderInputField("Kanban in cui inserire l'ordine", Tipo.dropdown, true));
+    }};
 
     public static OrderShowFields[] show_fields = new OrderShowFields[]{
         new OrderShowFields("Titolo", "'(#' + ${ordine.getId_ordine()} + ') ' + ${ordine.getTitolo()}"),
@@ -23,33 +26,23 @@ public class OrdineFields {
         new OrderShowFields("Autrizzato", "${ordine.isAutorizzato()} ? 'Si' : 'No'"),
         new OrderShowFields("Raccomandazione", "${ordine.getRaccomandazione()}")
     };
+    
 }
 
 class OrderInputField {
-    String nome;
     String descrizione;
     String tipo;
     String required = "false";
 
-    public OrderInputField(String nome, String descrizione, Enum<Tipo> tipo) {
-        this.nome = nome;
+    public OrderInputField(String descrizione, Enum<Tipo> tipo) {
         this.descrizione = descrizione;
         this.tipo = tipo.toString();
     }
 
-    public OrderInputField(String nome, String descrizione, Enum<Tipo> tipo, boolean required) {
-        this.nome = nome;
+    public OrderInputField(String descrizione, Enum<Tipo> tipo, boolean required) {
         this.descrizione = descrizione;
         this.tipo = tipo.toString();
         this.required = required ? "true" : "false";
-    }
-
-    public String getNome() {
-        return this.nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public String getDescrizione() {

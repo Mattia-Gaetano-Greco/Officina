@@ -65,6 +65,15 @@ public class DipendenteController {
         return new RedirectView("/dipendente/kanban?pos_kanban="+ordine.getKanban().getPosizione());
     }
 
+    @RequestMapping(value="/modifica_ordine", method=RequestMethod.GET)
+    public String modificaOrdineGet(Model model, @RequestParam("id_ordine") String id_ordine) {
+        Ordine ordine = DipendenteUtils.getFromAPI("/api/get_ordine?id="+id_ordine, Ordine.class);
+        model = DipendenteUtils.putPrincipal(model);
+        model = DipendenteUtils.putOrdineInputFields(model);
+        model.addAttribute("ordine", ordine);
+        return "dipendente/aggiungi_ordine";
+    }
+
 }
 
 class DipendenteUtils {
@@ -85,7 +94,7 @@ class DipendenteUtils {
         dropdowns.put("targa", targhe);
         dropdowns.put("kanban", id_kanbans);
         model.addAttribute("dropdowns", dropdowns);
-        model.addAttribute("fields", OrdineFields.input_fields);
+        model.addAttribute("input_fields", OrdineFields.input_fields);
         model.addAttribute("ordine", new Ordine());
         return model;
     }

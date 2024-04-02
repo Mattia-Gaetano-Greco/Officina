@@ -51,6 +51,15 @@ public class APIController {
         return null;
     }
 
+    @RequestMapping(value="/get_ordine", method=RequestMethod.GET)
+    @ResponseBody
+    public Ordine getOrdine(@RequestParam("id") String id) {
+        Optional<Ordine> ordine = ordineRepository.findById_ordine(Long.parseLong(id));
+        if (ordine.isPresent())
+            return ordine.get();
+        return null;
+    }
+
     @RequestMapping(value="/officina/find_by_admin", method=RequestMethod.GET)
     @ResponseBody
     public Shop[] findByAdmin(@RequestParam("id") String id) {

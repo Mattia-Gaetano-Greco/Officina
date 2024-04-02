@@ -43,13 +43,17 @@
                     <td> <a th:text="${kanban.getNome()}" th:href="@{kanban?pos_kanban={pos_kanban}(pos_kanban=${kanban.getPosizione()})}"></a> </td>
                 </tr>
             </table>
+            <a th:text="${input_fields}"></a>
             <table style="width: 100%;">
                 <tr style="width: 100%;">
                     <th th:each="field : ${show_fields}" style="width: 11%; text-align: center" th:text="${field.getNome()}"></th>
                 </tr>
                 <tr style="width: 100%;" th:each="ordine : ${ordini}">
                     <div th:each="field : ${show_fields}">
-                        <td style="width: 11%; text-align: center;" th:text="__${field.getValore_to_parse()}__"></td>
+                        <td th:if="${field.getNome() == 'Titolo'}" style="width: 11%; text-align: center;">
+                            <a th:href="@{__${'modifica_ordine?id_ordine=' + ordine.getId_ordine()}__}" th:text="__${field.getValore_to_parse()}__"></a>
+                        </td>
+                        <td th:unless="${field.getNome() == 'Titolo'}" style="width: 11%; text-align: center;" th:text="__${field.getValore_to_parse()}__"></td>
                     </div>
                 </tr>
             </table>
