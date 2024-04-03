@@ -2,6 +2,7 @@ package it.paleocapa.greco.officina.controllers;
 
 import java.util.*;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import it.paleocapa.greco.officina.model.Dipendente;
 import it.paleocapa.greco.officina.model.Kanban;
 import it.paleocapa.greco.officina.model.Ordine;
 import it.paleocapa.greco.officina.model.Veicolo;
@@ -78,12 +80,26 @@ public class DipendenteController {
     @RequestMapping(value="/elimina_ordine", method=RequestMethod.POST)
     public RedirectView eliminaOrdine(Model model, @RequestParam("id_ordine") String id_ordine) {
         DipendenteUtils.postToAPI("/api/ordine/delete?id="+id_ordine, null, Void.class);
-        return new RedirectView("/dipendente/kanban?pos_kanban=0");
+        return new RedirectView("/dipendente/home");
+    }
+
+    @RequestMapping(value="/aggiorna_dati", method=RequestMethod.POST)
+    public RedirectView aggiornaDati(Model model, @ModelAttribute("principal") DipendenteDetails dipendente) {
+        DipendenteUtils.updatePrincipal(dipendente);
+        return new RedirectView("/dipendente/home");
     }
 
 }
 
 class DipendenteUtils {
+
+    static void updatePrincipal(DipendenteDetails dipendente) {
+        Dipendente updatedUser = dipendente.getUser();
+        LoggerFactory.getLogger(DipendenteUtils.class).info(updatedUser.toString());
+        postToAPI("/dipendente/update", updatedUser, Void.class);
+        DipendenteDetails principal = (DipendenteDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        principal.setUser(updatedUser);
+    }
     
     static Model putPrincipal(Model model) {
         if (model.getAttribute("principal") == null)

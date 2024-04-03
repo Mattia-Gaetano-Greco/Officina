@@ -10,15 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import it.paleocapa.greco.officina.model.Admin;
-import it.paleocapa.greco.officina.model.Kanban;
-import it.paleocapa.greco.officina.model.Ordine;
-import it.paleocapa.greco.officina.model.Shop;
-import it.paleocapa.greco.officina.model.Veicolo;
-import it.paleocapa.greco.officina.repository.KanbanRepository;
-import it.paleocapa.greco.officina.repository.OrdineRepository;
-import it.paleocapa.greco.officina.repository.ShopRepository;
-import it.paleocapa.greco.officina.repository.VeicoloRepository;
+import it.paleocapa.greco.officina.model.*;
+import it.paleocapa.greco.officina.repository.*;
 import it.paleocapa.greco.officina.utilities.KeyIDPair;
 
 @Controller
@@ -49,6 +42,13 @@ public class APIController {
         if (veicolo.isPresent())
             return veicolo.get();
         return null;
+    }
+
+    @RequestMapping(value="dipendente/update", method=RequestMethod.POST)
+    @ResponseBody
+    public void updateDipendente(@RequestBody Dipendente dipendente) {
+        if (dipendente == null)
+            return;
     }
     
     @RequestMapping(value="/ordine/create", method=RequestMethod.POST)

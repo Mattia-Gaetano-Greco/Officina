@@ -20,6 +20,7 @@
     </style>
 </head>
 <body style="min-height: 97vh;">
+    <!--<div th:each="field : ${principal.getUser().getClass().getDeclaredFields()}"> <a th:text="${field.toString()}"></a> </div>-->
     <div style="height:97vh">
         <div style="width: 10%; height: 100%; float: left; border:1px solid black;">
             <h2 style="text-align: center;">Menu</h2>
@@ -62,23 +63,21 @@
     <div id="popup-box" class="modal">
         <div>
             <h1> Le tue informazioni: </h1>
-            <form th:action="@{/dipendente/update}" method="post">
-                <label for="nome">Nome</label><br>
-                <input type="text" id="nome" name="nome" th:value=${principal.getUser().getNome()} />
+            <form th:action="@{/dipendente/aggiorna_dati}" th:object="${principal}" method="post">
+                <div th:each="field_full_name : ${principal.user.getClass().getDeclaredFields()}" th:with="field=${field_full_name.toString().split('\.')[field_full_name.toString().split('\.').length-1]}">
+                    <div th:if="${field == 'nome' or field == 'cognome' or field == 'numero_telefono' or field == 'email'}">
+                        <label th:for="${field}" th:text="${field}"></label><br>
+                        <input type="text" th:field="*{user.__${field}__}" />
+                        <br><br>
+                    </div>
+                    <div th:if="${field != 'nome' and field != 'cognome' and field != 'numero_telefono' and field != 'email'}">
+                        <input type="hidden" th:field="*{user.__${field}__}"/>
+                    </div>
+                </div>
+                <input type="submit" value="Aggiorna dati"/>
                 <br><br>
-                <label for="cognome">Cognome</label><br>
-                <input type="text" id="cognome" name="cognome" th:value=${principal.getUser().getCognome()} />
-                <br><br>
-                <label for="telefono">Telefono</label><br>
-                <input type="text" id="telefono" name="telefono" th:value=${principal.getUser().getNumero_telefono()} />
-                <br><br>
-                <label for="email">Email</label><br>
-                <input type="text" id="email" name="email" th:value=${principal.getUser().getEmail()} />
-                <br><br>
-                <button th:href="@{/dipendente/update_password}"> Cambia password </button>
-                <br><br>
-                <input type="submit" value="Salva dati" />
             </form>
+            <button th:href="@{/dipendente/update_password}"> Cambia password </button>
             <br>
             <button onclick="window.location.href='#'" style="background-color: #fe0606; color: white"> Chiudi </button>
         </div>
