@@ -71,7 +71,14 @@ public class DipendenteController {
         model = DipendenteUtils.putPrincipal(model);
         model = DipendenteUtils.putOrdineInputFields(model);
         model.addAttribute("ordine", ordine);
+        model.addAttribute("is_modify", true);
         return "dipendente/aggiungi_ordine";
+    }
+
+    @RequestMapping(value="/elimina_ordine", method=RequestMethod.POST)
+    public RedirectView eliminaOrdine(Model model, @RequestParam("id_ordine") String id_ordine) {
+        DipendenteUtils.postToAPI("/api/delete_ordine?id="+id_ordine, null, Void.class);
+        return new RedirectView("/dipendente/kanban?pos_kanban=0");
     }
 
 }

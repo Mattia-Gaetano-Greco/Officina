@@ -60,6 +60,14 @@ public class APIController {
         return null;
     }
 
+    // TODO: creare /api/officina (/api/officina/get - /new - /delete) ; /api/ordine (/get - /create - /update - /delete)   ->   nome commit: refactor API endpoints
+
+    @RequestMapping(value="/delete_ordine", method=RequestMethod.POST)
+    @ResponseBody
+    public void deleteOrdine(@RequestParam("id") String id) {
+        ordineRepository.deleteById(Integer.parseInt(id));
+    }
+
     @RequestMapping(value="/officina/find_by_admin", method=RequestMethod.GET)
     @ResponseBody
     public Shop[] findByAdmin(@RequestParam("id") String id) {
