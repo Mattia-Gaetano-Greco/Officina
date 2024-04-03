@@ -19,10 +19,10 @@ public class OrdineFields {
         new OrderShowFields("Titolo", "'(#' + ${ordine.getId_ordine()} + ') ' + ${ordine.getTitolo()}"),
         new OrderShowFields("Informazioni veicolo", "${ordine.getVeicolo().getMarca()} + ' - ' + ${ordine.getVeicolo().getModello()} + ' - ' + ${ordine.getVeicolo().getAnno_costruzione()}"),
         new OrderShowFields("Costo totale", "${ordine.getRicavo()}"),
-        new OrderShowFields("Data di scadenza", "${ordine.getData_scadenza()}"),
-        new OrderShowFields("Stato pagamento", "${ordine.isPagamento_effettuato()} ? 'Si' : 'No'"),
+        new OrderShowFields("Data di scadenza", "${ordine.getData_scadenza_string()}"),
+        new OrderShowFields("Stato pagamento", "${ordine.isPagamento_effettuato()} ? 'Effettuato' : 'Non effettuato'"),
         new OrderShowFields("Commento cliente", "${ordine.getCommento_cliente()}"),
-        new OrderShowFields("Data creazione", "${ordine.getData_creazione()}"),
+        new OrderShowFields("Data creazione", "${ordine.getData_creazione_string()}"),
         new OrderShowFields("Autrizzato", "${ordine.isAutorizzato()} ? 'Si' : 'No'"),
         new OrderShowFields("Raccomandazione", "${ordine.getRaccomandazione()}")
     };
@@ -109,7 +109,7 @@ enum Tipo {
     public String toString() {
         switch (this.ordinal()) {
             case 0:
-                return "datetime";
+                return "date";
             case 1:
                 return "number";
             case 2:

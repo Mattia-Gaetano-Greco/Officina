@@ -3,7 +3,8 @@ package it.paleocapa.greco.officina.model;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "Ordine")
@@ -13,13 +14,13 @@ public class Ordine implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_ordine;
 
-    private Date appuntamento_fissato;
+    private LocalDate appuntamento_fissato;
 
     private String commento_cliente;
 
-    private Date data_creazione;
+    private LocalDate data_creazione;
 
-    private Date data_scadenza;
+    private LocalDate data_scadenza;
 
     private String titolo;
 
@@ -70,11 +71,17 @@ public class Ordine implements Serializable {
         this.id_ordine = id_ordine;
     }
 
-    public Date getAppuntamento_fissato() {
+    public LocalDate getAppuntamento_fissato() {
         return appuntamento_fissato;
     }
 
-    public void setAppuntamento_fissato(Date appuntamento_fissato) {
+    public String getAppuntamento_fissato_string() {
+        if (appuntamento_fissato != null)
+            return appuntamento_fissato.format(DateTimeFormatter.ofPattern("dd-MM-uuuu")).toString();
+        return "";
+    }
+
+    public void setAppuntamento_fissato(LocalDate appuntamento_fissato) {
         this.appuntamento_fissato = appuntamento_fissato;
     }
 
@@ -86,19 +93,31 @@ public class Ordine implements Serializable {
         this.commento_cliente = commento_cliente;
     }
 
-    public Date getData_creazione() {
+    public LocalDate getData_creazione() {
         return data_creazione;
     }
 
-    public void setData_creazione(Date data_creazione) {
+    public String getData_creazione_string() {
+        if (data_creazione != null)
+            return data_creazione.format(DateTimeFormatter.ofPattern("dd-MM-uuuu")).toString();
+        return "";
+    }
+
+    public void setData_creazione(LocalDate data_creazione) {
         this.data_creazione = data_creazione;
     }
 
-    public Date getData_scadenza() {
+    public LocalDate getData_scadenza() {
         return data_scadenza;
     }
 
-    public void setData_scadenza(Date data_scadenza) {
+    public String getData_scadenza_string() {
+        if (data_scadenza != null)
+            return data_scadenza.format(DateTimeFormatter.ofPattern("dd-MM-uuuu")).toString();
+        return "";
+    }
+
+    public void setData_scadenza(LocalDate data_scadenza) {
         this.data_scadenza = data_scadenza;
     }
 
