@@ -30,7 +30,7 @@ public class AdminController {
 
     @RequestMapping(value="/officina", method=RequestMethod.GET)
     public String infoOfficina(@RequestParam("id") String officinaid, Model model) {
-        String getShopURI = "/api/officina/get_officina?id="+officinaid;
+        String getShopURI = "/api/officina/get?id="+officinaid;
         Shop shop = AdminUtils.getFromAPI(getShopURI, Shop.class);
         model.addAttribute("shop", shop);
         return "admin/officina";
@@ -38,10 +38,10 @@ public class AdminController {
 
     @RequestMapping(value="/nuova_officina", method=RequestMethod.GET)
     public String nuovaOfficina(Model model) {
-        String newShopURI = "/api/officina/new_officina";
+        String newShopURI = "/api/officina/create";
         AdminDetails adminDetails = AdminUtils.getAuthenticatedAdminDetails();
         Long id_shop = AdminUtils.postToAPI(newShopURI, adminDetails.getAdmin(), Long.class);
-        String getShopURI = "/api/officina/get_officina?id="+id_shop;
+        String getShopURI = "/api/officina/get?id="+id_shop;
         Shop shop = AdminUtils.getFromAPI(getShopURI, Shop.class);
         model.addAttribute("shop", shop);
         return "admin/modifica_officina";
@@ -49,14 +49,14 @@ public class AdminController {
     
     @RequestMapping(value="/elimina_officina", method=RequestMethod.GET)
     public RedirectView eliminaOfficina(@RequestParam("id") String itemid, Model model) {
-        String deleteShopURI = "/api/officina/delete_officina?id="+itemid;
+        String deleteShopURI = "/api/officina/delete?id="+itemid;
         AdminUtils.postToAPI(deleteShopURI, null, Void.class);
         return new RedirectView("/admin/home");
     }
     
     @RequestMapping(value="/modifica_officina", method=RequestMethod.GET)
     public String modificaOfficina(@RequestParam("id") String officinaid, Model model) {
-        String getShopURI = "/api/officina/get_officina?id="+officinaid;
+        String getShopURI = "/api/officina/get?id="+officinaid;
         Shop shop = AdminUtils.getFromAPI(getShopURI, Shop.class);
         model.addAttribute("shop", shop);
         return "admin/modifica_officina";
@@ -64,7 +64,7 @@ public class AdminController {
 
     @RequestMapping(value="/modifica_officina", method=RequestMethod.POST)
     public RedirectView modificaOfficinaPost(@ModelAttribute Shop shop, Model model) {
-        String updateOfficinaURI = "/api/officina/update_officina";
+        String updateOfficinaURI = "/api/officina/update";
         AdminUtils.postToAPI(updateOfficinaURI, shop, Void.class);
         return new RedirectView("/admin/home");
     }

@@ -5,8 +5,8 @@
         <title>Login Cliente</title>
     </head>
     <body>
-        <h2>Crea nuovo ordine</h2>
-
+        <h2 th:if="${is_modify == true}">Modifica ordine</h2>
+        <h2 th:unless="${is_modify == true}">Crea nuovo ordine</h2>
         
         <form th:action="@{/dipendente/aggiungi_ordine}" th:object="${ordine}" method="post" style="max-width: 400px; margin: 0 auto;">
 

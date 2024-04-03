@@ -50,8 +50,16 @@ public class APIController {
             return veicolo.get();
         return null;
     }
+    
+    @RequestMapping(value="/ordine/create", method=RequestMethod.POST)
+    @ResponseBody
+    public Ordine aggiungiOrdine(@RequestBody Ordine ordine) {
+        if (ordine == null)
+            return null;
+        return ordineRepository.save(ordine);
+    }
 
-    @RequestMapping(value="/get_ordine", method=RequestMethod.GET)
+    @RequestMapping(value="/ordine/get", method=RequestMethod.GET)
     @ResponseBody
     public Ordine getOrdine(@RequestParam("id") String id) {
         Optional<Ordine> ordine = ordineRepository.findById_ordine(Long.parseLong(id));
@@ -60,9 +68,7 @@ public class APIController {
         return null;
     }
 
-    // TODO: creare /api/officina (/api/officina/get - /new - /delete) ; /api/ordine (/get - /create - /update - /delete)   ->   nome commit: refactor API endpoints
-
-    @RequestMapping(value="/delete_ordine", method=RequestMethod.POST)
+    @RequestMapping(value="/ordine/delete", method=RequestMethod.POST)
     @ResponseBody
     public void deleteOrdine(@RequestParam("id") String id) {
         ordineRepository.deleteById(Integer.parseInt(id));
@@ -74,16 +80,8 @@ public class APIController {
         List<Shop> shops = shopRepository.findById_admin(Long.parseLong(id));
         return shops.toArray(new Shop[shops.size()]);
     }
-    
-    @RequestMapping(value="/officina/aggiungi_ordine", method=RequestMethod.POST)
-    @ResponseBody
-    public Ordine aggiungiOrdine(@RequestBody Ordine ordine) {
-        if (ordine == null)
-            return null;
-        return ordineRepository.save(ordine);
-    }
 
-    @RequestMapping(value="/officina/get_officina", method=RequestMethod.GET)
+    @RequestMapping(value="/officina/get", method=RequestMethod.GET)
     @ResponseBody
     public Shop getOfficina(@RequestParam("id") String itemid) {
         Optional<Shop> shops = shopRepository.findById(Integer.parseInt(itemid));
@@ -92,7 +90,7 @@ public class APIController {
         return null;
     }
 
-    @RequestMapping(value="/officina/new_officina", method=RequestMethod.POST)
+    @RequestMapping(value="/officina/create", method=RequestMethod.POST)
     @ResponseBody
     public Long newOfficina(@RequestBody Admin admin) {
         Shop s = new Shop("New shop", admin);
@@ -100,7 +98,7 @@ public class APIController {
         return s.getId_shop();
     }
 
-    @RequestMapping(value="/officina/update_officina", method=RequestMethod.POST)
+    @RequestMapping(value="/officina/update", method=RequestMethod.POST)
     @ResponseBody
     public void updateOfficina(@RequestBody Shop shop) {
         if (shop == null)
@@ -108,7 +106,7 @@ public class APIController {
         shopRepository.save(shop);
     }
 
-    @RequestMapping(value="/officina/delete_officina", method=RequestMethod.POST)
+    @RequestMapping(value="/officina/delete", method=RequestMethod.POST)
     @ResponseBody
     public void deleteOfficina(@RequestParam("id") String shop_id) {
         shopRepository.deleteById(Integer.parseInt(shop_id));

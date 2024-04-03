@@ -61,13 +61,13 @@ public class DipendenteController {
         ordine = DipendenteUtils.prepareOrderFromInput(ordine, dipendenteDetails);
         if (ordine == null)
             return new RedirectView("/dipendente/aggiungi_ordine");
-        DipendenteUtils.postToAPI("/api/officina/aggiungi_ordine", ordine, Ordine.class);
+        DipendenteUtils.postToAPI("/api/ordine/create", ordine, Ordine.class);
         return new RedirectView("/dipendente/kanban?pos_kanban="+ordine.getKanban().getPosizione());
     }
 
     @RequestMapping(value="/modifica_ordine", method=RequestMethod.GET)
     public String modificaOrdineGet(Model model, @RequestParam("id_ordine") String id_ordine) {
-        Ordine ordine = DipendenteUtils.getFromAPI("/api/get_ordine?id="+id_ordine, Ordine.class);
+        Ordine ordine = DipendenteUtils.getFromAPI("/api/ordine/get?id="+id_ordine, Ordine.class);
         model = DipendenteUtils.putPrincipal(model);
         model = DipendenteUtils.putOrdineInputFields(model);
         model.addAttribute("ordine", ordine);
@@ -77,7 +77,7 @@ public class DipendenteController {
 
     @RequestMapping(value="/elimina_ordine", method=RequestMethod.POST)
     public RedirectView eliminaOrdine(Model model, @RequestParam("id_ordine") String id_ordine) {
-        DipendenteUtils.postToAPI("/api/delete_ordine?id="+id_ordine, null, Void.class);
+        DipendenteUtils.postToAPI("/api/ordine/delete?id="+id_ordine, null, Void.class);
         return new RedirectView("/dipendente/kanban?pos_kanban=0");
     }
 
