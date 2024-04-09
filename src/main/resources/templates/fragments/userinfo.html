@@ -1,0 +1,28 @@
+<div th:fragment="userinfo(role)">
+    <form th:action="@{__${'/' + role + '/aggiorna_dati'}__}" th:object="${principal}" method="post">
+        <div th:each="field_full_name : ${principal.user.getClass().getDeclaredFields()}" th:with="field=${field_full_name.toString().split('\.')[field_full_name.toString().split('\.').length-1]}">
+            <div th:if="${field == 'nome' or field == 'cognome'}">
+                <label th:for="${field}" th:text="${field}"></label><br>
+                <input type="text" th:field="*{user.__${field}__}" />
+                <br><br>
+            </div>
+            <div th:if="${field == 'email'}">
+                <label th:for="${field}" th:text="${field}"></label><br>
+                <input type="email" th:field="*{user.__${field}__}" />
+                <br><br>
+            </div>
+            <div th:if="${field == 'numero_telefono'}">
+                <label th:for="${field}" th:text="${field}"></label><br>
+                <input type="number" th:field="*{user.__${field}__}" />
+                <br><br>
+            </div>
+            <div th:if="${field != 'nome' and field != 'cognome' and field != 'numero_telefono' and field != 'email'}">
+                <input type="hidden" th:field="*{user.__${field}__}"/>
+            </div>
+        </div>
+        <input type="submit" value="Aggiorna dati"/>
+        <br><br>
+    </form>
+    <button th:href="@{__${'/' + role + '/update_password'}__}"> Cambia password </button>
+    <br><br>
+</div>

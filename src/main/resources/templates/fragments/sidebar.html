@@ -1,0 +1,20 @@
+<div th:fragment="sidebar(role)" style="width: 10%; height: 100%; float: left; border:1px solid black;">
+    <div>
+        <h2 style="text-align: center;">Menu</h2>
+        <ul>
+            <button onclick="document.getElementById('popup-box').style.display='flex'">Le tue informazioni</button>
+            <br><br>
+            <form th:action="@{__${'/' + role + '/logout'}__}" method="post">
+                <input type="submit" value="Logout" />
+            </form>
+            <a th:if="${role == 'admin'}"> Sono un admin! </a>
+        </ul>
+    </div>
+    <div id="popup-box" style="position: fixed; inset: 0; background: rgba(75, 75, 75, 0.7); display: none; align-items: center; justify-content: center;">
+        <div>
+            <h1> Le tue informazioni: </h1>
+            <div th:replace="~{fragments/userinfo :: userinfo(__${role}__)}"></div>
+            <button onclick="document.getElementById('popup-box').style.display='none'" style="background-color: #fe0606; color: white"> Chiudi </button>
+        </div>
+    </div>
+</div>
