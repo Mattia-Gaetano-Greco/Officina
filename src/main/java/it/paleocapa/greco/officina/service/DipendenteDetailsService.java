@@ -21,5 +21,9 @@ public class DipendenteDetailsService implements UserDetailsService {
          
         return new DipendenteDetails(user);
     }
+
+    public void updateUser(Dipendente dipendente) {
+        repo.save(dipendente);
+    }
  
 }

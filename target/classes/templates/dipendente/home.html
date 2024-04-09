@@ -65,9 +65,19 @@
             <h1> Le tue informazioni: </h1>
             <form th:action="@{/dipendente/aggiorna_dati}" th:object="${principal}" method="post">
                 <div th:each="field_full_name : ${principal.user.getClass().getDeclaredFields()}" th:with="field=${field_full_name.toString().split('\.')[field_full_name.toString().split('\.').length-1]}">
-                    <div th:if="${field == 'nome' or field == 'cognome' or field == 'numero_telefono' or field == 'email'}">
+                    <div th:if="${field == 'nome' or field == 'cognome'}">
                         <label th:for="${field}" th:text="${field}"></label><br>
                         <input type="text" th:field="*{user.__${field}__}" />
+                        <br><br>
+                    </div>
+                    <div th:if="${field == 'email'}">
+                        <label th:for="${field}" th:text="${field}"></label><br>
+                        <input type="email" th:field="*{user.__${field}__}" />
+                        <br><br>
+                    </div>
+                    <div th:if="${field == 'numero_telefono'}">
+                        <label th:for="${field}" th:text="${field}"></label><br>
+                        <input type="number" th:field="*{user.__${field}__}" />
                         <br><br>
                     </div>
                     <div th:if="${field != 'nome' and field != 'cognome' and field != 'numero_telefono' and field != 'email'}">

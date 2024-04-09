@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import it.paleocapa.greco.officina.model.*;
 import it.paleocapa.greco.officina.repository.*;
+import it.paleocapa.greco.officina.service.DipendenteDetailsService;
 import it.paleocapa.greco.officina.utilities.KeyIDPair;
 
 @Controller
@@ -22,6 +23,7 @@ public class APIController {
     @Autowired public OrdineRepository ordineRepository;
     @Autowired public KanbanRepository kanbanRepository;
     @Autowired public VeicoloRepository veicoloRepository;
+    @Autowired public DipendenteDetailsService dipendenteDetailsService;
 
     @RequestMapping(value="/get_targhe_keyidpairs", method=RequestMethod.GET)
     @ResponseBody
@@ -49,6 +51,7 @@ public class APIController {
     public void updateDipendente(@RequestBody Dipendente dipendente) {
         if (dipendente == null)
             return;
+        dipendenteDetailsService.updateUser(dipendente);
     }
     
     @RequestMapping(value="/ordine/create", method=RequestMethod.POST)

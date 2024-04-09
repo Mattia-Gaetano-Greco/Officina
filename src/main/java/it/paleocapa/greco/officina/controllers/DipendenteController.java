@@ -85,6 +85,7 @@ public class DipendenteController {
 
     @RequestMapping(value="/aggiorna_dati", method=RequestMethod.POST)
     public RedirectView aggiornaDati(Model model, @ModelAttribute("principal") DipendenteDetails dipendente) {
+        DipendenteUtils.postToAPI("/api/dipendente/update", (Dipendente)dipendente.getUser(), Void.class);
         DipendenteUtils.updatePrincipal(dipendente);
         return new RedirectView("/dipendente/home");
     }
@@ -139,13 +140,11 @@ class DipendenteUtils {
         return (DipendenteDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
-    @SuppressWarnings("null")
     static <T> T getFromAPI(String uri, Class<T> object_class) {
         uri = Endpoints.toAbsolutePathRequest(uri);
         return (T) new RestTemplate().getForObject(uri+"", object_class);
     }
 
-    @SuppressWarnings("null")
     static <T> T postToAPI(String uri, Object object, Class<T> object_class) {
         uri = Endpoints.toAbsolutePathRequest(uri);
         return new RestTemplate().postForObject(uri+"", object, object_class);
