@@ -3,11 +3,16 @@
         <h2 style="text-align: center;">Menu</h2>
         <ul>
             <button onclick="document.getElementById('popup-box').style.display='flex'">Le tue informazioni</button>
+            <div th:if="${role == 'admin'}">
+                <br>
+                <form th:action="@{/admin/visualizza_officine}" method="get">
+                    <input type="submit" value="Le tue officine" />
+                </form>
+            </div>
             <br><br>
             <form th:action="@{__${'/' + role + '/logout'}__}" method="post">
                 <input type="submit" value="Logout" />
             </form>
-            <a th:if="${role == 'admin'}"> Sono un admin! </a>
         </ul>
     </div>
     <div id="popup-box" style="position: fixed; inset: 0; background: rgba(75, 75, 75, 0.7); display: none; align-items: center; justify-content: center;">

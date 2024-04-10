@@ -2,7 +2,6 @@ package it.paleocapa.greco.officina.controllers;
 
 import java.util.*;
 
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,18 +9,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
-import it.paleocapa.greco.officina.model.Dipendente;
 import it.paleocapa.greco.officina.model.Kanban;
 import it.paleocapa.greco.officina.model.Ordine;
 import it.paleocapa.greco.officina.model.Veicolo;
 import it.paleocapa.greco.officina.user_details.DipendenteDetails;
-import it.paleocapa.greco.officina.utilities.Endpoints;
 import it.paleocapa.greco.officina.utilities.KeyIDPair;
 import it.paleocapa.greco.officina.utilities.OrdineFields;
+import it.paleocapa.greco.officina.utilities.Utilities;
 
 @Controller
 @RequestMapping("/dipendente")
@@ -34,11 +31,11 @@ public class DipendenteController {
 
     @RequestMapping(value="/kanban", method=RequestMethod.GET)
     public String vistaKanban(@RequestParam("pos_kanban") String pos_kanban, Model model) {
-        DipendenteDetails dipendenteDetails = DipendenteUtils.getAuthenticatedDipendente();
-        String getKanbansFromShopURI = "/api/officina/get_kanbans?shop_id="+dipendenteDetails.getUser().getShop().getId_shop();
-        String getOrdersFromShopURI = "/api/officina/get_ordini_kanban?shop_id="+dipendenteDetails.getUser().getShop().getId_shop()+"&pos_kanban="+pos_kanban;
-        Kanban[] kanbans = DipendenteUtils.getFromAPI(getKanbansFromShopURI, Kanban[].class);
-        Ordine[] ordini = DipendenteUtils.getFromAPI(getOrdersFromShopURI, Ordine[].class);
+        int id_shop = (DipendenteUtils.getAuthenticatedDipendente().getUser().getShop().getId_shop()).intValue();
+        String getKanbansFromShopURI = "/api/officina/get_kanbans?shop_id="+id_shop;
+        String getOrdersFromShopURI = "/api/officina/get_ordini_kanban?shop_id="+id_shop+"&pos_kanban="+pos_kanban;
+        Kanban[] kanbans = Utilities.getFromAPI(getKanbansFromShopURI, Kanban[].class);
+        Ordine[] ordini = Utilities.getFromAPI(getOrdersFromShopURI, Ordine[].class);
         model = DipendenteUtils.putPrincipal(model);
         model.addAttribute("kanbans", kanbans);
         model.addAttribute("ordini", ordini);
@@ -48,9 +45,10 @@ public class DipendenteController {
 
     @RequestMapping(value="/aggiungi_ordine", method=RequestMethod.GET)
     public String aggiungiOrdineGet(Model model) {
-        DipendenteDetails dipendenteDetails = DipendenteUtils.getAuthenticatedDipendente();
-        String getKanbansFromShopURI = "/api/officina/get_kanbans?shop_id="+dipendenteDetails.getUser().getShop().getId_shop();
-        Kanban[] kanbans = DipendenteUtils.getFromAPI(getKanbansFromShopURI, Kanban[].class);
+        int id_shop = (DipendenteUtils.getAuthenticatedDipendente().getUser().getShop().getId_shop()).intValue();
+        //DipendenteDetails dipendenteDetails = ;
+        String getKanbansFromShopURI = "/api/officina/get_kanbans?shop_id="+id_shop;
+        Kanban[] kanbans = Utilities.getFromAPI(getKanbansFromShopURI, Kanban[].class);
         model = DipendenteUtils.putPrincipal(model);
         model = DipendenteUtils.putOrdineInputFields(model);
         model.addAttribute("kanbans", kanbans);
@@ -59,17 +57,17 @@ public class DipendenteController {
 
     @RequestMapping(value="/aggiungi_ordine", method=RequestMethod.POST)
     public RedirectView aggiungiOrdinePost(Model model, @ModelAttribute("ordine") Ordine ordine) {
-        DipendenteDetails dipendenteDetails = DipendenteUtils.getAuthenticatedDipendente();        
+        DipendenteDetails dipendenteDetails = DipendenteUtils.getAuthenticatedDipendente();
         ordine = DipendenteUtils.prepareOrderFromInput(ordine, dipendenteDetails);
         if (ordine == null)
             return new RedirectView("/dipendente/aggiungi_ordine");
-        DipendenteUtils.postToAPI("/api/ordine/create", ordine, Ordine.class);
+        Utilities.postToAPI("/api/ordine/create", ordine, Ordine.class);
         return new RedirectView("/dipendente/kanban?pos_kanban="+ordine.getKanban().getPosizione());
     }
 
     @RequestMapping(value="/modifica_ordine", method=RequestMethod.GET)
     public String modificaOrdineGet(Model model, @RequestParam("id_ordine") String id_ordine) {
-        Ordine ordine = DipendenteUtils.getFromAPI("/api/ordine/get?id="+id_ordine, Ordine.class);
+        Ordine ordine = Utilities.getFromAPI("/api/ordine/get?id="+id_ordine, Ordine.class);
         model = DipendenteUtils.putPrincipal(model);
         model = DipendenteUtils.putOrdineInputFields(model);
         model.addAttribute("ordine", ordine);
@@ -79,28 +77,19 @@ public class DipendenteController {
 
     @RequestMapping(value="/elimina_ordine", method=RequestMethod.POST)
     public RedirectView eliminaOrdine(Model model, @RequestParam("id_ordine") String id_ordine) {
-        DipendenteUtils.postToAPI("/api/ordine/delete?id="+id_ordine, null, Void.class);
+        Utilities.postToAPI("/api/ordine/delete?id="+id_ordine, null, Void.class);
         return new RedirectView("/dipendente/home");
     }
 
     @RequestMapping(value="/aggiorna_dati", method=RequestMethod.POST)
     public RedirectView aggiornaDati(Model model, @ModelAttribute("principal") DipendenteDetails dipendente) {
-        DipendenteUtils.postToAPI("/api/dipendente/update", (Dipendente)dipendente.getUser(), Void.class);
-        DipendenteUtils.updatePrincipal(dipendente);
+        Utilities.updatePrincipal(dipendente);
         return new RedirectView("/dipendente/home");
     }
 
 }
 
 class DipendenteUtils {
-
-    static void updatePrincipal(DipendenteDetails dipendente) {
-        Dipendente updatedUser = dipendente.getUser();
-        LoggerFactory.getLogger(DipendenteUtils.class).info(updatedUser.toString());
-        postToAPI("/dipendente/update", updatedUser, Void.class);
-        DipendenteDetails principal = (DipendenteDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        principal.setUser(updatedUser);
-    }
     
     static Model putPrincipal(Model model) {
         if (model.getAttribute("principal") == null)
@@ -112,8 +101,8 @@ class DipendenteUtils {
         HashMap<String, KeyIDPair[]> dropdowns = new HashMap<String, KeyIDPair[]>();
         String id_kanbansURI = "/api/officina/get_kanbans_keyidpairs?shop_id="+getAuthenticatedDipendente().getUser().getShop().getId_shop();
         String targheURI = "/api/get_targhe_keyidpairs";
-        KeyIDPair[] id_kanbans = DipendenteUtils.getFromAPI(id_kanbansURI, KeyIDPair[].class);
-        KeyIDPair[] targhe = DipendenteUtils.getFromAPI(targheURI, KeyIDPair[].class);
+        KeyIDPair[] id_kanbans = Utilities.getFromAPI(id_kanbansURI, KeyIDPair[].class);
+        KeyIDPair[] targhe = Utilities.getFromAPI(targheURI, KeyIDPair[].class);
         dropdowns.put("autorizzato", new KeyIDPair[]{new KeyIDPair("No", 0), new KeyIDPair("Si", 1)});
         dropdowns.put("targa", targhe);
         dropdowns.put("kanban", id_kanbans);
@@ -124,7 +113,7 @@ class DipendenteUtils {
     }
 
     static Ordine prepareOrderFromInput(Ordine ordine, DipendenteDetails dipendenteDetails) {
-        Veicolo veicolo = DipendenteUtils.getFromAPI("/api/get_veicolo_from_targa?targa="+ordine.getTarga(), Veicolo.class);
+        Veicolo veicolo = Utilities.getFromAPI("/api/get_veicolo_from_targa?targa="+ordine.getTarga(), Veicolo.class);
         if (ordine.getTitolo() == null)
             ordine.setTitolo("Ordine");
         ordine.setPagamento_effettuato(false);
@@ -138,16 +127,6 @@ class DipendenteUtils {
 
     static DipendenteDetails getAuthenticatedDipendente() {
         return (DipendenteDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    }
-
-    static <T> T getFromAPI(String uri, Class<T> object_class) {
-        uri = Endpoints.toAbsolutePathRequest(uri);
-        return (T) new RestTemplate().getForObject(uri+"", object_class);
-    }
-
-    static <T> T postToAPI(String uri, Object object, Class<T> object_class) {
-        uri = Endpoints.toAbsolutePathRequest(uri);
-        return new RestTemplate().postForObject(uri+"", object, object_class);
     }
     
 }

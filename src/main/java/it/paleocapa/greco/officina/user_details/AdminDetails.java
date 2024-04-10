@@ -19,11 +19,11 @@ public class AdminDetails implements UserDetails {
         return null;
     }
  
-    public Admin getAdmin() {
+    public Admin getUser() {
         return user;
     }
 
-    public void setAdmin(Admin user) {
+    public void setUser(Admin user) {
         this.user = user;
     }
 
