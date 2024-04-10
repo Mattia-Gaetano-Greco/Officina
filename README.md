@@ -2,20 +2,20 @@
 Gestionale per autofficine, gestione ordini riparazioni (clone di Shopmonkey)
 
 ## Target del software
-Autofficine di piccole / medie dimensioni che si occupano esclusivamente di autoriparazioni e/o servizio gommista, con uno o più dipendenti, con o senza rifornitori ufficiali
+Autofficine di piccole / medie dimensioni che si occupano esclusivamente di autoriparazioni e/o servizio gommista, con una o più sedi, ciascuna con uno o più dipendenti
 
 ## Problemi che il software si pone l'obiettivo di risolvere
 - Passare da salvare gli ordini di riparazione su carta a salvarli in digitale, in modo da archiviarli, ordinarli e modificarli digitalmente
-- Ottenere bilanci sui guadagni di un dato periodo
-- Ottenere un elenco completo dei propri clienti, degli ordini commissionati da ciascuno e il veicolo interessato dall'ordine
-- Osservare la produttività dei singoli dipendenti e dell'autofficina
-- Suddividere gli ordini in servizi e ispezioni, con ogni ispezione divisibile in sottotask, e tenere traccia dei compiti già svolti e quelli da svolgere; tenere traccia del loro stato e del tempo impiegato per il loro completamento; 
-- Tenere traccia dei pezzi in magazzino con facilità
+- Avere accesso ad un elenco completo e aggiornabile delle sedi della propria officina
+- Per ciascuna officina della propria compagnia, avere accesso ad elenchi completi ed aggiornabili per:
+  - i propri clienti, gli ordini commissionati da ciascuno e il veicolo interessato dall'ordine
+  - i dipendenti impiegati nell'officina
+  - lo storico degli ordini svolti e di quelli attivi dell'officina
 - Permettere ai clienti di visualizzare lo storico dei propri ordini e gli ordini attivi in maniera facile e veloce
 
 ## Lista funzionalità
 - Dipendente:
-  - Aggiungi / visualizza / aggiorna / rimuovi ordini con note, servizi, ispezioni, note e task delle singole ispezioni correlate ad essi; parti dal magazzino; kanban; clienti; veicoli; _Template ispezione_; _Template task_
+  - Aggiungi / visualizza / aggiorna / rimuovi ordini con note, servizi, ispezioni, note e task delle singole ispezioni correlate ad essi; parti dal magazzino; kanban; clienti; veicoli; ***Template ispezione***; ***Template task***
   - Visualizza lo storico delle officine in cui ha lavorato e degli ordini svolti in ciascuna officina
   - Ottenere lo storico degli ordini di un cliente o di un veicolo
 - Admin:
@@ -26,9 +26,7 @@ Autofficine di piccole / medie dimensioni che si occupano esclusivamente di auto
   - Visualizza lo storico degli ordini e quelli in corso con le relative informazioni (veicolo associato, commenti propri e dell'officina, appuntamenti...)
 
 ### Considerazioni aggiuntive sulle funzionalità:
-- Il software offre la possibilità anche ai dipendenti, e non unicamente agli admin, di inserire numerosi dati anche sensibili e di estrema importanza (ad esempio i clienti) all'interno del database per una questione puramente produttiva, seppur vada a discapito della sicurezza: se ogni volta che il dipendente deve aggiungere al database un dato ha bisogno dell'intervento dell'admin, la produttività dell'officina scende e il software diventa d'intralcio più che di sostegno.
-- Quando vengono aggiunti i dati al database vengono effettuati numerosi controlli come ad esempio la verifica della rilevanza dei dati o che non vengano aggiunti dei duplicati, in modo da rendere la base di dati il più uniforme possibile.
-- Gli account admin vengono creati dal possessore del software tramite un processo non automatizzato, che prevede l'inserimento manuale all'interno del database dei dati dell'admin stesso: questa è una scelta di design atta a favorire la sicurezza del software (se il possessore del software avesse un account, e un malintenzionato dovesse entrare in possesso delle sue credenziali, il malintenzionato stesso avrebbe pieno controllo del software).
+- Gli account admin vengono creati dal gestore del software tramite un processo non automatizzato (e non automatizzabile), che prevede l'inserimento manuale all'interno del database dei dati dell'admin stesso: questa è una scelta di design atta a favorire la sicurezza del software, oltre a permetterne l'ideale gestione dei clienti.
 
 ## Diagramma E/R
 
@@ -61,11 +59,11 @@ Autofficine di piccole / medie dimensioni che si occupano esclusivamente di auto
 
 **Cliente**(telefono, nome, cognome, email, password, **id_cliente**)
 
-**Veicolo**(modello, marca, anno_costruzione, **targa**, **num_telaio**)
+**Veicolo**(modello, marca, anno_costruzione, **targa**, **num_telaio**, **Cliente_id_cliente**)
 
 **Dipendente**(nome, cognome, email, numero_telefono, password, **id_dipendente**, **Shop_id_shop**);
 
-**Ordine**(appuntamento_fissato, commento_cliente, data_creazione, data_scadenza, titolo, autorizzato, raccomandazione, pagamento_effettuato, ricavo,**id_ordine**, **Kanban_id_kanban**, **Cliente_id_cliente**, **Dipendente_id_dipendente**, **Veicolo_targa**, **Veicolo_num_telaio**)
+**Ordine**(appuntamento_fissato, commento_cliente, data_creazione, data_scadenza, titolo, autorizzato, raccomandazione, pagamento_effettuato, ricavo, costo_totale, **id_ordine**, **Kanban_id_kanban**, **Cliente_id_cliente**, **Dipendente_id_dipendente**, **Veicolo_targa**, **Veicolo_num_telaio**)
 
 **NotaOrdine**(testo, **id_nota_ordine**, **Ordine_id_ordine**)
 

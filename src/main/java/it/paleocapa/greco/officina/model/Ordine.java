@@ -32,6 +32,8 @@ public class Ordine implements Serializable {
 
     private float ricavo;
 
+    private float costo_totale;
+
     private Long id_kanban;
 
     private int id_cliente;
@@ -161,6 +163,14 @@ public class Ordine implements Serializable {
         this.ricavo = ricavo;
     }
 
+    public float getCosto_totale() {
+        return costo_totale;
+    }
+
+    public void setCosto_totale(float costo_totale) {
+        this.costo_totale = costo_totale;
+    }
+
     public Long getId_kanban() {
         return id_kanban;
     }
@@ -247,6 +257,7 @@ public class Ordine implements Serializable {
             ", raccomandazione='" + getRaccomandazione() + "'" +
             ", pagamento_effettuato='" + isPagamento_effettuato() + "'" +
             ", ricavo='" + getRicavo() + "'" +
+            ", costo_totale='" + getCosto_totale() + "'" +
             ", id_kanban='" + getId_kanban() + "'" +
             ", id_cliente='" + getId_cliente() + "'" +
             ", id_dipendente='" + getId_dipendente() + "'" +

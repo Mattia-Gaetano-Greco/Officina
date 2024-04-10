@@ -107,6 +107,7 @@ CREATE TABLE IF NOT EXISTS Ordine(
   autorizzato bool NOT NULL DEFAULT 0,
   raccomandazione varchar(500),
   pagamento_effettuato bool NOT NULL DEFAULT 0,
+  costo_totale float,
   ricavo float,
   id_ordine int NOT NULL AUTO_INCREMENT,
   id_kanban int NOT NULL,
