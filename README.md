@@ -14,16 +14,18 @@ Autofficine di piccole / medie dimensioni che si occupano esclusivamente di auto
 - Permettere ai clienti di visualizzare lo storico dei propri ordini e gli ordini attivi in maniera facile e veloce
 
 ## Lista funzionalità
-- Dipendente:
-  - Aggiungi / visualizza / aggiorna / rimuovi ordini con note, servizi, ispezioni, note e task delle singole ispezioni correlate ad essi; parti dal magazzino; kanban; clienti; veicoli; ***Template ispezione***; ***Template task***
-  - Visualizza lo storico delle officine in cui ha lavorato e degli ordini svolti in ciascuna officina
-  - Ottenere lo storico degli ordini di un cliente o di un veicolo
-- Admin:
-  - Tutti i privilegi di Dipendente
-  - Rinomina lo shop
-  - Aggiungi / visualizza / aggiorna / rimuovi dipendenti dello shop
+Per praticità le funzionalità ***aggiungi / visualizza / aggiorna / rimuovi*** verranno riportate con la sigla ***CRUD***
 - Cliente:
   - Visualizza lo storico degli ordini e quelli in corso con le relative informazioni (veicolo associato, commenti propri e dell'officina, appuntamenti...)
+  - CRUD veicoli
+  - Visualizza / aggiorna informazioni personali
+- Dipendente:
+  - CRUD ordini (dell'officina in cui è impiegato)
+  - Visualizza / aggiorna informazioni personali
+- Admin:
+  - Tutti i privilegi di Dipendente
+  - CRUD officine, ciascuna con i propri ordini, kanban e dipendenti
+  - CRUD clienti, ciascuno con i propri veicoli
 
 ### Considerazioni aggiuntive sulle funzionalità:
 - Gli account admin vengono creati dal gestore del software tramite un processo non automatizzato (e non automatizzabile), che prevede l'inserimento manuale all'interno del database dei dati dell'admin stesso: questa è una scelta di design atta a favorire la sicurezza del software, oltre a permetterne l'ideale gestione dei clienti.
@@ -63,7 +65,7 @@ Autofficine di piccole / medie dimensioni che si occupano esclusivamente di auto
 
 **Dipendente**(nome, cognome, email, numero_telefono, password, **id_dipendente**, **Shop_id_shop**);
 
-**Ordine**(appuntamento_fissato, commento_cliente, data_creazione, data_scadenza, titolo, autorizzato, raccomandazione, pagamento_effettuato, ricavo, costo_totale, **id_ordine**, **Kanban_id_kanban**, **Cliente_id_cliente**, **Dipendente_id_dipendente**, **Veicolo_targa**, **Veicolo_num_telaio**)
+**Ordine**(appuntamento_fissato, commento_cliente, data_creazione, data_scadenza, titolo, autorizzato, raccomandazione, pagamento_effettuato, ricavo, costo_totale, **id_ordine**, **Kanban_id_kanban**, **Cliente_id_cliente**, **Veicolo_targa**, **Veicolo_num_telaio**)
 
 **NotaOrdine**(testo, **id_nota_ordine**, **Ordine_id_ordine**)
 
@@ -87,4 +89,4 @@ Come accedere ad H2 Console (per visualizzare / modificare il database):
 ## FAQ
 Q: Perchè non è prevista una gestione più accurata del magazzino, con ad esempio l'acquisto di pezzi, la loro posizione nel magazino, valore dei pezzi eccetera? E la funzionalità che permette ai dipendenti di timbrare all'entrata e all'uscita della giornata lavorativa?
 
-A: Queste funzioni non sono previste a causa dell'elevata complessità che introdurrebbe all'interno del progetto.
+A: Queste, e molte altre funzioni, non sono previste a causa dell'elevata complessità che introdurrebbe all'interno del progetto.

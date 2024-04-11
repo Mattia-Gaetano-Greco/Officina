@@ -10,7 +10,7 @@
         <div>
             <div style="width:33%; float:left; text-align:center">
                 <h2> Le tue informazioni </h2>
-                <div th:replace="fragments/userinfo :: userinfo(cliente)"></div>
+                <div th:replace="~{fragments/userinfo :: userinfo(cliente)}"></div>
                 <form th:action="@{/cliente/logout}" method="post">
                     <input type="submit" value="Logout" />
                 </form>

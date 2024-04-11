@@ -112,13 +112,11 @@ CREATE TABLE IF NOT EXISTS Ordine(
   id_ordine int NOT NULL AUTO_INCREMENT,
   id_kanban int NOT NULL,
   id_cliente int NOT NULL,
-  id_dipendente int NOT NULL,
   targa varchar(7) NOT NULL,
   num_telaio varchar(17) NOT NULL,
   PRIMARY KEY (id_ordine),
   FOREIGN KEY (id_kanban) REFERENCES Kanban(id_kanban),
   FOREIGN KEY (id_cliente) REFERENCES Cliente(id_cliente),
-  FOREIGN KEY (id_dipendente) REFERENCES Dipendente(id_dipendente),
   FOREIGN KEY (targa, num_telaio) REFERENCES Veicolo(targa, num_telaio)
 );
 

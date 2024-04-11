@@ -22,7 +22,7 @@
                 <a th:text="${input_fields}"></a>
                 <table style="width: 100%;">
                     <tr style="width: 100%;">
-                        <th th:each="field : ${show_fields}" style="width: 11%; text-align: center" th:text="${field.getNome()}"></th>
+                        <th th:each="field : ${show_fields}" th:style="${'width: ' + (100 / show_fields.length) + '%; text-align: center'}" th:text="${field.getNome()}"></th>
                     </tr>
                     <tr style="width: 100%;" th:each="ordine : ${ordini}">
                         <div th:each="field : ${show_fields}">

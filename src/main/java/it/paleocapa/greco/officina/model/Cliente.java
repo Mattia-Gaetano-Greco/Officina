@@ -9,7 +9,7 @@ public class Cliente implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id_cliente;
+    private Long id_cliente;
 
     private String nome;
 
@@ -31,8 +31,8 @@ public class Cliente implements Serializable {
         this.password = password;
     }
 
-    public Cliente(Integer id, String nome, String cognome, String email, String numero_telefono, String password) {
-        this.id_cliente = id;
+    public Cliente(Long id_cliente, String nome, String cognome, String email, String numero_telefono, String password) {
+        this.id_cliente = id_cliente;
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
@@ -40,11 +40,11 @@ public class Cliente implements Serializable {
         this.password = password;
     }
 
-    public Integer getId_cliente() {
+    public Long getId_cliente() {
         return id_cliente;
     }
 
-    public void setId_cliente(Integer id_cliente) {
+    public void setId_cliente(Long id_cliente) {
         this.id_cliente = id_cliente;
     }
 

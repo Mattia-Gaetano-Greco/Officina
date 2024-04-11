@@ -36,9 +36,9 @@ public class Ordine implements Serializable {
 
     private Long id_kanban;
 
-    private int id_cliente;
+    private Long id_cliente;
 
-    private Long id_dipendente;
+    //private Long id_dipendente;
 
     private String targa;
 
@@ -52,9 +52,9 @@ public class Ordine implements Serializable {
     @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente", insertable = false, updatable = false)
     private Cliente cliente;
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "id_dipendente", referencedColumnName = "id_dipendente", insertable = false, updatable = false)
-    private Dipendente dipendente;
+    private Dipendente dipendente;*/
 
     @ManyToOne
     @JoinColumns({
@@ -179,21 +179,21 @@ public class Ordine implements Serializable {
         this.id_kanban = id_kanban;
     }
 
-    public int getId_cliente() {
+    public Long getId_cliente() {
         return id_cliente;
     }
 
-    public void setId_cliente(int id_cliente) {
+    public void setId_cliente(Long id_cliente) {
         this.id_cliente = id_cliente;
     }
 
-    public Long getId_dipendente() {
+    /*public Long getId_dipendente() {
         return id_dipendente;
     }
 
     public void setId_dipendente(Long id_dipendente) {
         this.id_dipendente = id_dipendente;
-    }
+    }*/
 
     public String getTarga() {
         return targa;
@@ -227,13 +227,13 @@ public class Ordine implements Serializable {
         this.cliente = cliente;
     }
 
-    public Dipendente getDipendente() {
+    /*public Dipendente getDipendente() {
         return dipendente;
     }
 
     public void setDipendente(Dipendente dipendente) {
         this.dipendente = dipendente;
-    }
+    }*/
 
     public Veicolo getVeicolo() {
         return veicolo;
@@ -260,12 +260,12 @@ public class Ordine implements Serializable {
             ", costo_totale='" + getCosto_totale() + "'" +
             ", id_kanban='" + getId_kanban() + "'" +
             ", id_cliente='" + getId_cliente() + "'" +
-            ", id_dipendente='" + getId_dipendente() + "'" +
+            //", id_dipendente='" + getId_dipendente() + "'" +
             ", targa='" + getTarga() + "'" +
             ", num_telaio='" + getNum_telaio() + "'" +
             ", kanban='" + getKanban() + "'" +
             ", cliente='" + getCliente() + "'" +
-            ", dipendente='" + getDipendente() + "'" +
+            //", dipendente='" + getDipendente() + "'" +
             ", veicolo='" + getVeicolo() + "'" +
             "}";
     }

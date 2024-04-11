@@ -7,7 +7,8 @@ public class OrdineFields {
     public static HashMap<String, OrderInputField> input_fields = new HashMap<String, OrderInputField>(){{
         put("titolo", new OrderInputField("Titolo ordine", Tipo.text));
         put("targa", new OrderInputField("Targa veicolo", Tipo.dropdown, true));
-        put("ricavo", new OrderInputField("Costo ordine", Tipo.number));
+        put("ricavo", new OrderInputField("Ricavo dell'ordine", Tipo.number));
+        put("costo_totale", new OrderInputField("Costo ordine", Tipo.number));
         put("data_scadenza", new OrderInputField("Data di scadenza dell'ordine", Tipo.datetime));
         put("commento_cliente", new OrderInputField("Commento del cliente", Tipo.text));
         put("autorizzato", new OrderInputField("Ordine autorizzato", Tipo.dropdown, true));
@@ -18,7 +19,8 @@ public class OrdineFields {
     public static OrderShowFields[] show_fields = new OrderShowFields[]{
         new OrderShowFields("Titolo", "'(#' + ${ordine.getId_ordine()} + ') ' + ${ordine.getTitolo()}"),
         new OrderShowFields("Informazioni veicolo", "${ordine.getVeicolo().getMarca()} + ' - ' + ${ordine.getVeicolo().getModello()} + ' - ' + ${ordine.getVeicolo().getAnno_costruzione()}"),
-        new OrderShowFields("Costo totale", "${ordine.getRicavo()}"),
+        new OrderShowFields("Ricavo", "${ordine.getRicavo()}"),
+        new OrderShowFields("Costo totale", "${ordine.getCosto_totale()}"),
         new OrderShowFields("Data di scadenza", "${ordine.getData_scadenza_string()}"),
         new OrderShowFields("Stato pagamento", "${ordine.isPagamento_effettuato()} ? 'Effettuato' : 'Non effettuato'"),
         new OrderShowFields("Commento cliente", "${ordine.getCommento_cliente()}"),
