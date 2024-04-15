@@ -30,4 +30,9 @@ public class MainController {
         return "cliente/login";
     }
 
+    @RequestMapping(value = "/403", method = RequestMethod.GET)
+    public String accessDenied(Model mode) {
+        return "403";
+    }
+
 }
