@@ -17,7 +17,6 @@ public class KanbanInterfaceImplementation {
 
     public static <T extends UserDetails> String vistaKanbanGet(@RequestParam("pos_kanban") String pos_kanban, Model model, Class<T> userDetails) {
         int id_shop = getShopIdFromUserDetails(userDetails);
-        String userRole = getUserRoleFromUserDetails(userDetails);
         String getKanbansFromShopURI = "/api/officina/get_kanbans?shop_id="+id_shop;
         String getOrdersFromShopURI = "/api/officina/get_ordini_kanban?shop_id="+id_shop+"&pos_kanban="+pos_kanban;
         Kanban[] kanbans = Utilities.getFromAPI(getKanbansFromShopURI, Kanban[].class);
@@ -26,18 +25,19 @@ public class KanbanInterfaceImplementation {
         model.addAttribute("kanbans", kanbans);
         model.addAttribute("ordini", ordini);
         model.addAttribute("show_fields", OrdineFields.show_fields);
-        return userRole+"/home";
+        addUserRoleToModel(model, userDetails);
+        return "kanban_user/home";
     }
 
     public static <T extends UserDetails> String aggiungiOrdineGet(Model model, Class<T> userDetails) {
         int id_shop = getShopIdFromUserDetails(userDetails);
-        String userRole = getUserRoleFromUserDetails(userDetails);
         String getKanbansFromShopURI = "/api/officina/get_kanbans?shop_id="+id_shop;
         Kanban[] kanbans = Utilities.getFromAPI(getKanbansFromShopURI, Kanban[].class);
         model = Utilities.putPrincipal(model, userDetails);
         model = Utilities.putOrdineInputFields(model, Long.valueOf(id_shop));
         model.addAttribute("kanbans", kanbans);
-        return userRole+"/aggiungi_ordine";
+        addUserRoleToModel(model, userDetails);
+        return "kanban_user/aggiungi_ordine";
     }
 
     public static <T extends UserDetails> RedirectView aggiungiOrdinePost(Model model, @ModelAttribute("ordine") Ordine ordine, Class<T> userDetails) {
@@ -51,13 +51,13 @@ public class KanbanInterfaceImplementation {
 
     public static <T extends UserDetails> String modificaOrdineGet(Model model, @RequestParam("id_ordine") String id_ordine, Class<T> userDetails) {
         int id_shop = getShopIdFromUserDetails(userDetails);
-        String userRole = getUserRoleFromUserDetails(userDetails);
         Ordine ordine = Utilities.getFromAPI("/api/ordine/get?id="+id_ordine, Ordine.class);
         model = Utilities.putPrincipal(model, userDetails);
         model = Utilities.putOrdineInputFields(model, Long.valueOf(id_shop));
         model.addAttribute("ordine", ordine);
         model.addAttribute("is_modify", true);
-        return userRole+"/aggiungi_ordine";
+        addUserRoleToModel(model, userDetails);
+        return "kanban_user/aggiungi_ordine";
     }
 
     public static <T extends UserDetails> RedirectView eliminaOrdine(Model model, @RequestParam("id_ordine") String id_ordine, Class<T> userDetails) {
@@ -82,6 +82,13 @@ public class KanbanInterfaceImplementation {
             return 1; // TODO: retrieve shop id from session
         }
         return -1;
-    } 
+    }
+
+    private static <T extends UserDetails> void addUserRoleToModel(Model model, Class<T> userDetails) {
+        if (userDetails == DipendenteDetails.class)
+            model.addAttribute("user_role", "dipendente");
+        else if (userDetails == AdminDetails.class)
+            model.addAttribute("user_role", "admin");
+    }
 
 }
