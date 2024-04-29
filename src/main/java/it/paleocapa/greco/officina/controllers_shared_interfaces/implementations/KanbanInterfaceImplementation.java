@@ -4,6 +4,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import it.paleocapa.greco.officina.model.Kanban;
@@ -14,6 +15,14 @@ import it.paleocapa.greco.officina.utilities.OrdineFields;
 import it.paleocapa.greco.officina.utilities.Utilities;
 
 public class KanbanInterfaceImplementation {
+
+    public static <T extends UserDetails> RedirectView home(Model model, RedirectAttributes attributes, Class<T> userDetails) {
+        if (userDetails == DipendenteDetails.class)
+            return new RedirectView("/dipendente/kanban?pos_kanban=0");
+        else if (userDetails == AdminDetails.class)
+            return new RedirectView("/admin/kanban?pos_kanban=0");
+        return null;
+    }
 
     public static <T extends UserDetails> String vistaKanbanGet(@RequestParam("pos_kanban") String pos_kanban, Model model, Class<T> userDetails) {
         int id_shop = getShopIdFromUserDetails(userDetails);

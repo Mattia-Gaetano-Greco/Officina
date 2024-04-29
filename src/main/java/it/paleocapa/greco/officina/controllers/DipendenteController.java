@@ -20,8 +20,8 @@ import it.paleocapa.greco.officina.utilities.Utilities;
 public class DipendenteController implements KanbanInterface {
 
     @RequestMapping(value="/home", method=RequestMethod.GET)
-    public RedirectView homeDipendente(Model model, RedirectAttributes attributes) {
-        return new RedirectView("/dipendente/kanban?pos_kanban=0");
+    public RedirectView home(Model model, RedirectAttributes attributes) {
+        return KanbanInterfaceImplementation.home(model, attributes, DipendenteDetails.class);
     }
 
     @RequestMapping(value="/kanban", method=RequestMethod.GET)
