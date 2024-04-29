@@ -1,25 +1,2 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-    <head>
-        <meta charset="ISO-8859-1">
-        <title>Pannello di controllo</title>
-    </head>
-    <body style="min-height: 97vh;">
-        <div style="height:97vh">
-            
-            <div th:replace="~{fragments/sidebar :: sidebar(admin)}"></div>
-            <div>
-                <h2 align="center">Pannello di controllo - Admin</h2>
-            </div>
-
-            <!--<div th:each="shop : ${shops}">
-                <a th:href="@{'/admin/officina?id=' + ${shop.id_shop}}"> <p th:text="${shop.nome}">NOME</p>  </a>
-                <a th:href="@{'/admin/elimina_officina?id=' + ${shop.id_shop}}">Elimina</a>
-                <a th:href="@{'/admin/modifica_officina?id=' + ${shop.id_shop}}">Modifica</a>
-            </div>
-            
-            <a href="/admin/nuova_officina">Crea nuova officina</a>
-            -->
-                
-    </body>
-</html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/kanbans_view :: kanbans_view(admin)}"></html>
