@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import it.paleocapa.greco.officina.converters.*;
+import it.paleocapa.greco.officina.converter.*;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {

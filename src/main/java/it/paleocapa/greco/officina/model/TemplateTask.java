@@ -3,9 +3,11 @@ package it.paleocapa.greco.officina.model;
 import java.io.Serializable;
 import java.util.Set;
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Table(name = "Template_Task")
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class TemplateTask implements Serializable {
 
     @Id
@@ -19,23 +21,5 @@ public class TemplateTask implements Serializable {
     Set<TemplateIspezione> templateIspezioni;
 
     private String nome;
-
-    public TemplateTask() {}
-
-    public int getId_templ_task() {
-        return id_templ_task;
-    }
-
-    public void setId_templ_task(int id_templ_task) {
-        this.id_templ_task = id_templ_task;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
 
 }

@@ -21,5 +21,9 @@ public class AdminDetailsService implements UserDetailsService {
          
         return new AdminDetails(user);
     }
+
+    public void updateAdmin(Admin admin) {
+        repo.save(admin);
+    }
  
 }

@@ -2,9 +2,11 @@ package it.paleocapa.greco.officina.model;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
+import lombok.*;
 
 @Entity
 @Table(name = "NotaOrdine")
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class NotaOrdine implements Serializable {
 
     @Id
@@ -12,46 +14,11 @@ public class NotaOrdine implements Serializable {
     private int id_nota_ordine;
 
     private String testo;
-
     private int id_ordine;
 
     @ManyToOne
     @JoinColumn(name = "id_ordine", referencedColumnName = "id_ordine", insertable = false, updatable = false)
     private Ordine ordine;
-
-    public NotaOrdine() {}
-
-    public int getId_nota_ordine() {
-        return id_nota_ordine;
-    }
-
-    public void setId_nota_ordine(int id_nota_ordine) {
-        this.id_nota_ordine = id_nota_ordine;
-    }
-
-    public String getTesto() {
-        return testo;
-    }
-
-    public void setTesto(String testo) {
-        this.testo = testo;
-    }
-
-    public int getId_ordine() {
-        return id_ordine;
-    }
-
-    public void setId_ordine(int id_ordine) {
-        this.id_ordine = id_ordine;
-    }
-
-    public Ordine getOrdine() {
-        return ordine;
-    }
-
-    public void setOrdine(Ordine ordine) {
-        this.ordine = ordine;
-    }
 
 }
 

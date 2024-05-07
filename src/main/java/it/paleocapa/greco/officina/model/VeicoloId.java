@@ -2,30 +2,13 @@ package it.paleocapa.greco.officina.model;
 
 import java.io.Serializable;
 import java.util.Objects;
+import lombok.*;
 
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class VeicoloId implements Serializable {
 
     private String targa;
-
     private String num_telaio;
-
-    public VeicoloId() {}
-
-    public String getTarga() {
-        return targa;
-    }
-
-    public void setTarga(String targa) {
-        this.targa = targa;
-    }
-
-    public String getNum_telaio() {
-        return num_telaio;
-    }
-
-    public void setNum_telaio(String num_telaio) {
-        this.num_telaio = num_telaio;
-    }
 
     @Override
     public boolean equals(Object o) {

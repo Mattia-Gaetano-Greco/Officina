@@ -21,5 +21,9 @@ public class ClienteDetailsService implements UserDetailsService {
          
         return new ClienteDetails(user);
     }
+
+    public void updateCliente(Cliente cliente) {
+        repo.save(cliente);
+    }
  
 }
