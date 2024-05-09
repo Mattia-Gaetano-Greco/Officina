@@ -1,4 +1,4 @@
-# Officina
+# Q&S Repairs
 Gestionale per autofficine, gestione ordini riparazioni (clone di Shopmonkey)
 
 ## Target del software
