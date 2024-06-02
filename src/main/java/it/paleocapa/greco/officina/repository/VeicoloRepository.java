@@ -15,4 +15,7 @@ public interface VeicoloRepository extends CrudRepository<Veicolo, VeicoloId> {
     public List<String> findAll_Targa();
 
     public Optional<Veicolo> findByTarga(String targa);
+
+    @Query("SELECT s FROM Veicolo s WHERE id_cliente = :id_cliente")
+    public List<Veicolo> findById_cliente(Long id_cliente);
 }

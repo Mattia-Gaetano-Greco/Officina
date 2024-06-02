@@ -14,4 +14,10 @@ public interface OrdineRepository extends CrudRepository<Ordine, Integer> {
 
     @Query("SELECT s FROM Ordine s WHERE s.id_ordine = :id_ordine")
     Optional<Ordine> findById_ordine(Long id_ordine);
+
+    @Query("SELECT s FROM Ordine s WHERE s.id_cliente = :id_cliente")
+    List<Ordine> findById_cliente(Long id_cliente);
+
+    @Query("SELECT s FROM Ordine s WHERE s.targa = :targa")
+    List<Ordine> findByTarga(String targa);
 }

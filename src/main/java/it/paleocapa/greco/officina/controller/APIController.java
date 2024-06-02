@@ -97,6 +97,20 @@ public class APIController {
         ordineRepository.deleteById(Integer.parseInt(id));
     }
 
+    @RequestMapping(value="/ordine/find_by_id_cliente", method=RequestMethod.GET)
+    @ResponseBody
+    public Ordine[] findByCliente(@RequestParam("id_cliente") String id_cliente) {
+        List<Ordine> ordini = ordineRepository.findById_cliente(Long.parseLong(id_cliente));
+        return ordini.toArray(new Ordine[ordini.size()]);
+    }
+
+    @RequestMapping(value="/ordine/find_by_targa", method=RequestMethod.GET)
+    @ResponseBody
+    public Ordine[] findByTarga(@RequestParam("targa") String targa) {
+        List<Ordine> ordini = ordineRepository.findByTarga(targa);
+        return ordini.toArray(new Ordine[ordini.size()]);
+    }
+
     @RequestMapping(value="/officina/find_by_admin", method=RequestMethod.GET)
     @ResponseBody
     public Shop[] findByAdmin(@RequestParam("id") String id) {
@@ -162,6 +176,13 @@ public class APIController {
             id_kanbans.add(new KeyIDPair(k.getNome(), k.getId_kanban().intValue()));
         }
         return id_kanbans.toArray(new KeyIDPair[id_kanbans.size()]);
+    }
+
+    @RequestMapping(value="/veicolo/find_by_id_cliente", method=RequestMethod.GET)
+    @ResponseBody
+    public Veicolo[] getVeicoli(@RequestParam("id_cliente") String id_cliente) {
+        List<Veicolo> veicoli = veicoloRepository.findById_cliente(Long.parseLong(id_cliente));
+        return veicoli.toArray(new Veicolo[veicoli.size()]);
     }
 
 }

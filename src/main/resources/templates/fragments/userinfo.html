@@ -1,28 +1,32 @@
-<div th:fragment="userinfo(role)">
+<div th:fragment="userinfo(role)" style="width:fit-content; margin: 0 auto;">
     <form th:action="@{__${'/' + role + '/aggiorna_dati'}__}" th:object="${principal}" method="post">
         <div th:each="field_full_name : ${principal.user.getClass().getDeclaredFields()}" th:with="field=${field_full_name.toString().split('\.')[field_full_name.toString().split('\.').length-1]}">
-            <div th:if="${field == 'nome' or field == 'cognome'}">
-                <label th:for="${field}" th:text="${field}"></label><br>
-                <input type="text" th:field="*{user.__${field}__}" />
+            <div th:if="${field == 'nome' or field == 'cognome'}" class="field_div">
+                <label class="field_label" th:for="${field}" th:text="${field[0].toUpperCase() + field.toUpperCase().substring(0, 0) + field.substring(1, field.length)}"></label>
+                <input class="field_value" type="text" th:field="*{user.__${field}__}" />
                 <br><br>
             </div>
-            <div th:if="${field == 'email'}">
-                <label th:for="${field}" th:text="${field}"></label><br>
-                <input type="email" th:field="*{user.__${field}__}" />
+            <div th:if="${field == 'email'}" class="field_div">
+                <label class="field_label" th:for="${field}">Email</label>
+                <input class="field_value" type="email" th:field="*{user.__${field}__}" />
                 <br><br>
             </div>
-            <div th:if="${field == 'numero_telefono'}">
-                <label th:for="${field}" th:text="${field}"></label><br>
-                <input type="number" th:field="*{user.__${field}__}" />
+            <div th:if="${field == 'numero_telefono'}" class="field_div">
+                <label class="field_label" th:for="${field}">Numero di telefono</label>
+                <input class="field_value" type="number" th:field="*{user.__${field}__}" />
                 <br><br>
             </div>
-            <div th:if="${field != 'nome' and field != 'cognome' and field != 'numero_telefono' and field != 'email'}">
-                <input type="hidden" th:field="*{user.__${field}__}"/>
+            <div th:if="${field != 'nome' and field != 'cognome' and field != 'numero_telefono' and field != 'email'}" class="field_div">
+                <input class="field_value" type="hidden" th:field="*{user.__${field}__}"/>
             </div>
         </div>
-        <input type="submit" value="Aggiorna dati"/>
+        <input type="submit" value="Aggiorna dati" class="action_button" style="background-color: #0C5EF6; border: 2px solid #0C5EF6;"/>
         <br><br>
     </form>
-    <button th:href="@{__${'/' + role + '/update_password'}__}"> Cambia password </button>
+    <button th:href="@{__${'/' + role + '/update_password'}__}" class="action_button" style="background-color: #0C5EF6; border: 2px solid #0C5EF6;"> Cambia password </button>
+    <form th:if="@{role='cliente'}" th:action="@{/cliente/logout}" method="post">
+        <br>
+        <input type="submit" value="Logout" class="action_button" style="background-color: #FF0000; border: 2px solid #FF0000;"/>
+    </form>
     <br><br>
 </div>

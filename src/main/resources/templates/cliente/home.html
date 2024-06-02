@@ -1,35 +1,157 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-<meta charset="ISO-8859-1">
-<title>Pannello di controllo</title>
-</head>
-<body>
-    <div>
-        <h1 style="text-align:left"> Gestionale Officina </h1>
-        <div>
-            <div style="width:33%; float:left; text-align:center">
-                <h2> Le tue informazioni </h2>
-                <div th:replace="~{fragments/userinfo :: userinfo(cliente)}"></div>
-                <form th:action="@{/cliente/logout}" method="post">
-                    <input type="submit" value="Logout" />
-                </form>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" style="height: 100%;">
+    <head>
+        <meta charset="ISO-8859-1">
+        <title>Pannello di controllo</title>
+        <style>
+            @import url(//fonts.googleapis.com/css?family=Inter);
+            body {
+                height: 100%;
+                overflow:hidden;
+                margin: 0px 0px;
+                font-family: Inter;
+            }
+            .custom_h1 {
+                height: 7.5%;
+                display: flex;
+                justify-content: center;
+                font-size: 32px;
+                align-items: center;
+                background-color: #15408F;
+                color: white;
+            }
+            .column {
+                width:33%;
+                float:left;
+                text-align:center;
+                height:100%;
+            }
+            .custom_h2 {
+                height: 10%;
+                display: flex;
+                justify-content: center;
+                font-size: 24px;
+                align-items: center;
+            }
+            .display_div {
+                display: flexbox;
+                justify-content: center;
+                overflow-y:auto;
+                height:90%;
+            }
+            .horizontal_divider {
+                border-top: 1px solid lightgray;
+                width: 90%;
+                margin-left: 5%;
+            }
+            .vertical_divier {
+                border-left: 1px solid lightgray;
+                height: 95%;
+                float:left;
+                width: 1px;
+                margin-top: 1.25%;
+            }
 
-                <h2> I tuoi veicoli </h2>
-                <!-- per ciascuno dei veicoli posseduti dal cliente crea un bottone con il nome del veicolo ; bottone aggiungi veicolo -->
+
+            .field_label {
+                font-weight: bold;
+                font-size:small;
+                display: block;
+                width: 100%;
+                margin-bottom: 6px;
+                text-align: left;
+            }
+            .field_value {
+                font-family: Inter;
+                font-size: small;
+                width: 100%;
+                border: 1px solid lightgray;
+                border-radius: 5px;
+                height: 18px;
+            }
+            .action_button {
+                width: 100%;
+                font-family: Inter;
+                font-weight:normal;
+                font-size: small;
+                border-radius: 5px;
+                color: white;
+            }
+            .field_div {
+                justify-content: left;
+                align-items: center;
+                margin: 0 auto;
+            }
+            .car_button {
+                font-family: Inter;
+                font-weight:normal;
+                font-size: small;
+                border-radius: 5px;
+                color: black;
+                background-color: white;
+                border: 1px solid lightgray;
+                height: 22px;
+            }
+        </style>   
+    </head>
+    <body>
+        <div style="height: 100%;">
+            <div class="custom_h1"> <b>Q&S Repairs</b> </div>
+            <div style="height:92.5%;">
+                <div class="column" style="justify-content: center; align-items: center;">
+
+                    <div class="custom_h2"> <b>Le tue informazioni</b> </div>
+                    
+                    <div th:replace="~{fragments/userinfo :: userinfo(cliente)}" style="height: 40%;"></div>
+                    <br><br>
+
+                    <div class="horizontal_divider"></div>
+
+                    <div class="custom_h2"> <b>I tuoi veicoli</b> </div>
+
+                    <div class="display_div" style="height:42%; width: fit-content; margin: 0 auto">
+                        <div th:each="veicolo : ${veicoli}" style="margin: 0 auto">
+                            <form> <!-- th:action="@{/admin/visualizza_officine}" method="get" -->
+                                <input type="submit" th:value="${veicolo.getAnno_costruzione() + ' ' + veicolo.getMarca() + ' ' + veicolo.getModello() + ' - ' + veicolo.getTarga()}" class="car_button"/>
+                            </form>
+                            <br>
+                        </div>
+                        <form> <!-- th:action="@{/admin/visualizza_officine}" method="get" -->
+                            <input type="submit" value="Aggiungi veicolo" class="action_button" style="background-color: #0C5EF6; border: 2px solid #0C5EF6;"/>
+                            <!-- TODO: implementazione -->
+                        </form>
+                        <br><br><br>
+                    </div>
+                </div>
+
+                <div class="vertical_divier"></div>
+
+                <div class="column">
+                    <div class="custom_h2"> <b>Ordini in corso</b> </div>
+                    <div class="display_div">
+                        <div th:each="ordine: ${ordini_in_corso}">
+                            <p th:replace="~{fragments/cards_ordine :: simple_card_ordine(${ordine})}" style="height: 50px"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vertical_divier"></div>
+
+                <div class="column" style="float: right;">
+                    <div class="custom_h2"> <b>Ordini consegnati</b> </div>
+                    <div class="display_div">
+                        <div th:each="ordine: ${ordini_completati}">
+                            <p th:replace="~{fragments/cards_ordine :: simple_card_ordine(${ordine})}" style="height: 50px"></p>
+                        </div>
+                        <!--
+
+                            <div th:replace="~{fragments/cards_ordine :: simple_card_ordine(ordine.getTarga(), ordine.getId_kanban(), ordine.getRicavo(), ordine.getPagamentoEffettuato())}"></div>
+                        -->
+                    </div>
+                </div>
+
             </div>
-
-            <div style="width:33%; float:left; text-align:center">
-                <h2> Ordini in corso </h2>
-                <!-- per ciascuno degli ordini crea una card dove ci aggiungi le informazioni -->
-            </div>
-
-            <div style="width:33%; float:left; text-align:center">
-                <h2> Ordini consegnati </h2> 
-            </div>
-
+    
         </div>
-   
-    </div>
-</body>
+    </body>
 </html>

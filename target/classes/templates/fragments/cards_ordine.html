@@ -1,0 +1,18 @@
+<div th:fragment="simple_card_ordine(ordine)" style="height: 75px; border: 1px solid lightgray; width: 90%; margin: 0 auto; margin-bottom: 10px; border-radius: 5px;">
+    <div style="width: 1.5%; background-color: #3171DF; height: 100%; float: left; border-radius: 5px"></div>
+    <div style="width: 98%; height: 100%">
+        <div style="height: 33%">
+            <b>Veicolo:</b> <span th:text="${ordine.getTarga()}"></span> <!-- <span th:text="${veicolo.getAnno_costruzione() + ' ' + veicolo.getMarca() + ' ' + veicolo.getModello() + ' - ' + veicolo.getTarga()}"></span> -->
+        </div>
+        <div style="height: 33%">
+            <b>Officina:</b> <span th:text="${ordine.getId_kanban()}"></span>
+        </div>
+        <div th:if="${ordine.isPagamento_effettuato()} == true" style="height: 33%">
+            <b>Pagamento effettuato</b>
+        </div>
+        <div th:unless="${ordine.isPagamento_effettuato()} == true" style="height: 33%">
+            <b>Prezzo da pagare:</b> <span th:text="${ordine.getRicavo()}"></span>
+        </div>
+    </div>
+
+</div>
