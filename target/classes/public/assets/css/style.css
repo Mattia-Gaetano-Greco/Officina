@@ -8,6 +8,12 @@ body {
 .custom_h1 {
     display: flex;
     justify-content: center;
+    font-size: 48px;
+    align-items: center;
+}
+.custom_h2 {
+    display: flex;
+    justify-content: center;
     font-size: 32px;
     align-items: center;
 }
@@ -17,7 +23,7 @@ body {
     text-align:center;
     height:100%;
 }
-.custom_h2 {
+.custom_h3 {
     height: 10%;
     display: flex;
     justify-content: center;
@@ -72,8 +78,47 @@ body {
     margin: 0 auto;
 }
 .action_button:hover, .car_button:hover {
-    transform: scale(1.15);
+    transform: scale(1.07);
 }
 .action_button, .car_button {
     transition: 0.15s;
+}
+.login_label {
+    width: 100%;
+    font-family: Inter;
+    font-weight:bold;
+    font-size: 30px;
+    color: black;
+    background-color: transparent;
+    border: none;
+    transition: 0.3s;
+}
+.login_label:hover {
+    transform: scale(1.1);
+}
+.login_credential_input {
+    height: 50px;
+    width: 300px;
+    font-family: Inter;
+    font-size: 17px;
+    padding: 0px 20px;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    margin-bottom: 10px;
+}
+.login_action_button {
+    width: 100%;
+    font-family: Inter;
+    font-weight:normal;
+    font-size: small;
+    border-radius: 5px;
+    color: white;
+    background-color: #00B591;
+    border:2px solid #00B591;
+    height: 50px;
+    font-size: 17px;
+    transition: 0.2s;
+}
+.login_action_button:hover {
+    transform: scale(1.05);
 }

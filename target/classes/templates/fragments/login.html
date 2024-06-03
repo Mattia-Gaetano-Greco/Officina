@@ -3,29 +3,29 @@
     <head>
         <meta charset="ISO-8859-1">
         <title th:text="${'Login ' + role.substring(0, 1).toUpperCase() + role.substring(1)}"></title>
+        <link rel="stylesheet" th:href="@{/assets/css/style.css}">
     </head>
-    <body>
-        <form th:action="@{__${'/' + role + '/login_processing'}__}" method="post" style="max-width: 400px; margin: 0 auto;">
-            <h2 th:text="${'Login ' + role.substring(0, 1).toUpperCase() + role.substring(1)}"></h2>
-            
-            <div th:if="${param.error}">
-                <h4 style="color: red">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</h4>
-            </div>
-                    
-            <table>
-                <tr>
-                    <td>E-mail: </td>
-                    <td><input type="email" name="email" required /></td>
-                </tr>
-                <tr>
-                    <td>Password: </td>
-                    <td><input type="password" name="password" required /></td>
-                </tr>
-                <tr><td>&nbsp;</td></tr>
-                <tr>
-                    <td colspan="2" align="center"><input type="submit" value="Login" /></td>
-                </tr>
-            </table>
+    <body style="margin: 50px; background-color: #F0F1FA;">
+        <form th:action="@{/}" method="get" style="width: 100%; margin: 0 auto; margin-bottom: 125px;">
+            <input type="submit" class="login_label" style="width: 15%; padding: left; font-weight: bold;" value="Q&S Repairs"/>
         </form>
+
+        <div style="width:100%; margin: 0 auto;">
+            <div class="custom_h1" style="font-weight: bold; font-size: 40px;" th:text="${'Login ' + role.substring(0, 1).toUpperCase() + role.substring(1)}"></div>
+    
+            <form th:action="@{__${'/' + role + '/login_processing'}__}" method="post" style="margin: 0 auto;">
+                <div class="display_div" style="width: fit-content; margin: 0 auto; padding: 50px">
+                    <input type="email" name="email" placeholder="Email" class="login_credential_input" required/>
+                    <br>
+                    <input type="password" name="password" placeholder="Password" class="login_credential_input" required/>
+                    <br>
+                    <input type="submit" class="login_action_button" value="Login"/>
+                    <div th:if="${param.error}">
+                        <h4 style="color: red">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</h4>
+                    </div>
+                </div>
+            </form>
+        </div>
+
     </body>
 </html>

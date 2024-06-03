@@ -7,18 +7,18 @@
     </head>
     <body>
         <div style="height: 100%;">
-            <div class="custom_h1" style="height: 7.5%; background-color: #15408F; color:white; font-weight: bold;">Q&S Repairs</div>
+            <div class="custom_h2" style="height: 7.5%; background-color: #15408F; color:white; font-weight: bold;">Q&S Repairs</div>
             <div style="height:92.5%;">
                 <div class="column" style="justify-content: center; align-items: center;">
 
-                    <div class="custom_h2" style="font-weight: bold;">Le tue informazioni</div>
+                    <div class="custom_h3" style="font-weight: bold;">Le tue informazioni</div>
                     
                     <div th:replace="~{fragments/userinfo :: userinfo(cliente)}" style="height: 40%;"></div>
                     <br><br>
 
                     <div class="horizontal_divider"></div>
 
-                    <div class="custom_h2" style="font-weight: bold;">I tuoi veicoli</div>
+                    <div class="custom_h3" style="font-weight: bold;">I tuoi veicoli</div>
 
                     <div class="display_div" style="height:42%; width: fit-content; margin: 0 auto; overflow: visible;">
                         <div th:each="veicolo : ${veicoli}" style="margin: 0 auto">
@@ -60,7 +60,7 @@
                 <div class="vertical_divier"></div>
 
                 <div class="column">
-                    <div class="custom_h2" style="font-weight: bold;">Ordini in corso</div>
+                    <div class="custom_h3" style="font-weight: bold;">Ordini in corso</div>
                     <div class="display_div">
                         <div th:each="ordine: ${ordini_in_corso}">
                             <p th:replace="~{fragments/cards_ordine :: simple_card_ordine(${ordine})}" style="height: 50px"></p>
@@ -71,7 +71,7 @@
                 <div class="vertical_divier"></div>
 
                 <div class="column" style="float: right;">
-                    <div class="custom_h2" style="font-weight: bold;">Ordini consegnati</div>
+                    <div class="custom_h3" style="font-weight: bold;">Ordini consegnati</div>
                     <div class="display_div">
                         <div th:each="ordine: ${ordini_completati}">
                             <p th:replace="~{fragments/cards_ordine :: simple_card_ordine(${ordine})}" style="height: 50px"></p>

@@ -1,15 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="ISO-8859-1">
-<title>Officina</title>
-</head>
-<body>
-    <div>
-        <h2>Benvenuto nel gestionale dell'officina!</h2>
-        <h4><a th:href="@{/admin/home}">Login Admin</a></h4>
-        <h4><a th:href="@{/cliente/home}">Login Cliente</a></h4>
-        <h4><a th:href="@{/dipendente/home}">Login Dipendente</a></h4>
-    </div>
-</body>
+    <head>
+        <meta charset="ISO-8859-1">
+        <title>Q&S Repairs</title>
+        <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+    </head>
+    <body style="align-items: center; justify-content: center; margin: 50px; background-color: #F0F1FA;">
+
+        <div style="width: 100%; margin: 0 auto; margin-bottom: 200px;">
+            <div class="custom_h2" style="width: 15%; padding: left; font-weight: bold;">Q&S Repairs</div>
+        </div>
+
+        <div class="display_div" style="width: 40%; margin: 0 auto; overflow: visible; justify-content: left;">
+            <form th:action="@{/admin/home}" method="get" style="margin-bottom: 25px;">
+                <input type="submit" value="Login admin" class="login_action_button" style="background-color: #15408F; border: 2px solid #15408F; font-size: 22px;"/>
+            </form>
+            <form th:action="@{/cliente/home}" method="get" style="margin-bottom: 25px;">
+                <input type="submit" value="Login cliente" class="login_action_button" style="background-color: #15408F; border: 2px solid #15408F; font-size: 22px;"/>
+            </form>
+            <form th:action="@{/dipendente/home}" method="get">
+                <input type="submit" value="Login dipendente" class="login_action_button" style="background-color: #15408F; border: 2px solid #15408F; font-size: 22px;"/>
+            </form>
+        </div>
+    </body>
 </html>
