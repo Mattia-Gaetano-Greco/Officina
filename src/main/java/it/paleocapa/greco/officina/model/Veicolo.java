@@ -14,7 +14,7 @@ public class Veicolo implements Serializable {
     private String targa;
 
     @Id
-    private String num_telaio;
+    private String numero_telaio;
 
     private int id_cliente;
 

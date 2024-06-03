@@ -1,0 +1,79 @@
+@import url(//fonts.googleapis.com/css?family=Inter);
+body {
+    height: 100%;
+    overflow:hidden;
+    margin: 0px 0px;
+    font-family: Inter;
+}
+.custom_h1 {
+    display: flex;
+    justify-content: center;
+    font-size: 32px;
+    align-items: center;
+}
+.column {
+    width:33%;
+    float:left;
+    text-align:center;
+    height:100%;
+}
+.custom_h2 {
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    font-size: 24px;
+    align-items: center;
+}
+.display_div {
+    display: flexbox;
+    justify-content: center;
+    overflow-y:auto;
+    height:90%;
+}
+.horizontal_divider {
+    border-top: 1px solid lightgray;
+    width: 90%;
+    margin-left: 5%;
+}
+.vertical_divier {
+    border-left: 1px solid lightgray;
+    height: 95%;
+    float:left;
+    width: 1px;
+    margin-top: 1.25%;
+}
+.field_label {
+    font-weight: bold;
+    font-size:small;
+    display: block;
+    width: 100%;
+    margin-bottom: 6px;
+    text-align: left;
+}
+.field_value {
+    font-family: Inter;
+    font-size: small;
+    width: calc(100% - 16px);
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 3px 8px;
+}
+.action_button {
+    width: 100%;
+    font-family: Inter;
+    font-weight:normal;
+    font-size: small;
+    border-radius: 5px;
+    color: white;
+}
+.field_div {
+    justify-content: left;
+    align-items: center;
+    margin: 0 auto;
+}
+.action_button:hover, .car_button:hover {
+    transform: scale(1.15);
+}
+.action_button, .car_button {
+    transition: 0.15s;
+}

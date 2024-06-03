@@ -5,6 +5,7 @@ import java.util.HashMap;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.client.RestTemplate;
 
@@ -63,6 +64,21 @@ public class Utilities {
         }
     }
 
+    public static <ST extends UserDetails> void updatePrincipal(ST userDetails, String password) {
+        password = new BCryptPasswordEncoder().encode(password);
+        if (userDetails.getClass() == DipendenteDetails.class) {
+            Dipendente updatedUser = ((DipendenteDetails)userDetails).getUser();
+            updatedUser.setPassword(password);
+        } else if (userDetails.getClass() == AdminDetails.class) {
+            Admin updatedUser = ((AdminDetails)userDetails).getUser();
+            updatedUser.setPassword(password);
+        } else if (userDetails.getClass() == ClienteDetails.class) {
+            Cliente updatedUser = ((ClienteDetails)userDetails).getUser();
+            updatedUser.setPassword(password);
+        }
+        updatePrincipal(userDetails);
+    }
+
     public static Model putOrdineInputFields(Model model, Long id_shop) {
         HashMap<String, KeyIDPair[]> dropdowns = new HashMap<String, KeyIDPair[]>();
         String id_kanbansURI = "/api/officina/get_kanbans_keyidpairs?shop_id="+id_shop;
@@ -84,7 +100,7 @@ public class Utilities {
             ordine.setTitolo("Ordine");
         ordine.setPagamento_effettuato(false);
         ordine.setVeicolo(veicolo);
-        ordine.setNum_telaio(ordine.getVeicolo().getNum_telaio());
+        ordine.setNumero_telaio(ordine.getVeicolo().getNumero_telaio());
         ordine.setId_cliente(ordine.getVeicolo().getCliente().getId_cliente());
         ordine.setId_kanban(ordine.getKanban().getId_kanban());
         return ordine;

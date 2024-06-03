@@ -1,32 +1,85 @@
-<div th:fragment="userinfo(role)" style="width:fit-content; margin: 0 auto;">
-    <form th:action="@{__${'/' + role + '/aggiorna_dati'}__}" th:object="${principal}" method="post">
-        <div th:each="field_full_name : ${principal.user.getClass().getDeclaredFields()}" th:with="field=${field_full_name.toString().split('\.')[field_full_name.toString().split('\.').length-1]}">
-            <div th:if="${field == 'nome' or field == 'cognome'}" class="field_div">
-                <label class="field_label" th:for="${field}" th:text="${field[0].toUpperCase() + field.toUpperCase().substring(0, 0) + field.substring(1, field.length)}"></label>
-                <input class="field_value" type="text" th:field="*{user.__${field}__}" />
-                <br><br>
+<div th:fragment="userinfo(role)">
+    <div style="width: fit-content; margin: 0 auto;">
+        <form th:action="@{__${'/' + role + '/aggiorna_dati'}__}" th:object="${principal}" method="post">
+            <div th:each="field_full_name : ${principal.user.getClass().getDeclaredFields()}" th:with="field=${field_full_name.toString().split('\.')[field_full_name.toString().split('\.').length-1]}">
+                <div th:if="${field == 'nome' or field == 'cognome'}" class="field_div">
+                    <label class="field_label" th:for="${field}" th:text="${field[0].toUpperCase() + field.toUpperCase().substring(0, 0) + field.substring(1, field.length)}"></label>
+                    <input class="field_value" type="text" th:field="*{user.__${field}__}" />
+                    <br><br>
+                </div>
+                <div th:if="${field == 'email'}" class="field_div">
+                    <label class="field_label" th:for="${field}">Email</label>
+                    <input class="field_value" type="email" th:field="*{user.__${field}__}" />
+                    <br><br>
+                </div>
+                <div th:if="${field == 'numero_telefono'}" class="field_div">
+                    <label class="field_label" th:for="${field}">Numero di telefono</label>
+                    <input class="field_value" type="number" th:field="*{user.__${field}__}" />
+                    <br><br>
+                </div>
+                <div th:if="${field != 'nome' and field != 'cognome' and field != 'numero_telefono' and field != 'email'}" class="field_div">
+                    <input class="field_value" type="hidden" th:field="*{user.__${field}__}"/>
+                </div>
             </div>
-            <div th:if="${field == 'email'}" class="field_div">
-                <label class="field_label" th:for="${field}">Email</label>
-                <input class="field_value" type="email" th:field="*{user.__${field}__}" />
-                <br><br>
-            </div>
-            <div th:if="${field == 'numero_telefono'}" class="field_div">
-                <label class="field_label" th:for="${field}">Numero di telefono</label>
-                <input class="field_value" type="number" th:field="*{user.__${field}__}" />
-                <br><br>
-            </div>
-            <div th:if="${field != 'nome' and field != 'cognome' and field != 'numero_telefono' and field != 'email'}" class="field_div">
-                <input class="field_value" type="hidden" th:field="*{user.__${field}__}"/>
-            </div>
+            <input type="submit" value="Aggiorna dati" class="action_button" style="background-color: #0C5EF6; border: 2px solid #0C5EF6;"/>
+            <br><br>
+        </form>
+        <div th:replace="~{fragments/popup_box :: popup_box('Cambia password', 'background-color: #0C5EF6; border: 2px solid #0C5EF6;', 'Cambia password', ~{::content})}">
+            <content>
+                    <div class="field_div">
+                        <label class="field_label" for="old_password">Password attuale</label>
+                        <input id="old_password" class="field_value" type="password"/>
+                        <br><br>
+                    </div>
+                    <div class="field_div">
+                        <label class="field_label" for="new_password">Nuova password</label>
+                        <input id="new_password" class="field_value" type="password"/>
+                        <br><br>
+                    </div>
+                    <div class="field_div">
+                        <label class="field_label" for="confirm_password">Conferma password</label>
+                        <input id="confirm_password" class="field_value" type="password"/>
+                        <br><br>
+                    </div>
+                    <p id="password_error_label" style="font-size: small; color: red; font-weight: bold;"></p>                    
+                    <p id="successfull_password_reset_label" style="font-size: small; color: green; font-weight: bold;"></p>
+                    <button class="action_button" style="background-color: #0C5EF6; border: 2px solid #0C5EF6;" th:onclick="
+                        document.getElementById('successfull_password_reset_label').innerText = '';
+                        document.getElementById('password_error_label').innerText = '';
+                        let old_password = document.getElementById('old_password').value;
+                        let new_password = document.getElementById('new_password').value;
+                        let confirm_password = document.getElementById('confirm_password').value;
+                        if (new_password == '' || confirm_password == '' || old_password == '') {
+                            document.getElementById('password_error_label').innerText = 'Compilare tutti i campi';
+                            return;
+                        }
+                        if (new_password != confirm_password) {
+                            document.getElementById('password_error_label').innerText = 'Le password non coincidono';
+                            return;
+                        }
+                        let xhr = new XMLHttpRequest();
+                        xhr.open('POST', [[${'aggiorna_password'}]], true);
+                        xhr.setRequestHeader('Content-Type', 'application/json');
+                        xhr.send(JSON.stringify({old_password: old_password, new_password: new_password}));
+                        xhr.onreadystatechange = function() {
+                            document.getElementById('password_error_label').innerText = xhr.status + ': ' + xhr.responseText;
+                            /*if (xhr.readyState == 4 && xhr.status == 400) {
+                                document.getElementById('password_error_label').innerText = 'Password attuale errata';
+                            } else if (xhr.readyState == 4 && xhr.status == 409) {
+                                document.getElementById('password_error_label').innerText = 'Errore nella modifica della password. Ricontrollare i dati inseriti';
+                            } else if (xhr.readyState == 4 && xhr.status == 200) {
+                                document.getElementById('password_error_label').innerText = 'Password modificata con successo';
+                            } else {
+                                document.getElementById('password_error_label').innerText = xhr.status + ': ' + xhr.responseText;
+                            }*/
+                        }">Cambia password</button>
+                    <br><br>
+            </content>
         </div>
-        <input type="submit" value="Aggiorna dati" class="action_button" style="background-color: #0C5EF6; border: 2px solid #0C5EF6;"/>
+        <form th:if="@{role='cliente'}" th:action="@{/cliente/logout}" method="post">
+            <br>
+            <input type="submit" value="Logout" class="action_button" style="background-color: #FF0000; border: 2px solid #FF0000;"/>
+        </form>
         <br><br>
-    </form>
-    <button th:href="@{__${'/' + role + '/update_password'}__}" class="action_button" style="background-color: #0C5EF6; border: 2px solid #0C5EF6;"> Cambia password </button>
-    <form th:if="@{role='cliente'}" th:action="@{/cliente/logout}" method="post">
-        <br>
-        <input type="submit" value="Logout" class="action_button" style="background-color: #FF0000; border: 2px solid #FF0000;"/>
-    </form>
-    <br><br>
+    </div>
 </div>

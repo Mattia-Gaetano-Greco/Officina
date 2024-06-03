@@ -1,8 +1,10 @@
 package it.paleocapa.greco.officina.controller;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,6 +60,11 @@ public class AdminController implements KanbanInterface, UtenteInterface<AdminDe
     @RequestMapping(value="/aggiorna_dati", method=RequestMethod.POST)
     public RedirectView aggiornaDatiPost(Model model, @ModelAttribute("principal") AdminDetails admin) {
         return UtenteInterfaceImplementation.aggiornaDatiPost(model, admin);
+    }
+
+    @RequestMapping(value="/aggiorna_password", method=RequestMethod.POST)
+    public Response aggiornaPasswordPost(Model model, @RequestBody String json) {
+        return UtenteInterfaceImplementation.aggiornaPasswordPost(model, json);
     }
 
 }

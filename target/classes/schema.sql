@@ -80,9 +80,9 @@ CREATE TABLE IF NOT EXISTS Veicolo(
   marca varchar(50) NOT NULL,
   anno_costruzione int NOT NULL,
   targa varchar(7) NOT NULL, -- funziona per unione europea e alcuni stati US
-  num_telaio varchar(17) NOT NULL, -- convenzione internazionale
+  numero_telaio varchar(17) NOT NULL, -- convenzione internazionale
   id_cliente int NOT NULL,
-  PRIMARY KEY (targa, num_telaio),
+  PRIMARY KEY (targa, numero_telaio),
   FOREIGN KEY (id_cliente) REFERENCES Cliente(id_cliente)
 );
 
@@ -113,11 +113,11 @@ CREATE TABLE IF NOT EXISTS Ordine(
   id_kanban int NOT NULL,
   id_cliente int NOT NULL,
   targa varchar(7) NOT NULL,
-  num_telaio varchar(17) NOT NULL,
+  numero_telaio varchar(17) NOT NULL,
   PRIMARY KEY (id_ordine),
   FOREIGN KEY (id_kanban) REFERENCES Kanban(id_kanban),
   FOREIGN KEY (id_cliente) REFERENCES Cliente(id_cliente),
-  FOREIGN KEY (targa, num_telaio) REFERENCES Veicolo(targa, num_telaio)
+  FOREIGN KEY (targa, numero_telaio) REFERENCES Veicolo(targa, numero_telaio)
 );
 
 CREATE TABLE IF NOT EXISTS Nota_Ordine(

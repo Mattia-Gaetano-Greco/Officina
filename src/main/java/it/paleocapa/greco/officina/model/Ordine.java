@@ -30,7 +30,7 @@ public class Ordine implements Serializable {
     private Long id_cliente;
     //private Long id_dipendente;
     private String targa;
-    private String num_telaio;
+    private String numero_telaio;
 
     @ManyToOne
     @JoinColumn(name = "id_kanban", referencedColumnName = "id_kanban", insertable = false, updatable = false)
@@ -47,7 +47,7 @@ public class Ordine implements Serializable {
     @ManyToOne
     @JoinColumns({
         @JoinColumn(name = "targa", referencedColumnName = "targa", insertable = false, updatable = false),
-        @JoinColumn(name = "num_telaio", referencedColumnName = "num_telaio", insertable = false, updatable = false)
+        @JoinColumn(name = "numero_telaio", referencedColumnName = "numero_telaio", insertable = false, updatable = false)
     })
     private Veicolo veicolo;
 

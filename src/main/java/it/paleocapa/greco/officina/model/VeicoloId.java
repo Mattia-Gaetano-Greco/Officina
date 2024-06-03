@@ -8,7 +8,7 @@ import lombok.*;
 public class VeicoloId implements Serializable {
 
     private String targa;
-    private String num_telaio;
+    private String numero_telaio;
 
     @Override
     public boolean equals(Object o) {
@@ -16,11 +16,11 @@ public class VeicoloId implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         VeicoloId veicoloId = (VeicoloId) o;
         return Objects.equals(targa, veicoloId.targa) &&
-                Objects.equals(num_telaio, veicoloId.num_telaio);
+                Objects.equals(numero_telaio, veicoloId.numero_telaio);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(targa, num_telaio);
+        return Objects.hash(targa, numero_telaio);
     }
 }

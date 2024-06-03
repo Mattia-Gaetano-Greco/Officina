@@ -1,0 +1,11 @@
+<div th:fragment="popup_box(action_button_text, action_button_style, title, content)">
+    <button class="action_button" th:style="${action_button_style}" th:onclick="document.getElementById( [[${action_button_text + title}]] ).style.display='flex'" th:text="${action_button_text}"></button>
+    <div th:id="${action_button_text + title}" style="position: fixed; inset: 0; background: rgba(75, 75, 75, 0.7); display: none; align-items: center; justify-content: center;">
+        <div style="background-color: white; border-radius: 10px; border: 0px; border: 50px solid white;">
+            <div class="custom_h1" th:text="${title}" style="font-weight: bold;"></div>
+            <br>
+            <div th:replace="${content}"></div>
+            <button th:onclick="document.getElementById( [[${action_button_text + title}]] ).style.display='none'" class="action_button" style="background-color: #F60C0C; border: 2px solid #F60C0C"> Chiudi </button>
+        </div>
+    </div>
+</div>

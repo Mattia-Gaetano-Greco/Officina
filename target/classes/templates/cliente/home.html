@@ -3,117 +3,50 @@
     <head>
         <meta charset="ISO-8859-1">
         <title>Pannello di controllo</title>
-        <style>
-            @import url(//fonts.googleapis.com/css?family=Inter);
-            body {
-                height: 100%;
-                overflow:hidden;
-                margin: 0px 0px;
-                font-family: Inter;
-            }
-            .custom_h1 {
-                height: 7.5%;
-                display: flex;
-                justify-content: center;
-                font-size: 32px;
-                align-items: center;
-                background-color: #15408F;
-                color: white;
-            }
-            .column {
-                width:33%;
-                float:left;
-                text-align:center;
-                height:100%;
-            }
-            .custom_h2 {
-                height: 10%;
-                display: flex;
-                justify-content: center;
-                font-size: 24px;
-                align-items: center;
-            }
-            .display_div {
-                display: flexbox;
-                justify-content: center;
-                overflow-y:auto;
-                height:90%;
-            }
-            .horizontal_divider {
-                border-top: 1px solid lightgray;
-                width: 90%;
-                margin-left: 5%;
-            }
-            .vertical_divier {
-                border-left: 1px solid lightgray;
-                height: 95%;
-                float:left;
-                width: 1px;
-                margin-top: 1.25%;
-            }
-
-
-            .field_label {
-                font-weight: bold;
-                font-size:small;
-                display: block;
-                width: 100%;
-                margin-bottom: 6px;
-                text-align: left;
-            }
-            .field_value {
-                font-family: Inter;
-                font-size: small;
-                width: 100%;
-                border: 1px solid lightgray;
-                border-radius: 5px;
-                height: 18px;
-            }
-            .action_button {
-                width: 100%;
-                font-family: Inter;
-                font-weight:normal;
-                font-size: small;
-                border-radius: 5px;
-                color: white;
-            }
-            .field_div {
-                justify-content: left;
-                align-items: center;
-                margin: 0 auto;
-            }
-            .car_button {
-                font-family: Inter;
-                font-weight:normal;
-                font-size: small;
-                border-radius: 5px;
-                color: black;
-                background-color: white;
-                border: 1px solid lightgray;
-                height: 22px;
-            }
-        </style>   
+        <link rel="stylesheet" th:href="@{/assets/css/style.css}">
     </head>
     <body>
         <div style="height: 100%;">
-            <div class="custom_h1"> <b>Q&S Repairs</b> </div>
+            <div class="custom_h1" style="height: 7.5%; background-color: #15408F; color:white; font-weight: bold;">Q&S Repairs</div>
             <div style="height:92.5%;">
                 <div class="column" style="justify-content: center; align-items: center;">
 
-                    <div class="custom_h2"> <b>Le tue informazioni</b> </div>
+                    <div class="custom_h2" style="font-weight: bold;">Le tue informazioni</div>
                     
                     <div th:replace="~{fragments/userinfo :: userinfo(cliente)}" style="height: 40%;"></div>
                     <br><br>
 
                     <div class="horizontal_divider"></div>
 
-                    <div class="custom_h2"> <b>I tuoi veicoli</b> </div>
+                    <div class="custom_h2" style="font-weight: bold;">I tuoi veicoli</div>
 
-                    <div class="display_div" style="height:42%; width: fit-content; margin: 0 auto">
+                    <div class="display_div" style="height:42%; width: fit-content; margin: 0 auto; overflow: visible;">
                         <div th:each="veicolo : ${veicoli}" style="margin: 0 auto">
-                            <form> <!-- th:action="@{/admin/visualizza_officine}" method="get" -->
-                                <input type="submit" th:value="${veicolo.getAnno_costruzione() + ' ' + veicolo.getMarca() + ' ' + veicolo.getModello() + ' - ' + veicolo.getTarga()}" class="car_button"/>
-                            </form>
+                            <div th:replace="~{fragments/popup_box :: popup_box(${veicolo.getAnno_costruzione() + ' ' + veicolo.getMarca() + ' ' + veicolo.getModello() + ' - ' + veicolo.getTarga()}, 'color:black; background-color:white; border: 1px solid lightgray; height: 22px', 'Informazioni veicolo', ~{::content})}">
+                                <content>
+                                    <form>
+                                        <div style="width: 45%; float:left">
+                                            <label class="field_label" >Marca</label>
+                                            <input class="field_value" type="text" th:value="${veicolo.getMarca()}"readonly="readonly"/>
+                                            <br><br>
+                                            <label class="field_label" >Anno costruzione</label>
+                                            <input class="field_value" type="text" th:value="${veicolo.getAnno_costruzione()}" readonly="readonly"/>
+                                            <br><br>
+                                            <label class="field_label" >Numero telaio</label>
+                                            <input class="field_value" type="text" th:value="${veicolo.getNumero_telaio()}" readonly="readonly"/>
+                                            <br><br>
+                                        </div>
+                                        <div style="width: 45%; float: right;">
+                                            <label class="field_label" >Modello</label>
+                                            <input class="field_value" type="text" th:value="${veicolo.getModello()}"  readonly="readonly"/>
+                                            <br><br>
+                                            <label class="field_label" >Targa</label>
+                                            <input class="field_value" type="text" th:value="${veicolo.getTarga()}"  readonly="readonly"/>
+                                            <br><br>
+                                        </div>
+                                    </form>
+                                </content>
+                            </div>
                             <br>
                         </div>
                         <form> <!-- th:action="@{/admin/visualizza_officine}" method="get" -->
@@ -127,7 +60,7 @@
                 <div class="vertical_divier"></div>
 
                 <div class="column">
-                    <div class="custom_h2"> <b>Ordini in corso</b> </div>
+                    <div class="custom_h2" style="font-weight: bold;">Ordini in corso</div>
                     <div class="display_div">
                         <div th:each="ordine: ${ordini_in_corso}">
                             <p th:replace="~{fragments/cards_ordine :: simple_card_ordine(${ordine})}" style="height: 50px"></p>
@@ -138,15 +71,11 @@
                 <div class="vertical_divier"></div>
 
                 <div class="column" style="float: right;">
-                    <div class="custom_h2"> <b>Ordini consegnati</b> </div>
+                    <div class="custom_h2" style="font-weight: bold;">Ordini consegnati</div>
                     <div class="display_div">
                         <div th:each="ordine: ${ordini_completati}">
                             <p th:replace="~{fragments/cards_ordine :: simple_card_ordine(${ordine})}" style="height: 50px"></p>
                         </div>
-                        <!--
-
-                            <div th:replace="~{fragments/cards_ordine :: simple_card_ordine(ordine.getTarga(), ordine.getId_kanban(), ordine.getRicavo(), ordine.getPagamentoEffettuato())}"></div>
-                        -->
                     </div>
                 </div>
 

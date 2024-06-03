@@ -4,8 +4,10 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.view.RedirectView;
@@ -59,6 +61,11 @@ public class ClienteController implements UtenteInterface<ClienteDetails> {
     @RequestMapping(value="/aggiorna_dati", method=RequestMethod.POST)
     public RedirectView aggiornaDatiPost(Model model, ClienteDetails user) {
         return UtenteInterfaceImplementation.aggiornaDatiPost(model, user);
+    }
+
+    @RequestMapping(value="/aggiorna_password", method=RequestMethod.POST)
+    public Response aggiornaPasswordPost(Model model, @RequestBody String json) {
+        return UtenteInterfaceImplementation.aggiornaPasswordPost(model, json);
     }
 
 }
